@@ -10,6 +10,9 @@ public class client {
 	//atributions for Login_display
 	private String login_name = "default";
 	private String login_pass = "default";
+
+	//atributions for Room selecting
+	int room_num = -1;
 	
 	public client() {
 		
@@ -52,6 +55,23 @@ public class client {
 		}catch(Exception erro) {
 			System.out.println("Send register info erro");
 			erro.printStackTrace();
+		}
+	}
+	public void send_room_num(int room_num){
+		this.room_num = room_num;
+		int port = 13;
+		transData data = new transData(port);
+		try{
+			Socket socket = new Socket("localhost",port);
+			OutputStream os = socket.getOutputStream();
+			ObjectOutputStream oos = new ObjectOutputStream(os);
+			oos.writeObject(data);
+			oos.flush();
+			socket.shutdownOutput();
+			System.out.println("Send room number successfully");
+		}catch(Exception erro){
+			erro.printStackTrace();
+			System.out.println("Send room number failed");
 		}
 	}
 	public static void main(String[] args) {

@@ -48,6 +48,9 @@ public class Register_display extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==btn) {
 			client2.send_register_name_pass(txt[0].getText(), txt[0].getText());
+		
+		//return to display login
+		new Login_display("Login",client2);
 		}
 
 	}

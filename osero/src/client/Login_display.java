@@ -1,21 +1,23 @@
 package client;
+
 import java.awt.*;
 import java.awt.List;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
 
-public class Login_display extends JFrame implements ActionListener{
+public class Login_display extends JFrame implements ActionListener {
 	static final long serialVersionUID = 1;
 	JLabel label[] = new JLabel[2];
 	JTextField txt = new JTextField();
 	JPasswordField pwd = new JPasswordField();
 	JButton btn[] = new JButton[4];
-	client client2;
-	public Login_display(String title,client client2){
+	client client;
+
+	public Login_display(String title, client client) {
 		super(title);
-		this.client2 = client2;
-		JPanel p = (JPanel)getContentPane();
+		this.client = client;
+		JPanel p = (JPanel) getContentPane();
 		p.setLayout(null);
 		label[0] = new JLabel("プレイヤ名");
 		label[1] = new JLabel("パスワード");
@@ -23,8 +25,8 @@ public class Login_display extends JFrame implements ActionListener{
 		btn[1] = new JButton("ログイン");
 		btn[2] = new JButton("パスワード");
 		btn[3] = new JButton("ルール説明");
-		
-		for(int i=0;i<4;i++) {
+
+		for (int i = 0; i < 4; i++) {
 			btn[i].addActionListener(this);
 		}
 
@@ -53,18 +55,27 @@ public class Login_display extends JFrame implements ActionListener{
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		//onclick
-		
-		if(e.getSource()==btn[1]) {
+		// onclick
+
+		if (e.getSource() == btn[0]) {
+			new Register_display("Register", client);
+			this.dispose();
+		}
+	
+		if (e.getSource() == btn[1]) {
 			System.out.println(pwd);
 			String pwd1 = String.valueOf(pwd);
-			client2.send_login_name_pass(txt.getText(),pwd1);
+			client.send_login_name_pass(txt.getText(), pwd1);
 			new Oserov4();
+		}
+		
+		if(e.getSource()==btn[3]){
+			new Explain("Explaination");
 		}
 	}
 
 	public static void main(String[] args) {
-		client client2 =new client();
-		new Login_display("Display-1",client2);
+		client client2 = new client();
+		new Login_display("Display-1", client2);
 	}
 }

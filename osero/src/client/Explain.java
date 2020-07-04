@@ -5,14 +5,15 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
 
-public class d2 extends JFrame implements ActionListener{
+public class Explain extends JFrame implements ActionListener{
 	static final long serialVersionUID = 1;
 	JTextArea txt = new JTextArea("オセロのゲーム説明。123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890");
 	JScrollPane scr = new JScrollPane(txt);
 	JButton btn = new JButton("戻る");
-
-	public d2(String title){
+	client client;
+	public Explain(String title,client client){
 		super(title);
+		this.client = client;
 		JPanel p = (JPanel)getContentPane();
 		p.setLayout(null);
 
@@ -21,6 +22,7 @@ public class d2 extends JFrame implements ActionListener{
 
 		scr.setBounds(15, 10, 200, 150);
 		btn.setBounds(90, 180, 60, 20);
+		btn.addActionListener(this);
 
 		p.add(scr);
 		p.add(btn);
@@ -32,9 +34,8 @@ public class d2 extends JFrame implements ActionListener{
 
 	public void actionPerformed(ActionEvent e) {
 		//onclick
-	}
-
-	public static void main(String[] args) {
-		new d2("Display-2");
+		if(e.getSource()==btn){
+			new Login_display("Login",client);
+		}
 	}
 }
