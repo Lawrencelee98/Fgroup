@@ -426,6 +426,8 @@ public class Oserov4 extends JFrame implements ActionListener{
 										map[ttr][ttl] = p;
 									}
 									break;
+								}else{
+									break;
 								}
 							}else{
 								//turnFlag銇宖alse->false銇牬鍚堛伅銇撱伄鎺㈢储鏂瑰悜銇с伄鎺㈢储銈掔祩浜�(鍒濆洖銇伩鐧虹敓)
@@ -500,6 +502,8 @@ public class Oserov4 extends JFrame implements ActionListener{
 									if(map[tr][tl] == t){
 										map[j][k] = 2;
 										break;//1鏂瑰悜銇с倐銇层仯銇忋倞杩斻仜銈屻伆鑹亜銇仹銉兗銉椼倰鎶溿亼銈�
+									}else{
+										break;
 									}
 								}else{
 									//turnFlag銇宖alse->false銇牬鍚堛伅銇撱伄鎺㈢储鏂瑰悜銇с伄鎺㈢储銈掔祩浜�(鍒濆洖銇伩鐧虹敓)
@@ -512,6 +516,20 @@ public class Oserov4 extends JFrame implements ActionListener{
 				}
 			}//j,k銇倛銈嬪叏鎺㈢储绲備簡
 		}
+		
+		public int countNumber(int n){//n:数えたい数字(0～3)
+			int i,j,k=0;
+			for(i=0; i<8; i++){
+				for(j=0; j<8; j++){
+					if(map[i][j] == n){
+						k++;
+					}
+				}
+			}
+
+			return k;
+		}
+		
 		public void castToBoard(Oserov4 osero) {
 
 			for(int i=0; i<8;i++) {
