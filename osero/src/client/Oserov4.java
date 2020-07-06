@@ -265,10 +265,65 @@ public class Oserov4 extends JFrame implements ActionListener{
 		}
 		
 	}
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		new Oserov4();
+	}
+	
+	public int isGameFinish(){//ゲームが終了した:0or1or2[0=黒勝,1=白勝,2=引き分け],終了しない:3
+		//両者置ける場所が無くなったときにゲーム終了
+		int b,b2,w,w2;
+		map.checkMap(0);
+		b = map.countNumber(0);//黒石の個数
+		b2 = map.countNumber(2);//黒の置ける場所の数
+		map.printMap();
+
+		map.checkMap(1);
+		w = map.countNumber(1);//白石の個数
+		w2 = map.countNumber(2);//白の置ける場所の数
+		map.printMap();
+
+		map.checkMap(turn);//map[][]を元に戻しておく
+		
+		if(b2 == 0 && w2 == 0){
+			//ゲーム終了確定
+			if(b > w){
+				return 0;
+			}else if(w > b){
+				return 1;
+			}else{
+				return 2;
+			}
+		}else{
+			return 3;
 		}
+	}
+
+	public void matchCPU(int t){//t:CPUの手番[0=CPUが黒,1=CPUが白]
+		//CPUとの対戦
+		map.checkMap(t);
+		int c = map.countNumber(2);//CPUが置ける場所の個数
+		if(c > 0){
+			Random r = new Random();
+			int p = r.nextInt(c);//乱数で置く場所を一つ選ぶ
+			int i,j,d=0;
+			for(i=0; i<8; i++){
+				for(j=0; j<8; j++){
+					if(map.map[i][j] == 2){
+						if(p == d){
+							System.out.println("CPU"+ t +" put "+ i +" "+ j);
+							map.updateMap(i, j, t);//i,jに置く
+						}
+						d++;
+					}
+				}
+			}
+		}else{
+			//パスする
+			System.out.println("CPU pass");
+		}
+	}
 	
 	public class Map {
 		int r;
