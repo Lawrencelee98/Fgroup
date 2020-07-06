@@ -254,6 +254,9 @@ public class Oserov4 extends JFrame implements ActionListener{
 				
 				turn = 1-turn;
 				map.checkMap(turn);
+				if(isGameFinish()!=3){
+					//勝敗を表すディスプレイ//
+				}
 			}
 			}
 	
@@ -300,29 +303,34 @@ public class Oserov4 extends JFrame implements ActionListener{
 		}
 	}
 
-	public void matchCPU(int t){//t:CPUの手番[0=CPUが黒,1=CPUが白]
+	public void matchCPU(int t){//t:CPUの手番[0=CPUが黒,1=CPUが白,2=CPUstop]
 		//CPUとの対戦
 		map.checkMap(t);
 		int c = map.countNumber(2);//CPUが置ける場所の個数
-		if(c > 0){
-			Random r = new Random();
-			int p = r.nextInt(c);//乱数で置く場所を一つ選ぶ
-			int i,j,d=0;
-			for(i=0; i<8; i++){
-				for(j=0; j<8; j++){
-					if(map.map[i][j] == 2){
-						if(p == d){
-							System.out.println("CPU"+ t +" put "+ i +" "+ j);
-							map.updateMap(i, j, t);//i,jに置く
+		if(t==0||t==1){
+			if(c > 0){
+				Random r = new Random();
+				int p = r.nextInt(c);//乱数で置く場所を一つ選ぶ
+				int i,j,d=0;
+				for(i=0; i<8; i++){
+					for(j=0; j<8; j++){
+						if(map.map[i][j] == 2){
+							if(p == d){
+								System.out.println("CPU"+ t +" put "+ i +" "+ j);
+								map.updateMap(i, j, t);//i,jに置く
+							}
+							d++;
 						}
-						d++;
 					}
 				}
 			}
-		}else{
-			//パスする
-			System.out.println("CPU pass");
+			else{
+				//パスする
+				System.out.println("CPU pass");
+			}
 		}
+		else{}
+		
 	}
 	
 	public class Map {
