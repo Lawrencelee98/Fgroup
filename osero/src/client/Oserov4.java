@@ -336,13 +336,34 @@ public class Oserov4 extends JFrame implements ActionListener{
 	public class Map {
 		int r;
 		int l;
+		int whiteChessNum;
+		int blackChessNum
 		int [][]map = new int [8][8];//榛�0,鐧�1,缃亼銈嬪牬鎵�2,绌虹櫧3
 
 		public Map(){
 			this.r = 8;
 			this.l = 8;
 		}
-
+		int count_white_chess(){
+			this.whiteChessNum=0;
+			for(int i=0; i<8;i++){
+				for(int j=0;j<8;j++){
+					if(map[i][j]==1){
+						whiteChessNum = whiteChessNum+1;
+					}
+				}
+			}
+		}
+		int count_black_chess(){
+			this.blackChessNum=0;
+			for(int i=0; i<8;i++){
+				for(int j=0;j<8;j++){
+					if(map[i][j]==0){
+						blackChessNum = blackChessNum+1;
+					}
+				}
+			}
+		}
 		public void initMap() {
 			for(int i=0;i<8;i++) {
 				Arrays.fill(map[i], 3);//绌虹櫧銇у煁銈併倠
