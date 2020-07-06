@@ -45,6 +45,8 @@ public class Oserov4 extends JFrame implements ActionListener {
 	double y = 0;
 	int time_limit = 30;
 	boolean interuput = false;
+	int CPU_switch=2;
+	
 	Osero_setting osero_setting;
 	ImageIcon iconB = new ImageIcon(getClass().getResource("00Black.jpg"));
 	ImageIcon iconW = new ImageIcon(getClass().getResource("00White.jpg"));
@@ -52,7 +54,7 @@ public class Oserov4 extends JFrame implements ActionListener {
 	Map map = new Map();
 	HashMap<Integer, transData> hash = new HashMap<Integer, transData>();
 	JFrame j = new JFrame();
-
+	Timer_count_down time_count_down = new Timer_count_down(time_limit);
 	public Oserov4() {
 
 		c = j.getContentPane();
@@ -84,22 +86,19 @@ public class Oserov4 extends JFrame implements ActionListener {
 		int buttonSize = 46;
 
 		// Timer
-		Timer time = new Timer();
-		time.schedule(new TimerTask() {
-
+		
+		Timer chess_number_count = new Timer();
+		chess_number_count.schedule(new TimerTask(){
+		
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				time_limit = time_limit - 1;
-				l2.setText("Rest time: " + String.valueOf(time_limit));
-				if (time_limit == 0) {
-					System.out.println("Time out");
-					cancel();
-				}
-
+				l4.setText("Black:"+String.valueOf(map.count_black_chess())+"vs"+"White:"+String.valueOf(map.count_white_chess()));
 			}
-		}, 100, 1000);
+		},100,100);
 
+		
+		//Timer finish
 		for (int i = 0; i < 8; i++) {
 			A[i] = new JButton();
 
@@ -222,51 +221,83 @@ public class Oserov4 extends JFrame implements ActionListener {
 
 					turn = 1 - turn;
 					map.checkMap(turn);
+					matchCPU(CPU_switch);
+					time_count_down.reset();
+					time_count_down.start();
+					
 				} else if (e.getSource() == B[i]) {
 					map.updateMap(i, 1, turn);
 					map.castToBoard(this);
 
 					turn = 1 - turn;
 					map.checkMap(turn);
+					matchCPU(CPU_switch);
+					time_count_down.reset();
+					time_count_down.start();
+					
 				} else if (e.getSource() == C[i]) {
 					map.updateMap(i, 2, turn);
 					map.castToBoard(this);
 
 					turn = 1 - turn;
 					map.checkMap(turn);
+					matchCPU(CPU_switch);
+					time_count_down.reset();
+					time_count_down.start();
+					
 				} else if (e.getSource() == D[i]) {
 					map.updateMap(i, 3, turn);
 					map.castToBoard(this);
 
 					turn = 1 - turn;
 					map.checkMap(turn);
+					matchCPU(CPU_switch);
+					time_count_down.reset();
+					time_count_down.start();
+					
 				} else if (e.getSource() == E[i]) {
 					map.updateMap(i, 4, turn);
 					map.castToBoard(this);
 
 					turn = 1 - turn;
 					map.checkMap(turn);
+					matchCPU(CPU_switch);
+					time_count_down.reset();
+					time_count_down.start();
+					
 				} else if (e.getSource() == F[i]) {
 					map.updateMap(i, 5, turn);
 					map.castToBoard(this);
 
 					turn = 1 - turn;
 					map.checkMap(turn);
+					matchCPU(CPU_switch);
+					time_count_down.reset();
+					time_count_down.start();
+					
 				} else if (e.getSource() == G[i]) {
 					map.updateMap(i, 6, turn);
 					map.castToBoard(this);
 
 					turn = 1 - turn;
 					map.checkMap(turn);
+					matchCPU(CPU_switch);
+					time_count_down.reset();
+					time_count_down.start();
+					
 				} else if (e.getSource() == H[i]) {
 					map.updateMap(i, 7, turn);
 					map.castToBoard(this);
 
 					turn = 1 - turn;
 					map.checkMap(turn);
-					if (isGameFinish() != 3) {
-						// 勝敗を表すディスプレイ//
-					}
+					matchCPU(CPU_switch);
+					time_count_down.start();
+					
+				}
+				if (isGameFinish() != 3) {
+					// 勝敗を表すディスプレイ//
+					System.out.println("Gameover");
 				}
 			}
 
@@ -314,9 +345,10 @@ public class Oserov4 extends JFrame implements ActionListener {
 
 	public void matchCPU(int t) {// t:CPUの手番[0=CPUが黒,1=CPUが白,2=CPUstop]
 		// CPUとの対戦
+		if (t == 0 || t == 1) {
 		map.checkMap(t);
 		int c = map.countNumber(2);// CPUが置ける場所の個数
-		if (t == 0 || t == 1) {
+		
 			if (c > 0) {
 				Random r = new Random();
 				int p = r.nextInt(c);// 乱数で置く場所を一つ選ぶ
@@ -649,7 +681,7 @@ public class Oserov4 extends JFrame implements ActionListener {
 
 		}// castToBoard 将棋子投射到棋盘上
 	}
-
+/*
 	class Iner_Thread extends Thread {
 		Oserov4 osero;
 
@@ -662,7 +694,50 @@ public class Oserov4 extends JFrame implements ActionListener {
 			new Osero_setting(osero);
 		}
 	}
+*/
+void start_count_down(){
+	Timer time = new Timer();
+		
+	time.schedule(new TimerTask() {
 
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			time_limit = time_limit - 1;
+			l2.setText("Rest time: " + String.valueOf(time_limit));
+			if (time_limit == 0) {
+				System.out.println("Time out");
+				cancel();
+			}
+
+		}
+	}, 100, 1000);
+}
+class Timer_count_down extends Thread {
+	int time_limit;
+	int time;
+	Timer_count_down(int time_limit){
+		this.time_limit = time_limit;
+	}
+	public void run(){
+		time = time_limit;
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask(){
+		@Override
+			public void run(){
+				time = time - 1;
+			l2.setText("Left time: " + String.valueOf(time));
+			if (time_limit == 0) {
+				System.out.println("Time out");
+				cancel();
+			}
+			}
+		},0,1000);
+	}
+	public void reset(){
+		time = time_limit;
+	}
+}
 } // Oserov4
 
 // comment: 棋盘应该是横纵为偶数，并且初始化双方各两个子交叉排列在中心，只有旁边有棋子的时候才能下棋
