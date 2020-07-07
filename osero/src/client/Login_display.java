@@ -4,7 +4,9 @@ import java.awt.*;
 import java.awt.List;
 import java.awt.event.*;
 import javax.swing.*;
+import java.io.*;
 import java.util.*;
+import java.net.*;
 
 public class Login_display extends JFrame implements ActionListener {
 	static final long serialVersionUID = 1;
@@ -12,9 +14,12 @@ public class Login_display extends JFrame implements ActionListener {
 	JTextField txt = new JTextField();
 	JPasswordField pwd = new JPasswordField();
 	JButton btn[] = new JButton[4];
-	client client;
+	Client client=null;
+	Socket s  = null;
+	ObjectOutputStream oos = null;
+	ObjectInputStream ois = null;
 
-	public Login_display(String title, client client) {
+	public Login_display(String title, Client client) {
 		super(title);
 		this.client = client;
 		JPanel p = (JPanel) getContentPane();
@@ -52,30 +57,87 @@ public class Login_display extends JFrame implements ActionListener {
 		setSize(250, 250);
 		setVisible(true);
 		setResizable(false);
+		
+		try{
+			s = new Socket(client.ServerAddress,client.getLoginPort());
+			OutputStream os = s.getOutputStream();
+			oos = new ObjectOutputStream(os);
+			InputStream is = s.getInputStream();
+			ois = new ObjectInputStream(is);
+		}catch(Exception se) {
+			System.out.println("Error(Login_display):Socket error");
+			se.printStackTrace();
+		}finally {
+
+		}
 	}
 
 	public void actionPerformed(ActionEvent e) {
 		// onclick
 
+		//button 新規登録
 		if (e.getSource() == btn[0]) {
+			try {
+				s.close();
+			} catch (IOException e1) {
+				// TODO 自動生成された catch ブロック
+				e1.printStackTrace();
+			}
 			new Register_display("Register", client);
 			this.dispose();
 		}
-	
+
+		//button ログイン
 		if (e.getSource() == btn[1]) {
-			System.out.println(pwd);
-			String pwd1 = String.valueOf(pwd);
-			client.send_login_name_pass(txt.getText(), pwd1);
-			new Oserov4();
+			//String username = txt.getText();
+			String username = "usr_1";
+			char[] password = pwd.getPassword();
+			//String passwordstr = new String(password);
+			String passwordstr = "pass_1";
+			System.out.println("username="+username+",password="+passwordstr);
+			boolean flag = client.send_login_info(username, passwordstr, ois, oos);
+			if(flag){
+				//login success
+				client.choose_room(oos, ois);
+				/*try {
+					System.out.println("Login_display:socket close");
+					//s.close();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}finally {*/
+				/*	ObjectOutputStream oos_room = null;
+			        ObjectInputStream ois_room = null;
+			        try{
+			            Socket s_room = new Socket(client.ServerAddress,client.room_port);
+			            OutputStream os_room = s_room.getOutputStream();
+			            oos_room = new ObjectOutputStream(os_room);
+
+			            InputStream is_room = s_room.getInputStream();
+			            ois_room = new ObjectInputStream(is_room);
+			            System.out.println("start oserov4");
+			            new Oserov4(client, oos_room, ois_room);
+			        }catch (Exception e1){
+			            //e.printStackTrace();
+			        }finally {
+
+			        }*/ //->Display4 Action
+				//}
+			}else{
+				//login failed
+				//TODO show "login failed"
+				System.out.println("Login Failed");
+			}
 		}
-		
+		//osero 対局の終了
+	
+		//button ルール説明
 		if(e.getSource()==btn[3]){
-			new Explain("Explaination");
+			new Explain("Explaination", client);
 		}
 	}
 
 	public static void main(String[] args) {
-		client client2 = new client();
+		Client client2 = new Client();
 		new Login_display("Display-1", client2);
 	}
 }
