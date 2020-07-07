@@ -13,8 +13,7 @@ import java.net.Socket;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-client client;
+import javax.swing.JPanel;client client;
 
 public class Room {
 
@@ -239,6 +238,7 @@ public class Room {
 			setVisible(true);
 		}
 
+		// send the room information
 		public void actionPerformed(ActionEvent e) {
 			if (e.getActionCommand().equals("ログアウト")) {
 				setVisible(false);
@@ -334,6 +334,7 @@ public class Room {
 			setVisible(true);
 		}
 
+		// send transmit data to comfirm the waiting time
 		public void actionPerformed(ActionEvent e) {
 			if (e.getActionCommand().equals("合意する")) {
 				setVisible(false);
@@ -401,10 +402,12 @@ public class Room {
 			setVisible(true);
 		}
 
+		// data transmit : send room information and accept comfirmed notice
 		public void actionPerformed(ActionEvent e) {
 			if (e.getActionCommand().equals("5秒")) {
 				str = "5秒";
 				setVisible(false);
+
 			} else if (e.getActionCommand().equals("10秒")) {
 				str = "10秒";
 				setVisible(false);
