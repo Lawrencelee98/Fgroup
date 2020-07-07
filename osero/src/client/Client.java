@@ -28,6 +28,9 @@ public class Client {
 	String ServerAddress = "localhost";
 	int turn = 1;
 	int your_turn = 0;
+	
+	transData r_data = null;
+	Oserov4 osero = null;
 
 	public  Client() {
 

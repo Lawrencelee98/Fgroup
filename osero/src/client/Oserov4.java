@@ -61,7 +61,6 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 	ObjectOutputStream oos = null;
 	ObjectInputStream ois = null;
 	
-	Timer_count_down time_count_down = new Timer_count_down(time_limit);
 	JFrame j = new JFrame();
 	public Oserov4(Client client, ObjectOutputStream oos, ObjectInputStream ois) {
 		this.client = client;
@@ -273,8 +272,7 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 							map.castToBoard();
 							s_data.set_line(1);
 							s_data.set_row(i);
-							time_count_down.reset();
-							time_count_down.start();
+							
 							map.checkMap(client.turn);
 						}
 						else if(e.getSource()==B[i]) {
@@ -282,8 +280,7 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 							map.castToBoard();
 							s_data.set_line(2);
 							s_data.set_row(i);
-							time_count_down.reset();
-							time_count_down.start();
+							
 							map.checkMap(client.turn);
 						}
 						else if(e.getSource()==C[i]) {
@@ -291,8 +288,7 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 							map.castToBoard();
 							s_data.set_line(3);
 							s_data.set_row(i);
-							time_count_down.reset();
-							time_count_down.start();
+							
 							map.checkMap(client.turn);
 						}
 						else if(e.getSource()==D[i]) {
@@ -300,8 +296,7 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 							map.castToBoard();
 							s_data.set_line(4);
 							s_data.set_row(i);
-							time_count_down.reset();
-							time_count_down.start();
+							
 							map.checkMap(client.turn);
 						}
 						else if(e.getSource()==E[i]) {
@@ -309,8 +304,7 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 							map.castToBoard();
 							s_data.set_line(5);
 							s_data.set_row(i);
-							time_count_down.reset();
-							time_count_down.start();
+			
 							map.checkMap(client.turn);
 						}
 						else if(e.getSource()==F[i]) {
@@ -318,8 +312,7 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 							map.castToBoard();
 							s_data.set_line(6);
 							s_data.set_row(i);
-							time_count_down.reset();
-							time_count_down.start();
+
 							map.checkMap(client.turn);
 						}
 						else if(e.getSource()==G[i]) {
@@ -327,8 +320,7 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 							map.castToBoard();
 							s_data.set_line(7);
 							s_data.set_row(i);
-							time_count_down.reset();
-							time_count_down.start();
+
 							map.checkMap(client.turn);
 						}
 						else if(e.getSource()==H[i]) {
@@ -336,15 +328,15 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 							map.castToBoard();
 							s_data.set_line(8);
 							s_data.set_row(i);
-							time_count_down.reset();
-							time_count_down.start();
+
 							map.checkMap(client.turn);
 						}
 					}
 					oos.writeObject(s_data);
 					System.out.println("send!!");
 					client.your_turn = 0;	
-					client.BattleReceiver(map);
+					//client.BattleReceiver(map);
+					new Reciever(client, map);
 				}
 
 			}catch(ArithmeticException pe) {
@@ -779,30 +771,6 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 		public void run() {
 			new Osero_setting(osero);
 		}
-	}
-	class Timer_count_down extends Thread {
-	int time_limit;
-	int time;
-	Timer_count_down(int time_limit){
-		this.time_limit = time_limit;
-	}
-	public void run(){
-		time = time_limit;
-		Timer timer = new Timer();
-		timer.schedule(new TimerTask(){
-		@Override
-			public void run(){
-				time = time - 1;
-			l2.setText("Left time: " + String.valueOf(time));
-			if (time_limit == 0) {
-				System.out.println("Time out");
-				cancel();
-			}
-			}
-		},0,1000);
-	}
-	public void reset(){
-		time = time_limit;
 	}
 
 } //Oserov4
