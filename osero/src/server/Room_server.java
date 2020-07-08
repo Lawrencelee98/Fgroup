@@ -62,8 +62,10 @@ public class Room_server extends Thread{
 								os_1.writeObject(start);
 								transData koukou = new transData(1200);
 								os_2.writeObject(koukou);
+								os_2.flush();
 								System.out.println("send --start-- to player1");
 
+								
                 while(battle_end){
                     transData data_1 =(transData)ois_1.readObject();
 										System.out.println("read Object");

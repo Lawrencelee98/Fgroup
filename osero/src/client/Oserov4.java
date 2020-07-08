@@ -52,20 +52,20 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 	//static int turn = 1;//初始化先手 黑色为0 白色为1
 	//static int your_turn = 0; //自分のターン1, 相手のターン0
 	Client client = null;
+	int count=0;
 	
 	transData s_data = new transData(3);
 	
 	Ban map = new Ban();
 	HashMap<Integer,transData>hash = new HashMap<Integer,transData>();
 	
-	ObjectOutputStream oos = null;
-	ObjectInputStream ois = null;
+	Reciever rec = null;
 	
 	JFrame j = new JFrame();
 	public Oserov4(Client client, ObjectOutputStream oos, ObjectInputStream ois) {
 		this.client = client;
-		this.oos = oos;
-		this.ois = ois;
+		//this.oos = oos;
+		//this.ois = ois;
 		client.oos =  oos;
 		client.ois =  ois;
 		new Display();
@@ -190,10 +190,12 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 			j.setResizable(false);
 			map.initMap();
 			map.castToBoard();
+			
+			//data exchange
 			transData r_data = null;
 			try {
 				//receive battle start notice
-				r_data = (transData)ois.readObject();
+				r_data = (transData)client.ois.readObject();
 			} catch (ClassNotFoundException e11) {
 				// TODO 自動生成された catch ブロック
 				e11.printStackTrace();
@@ -211,7 +213,7 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 				
 			System.out.println("please wait for opponent");
 			try {
-				r_data = (transData)ois.readObject();
+				r_data = (transData)client.ois.readObject();
 			
 				if(r_data instanceof transData) {
 					//1000が送られてきた方が先攻
@@ -223,8 +225,14 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 						System.out.println("You hava white!");
 						client.turn = 1;
 						client.your_turn = 0;
-						client.BattleReceiver(map);
+						//client.BattleReceiver(map);
+						rec = new Reciever(client, map, client.ois);
+						count++;
+						System.out.println("re12");
+						rec.start();
+						System.out.println("toppa");
 					}
+					//client.ois.reset();
 				}
 			} catch (ClassNotFoundException e1) {
 				// TODO 自動生成された catch ブロック
@@ -257,6 +265,12 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 				}catch(Exception erro) {erro.printStackTrace();}
 			}
 		*/
+			try {
+				client.oos.reset();
+			} catch (IOException e1) {
+				// TODO 自動生成された catch ブロック
+				e1.printStackTrace();
+			}
 			if(e.getSource()==b1) {
 				System.out.println("open new window");
 				//osero_setting = new Osero_setting(this);
@@ -264,13 +278,12 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 			}
 
 			try {
-				//line:A,B,C,...,H, row:1,2,3,..,8
 				if(client.your_turn ==  1) {
 					for(int i=0; i<8;i++) {
 						if(e.getSource()==A[i]) {
 							map.updateMap(i, 0,client.turn);
 							map.castToBoard();
-							s_data.set_line(1);
+							s_data.set_line(0);
 							s_data.set_row(i);
 							
 							map.checkMap(client.turn);
@@ -278,7 +291,7 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 						else if(e.getSource()==B[i]) {
 							map.updateMap(i, 1,client.turn);
 							map.castToBoard();
-							s_data.set_line(2);
+							s_data.set_line(1);
 							s_data.set_row(i);
 							
 							map.checkMap(client.turn);
@@ -286,7 +299,7 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 						else if(e.getSource()==C[i]) {
 							map.updateMap(i, 2,client.turn);
 							map.castToBoard();
-							s_data.set_line(3);
+							s_data.set_line(2);
 							s_data.set_row(i);
 							
 							map.checkMap(client.turn);
@@ -294,7 +307,7 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 						else if(e.getSource()==D[i]) {
 							map.updateMap(i, 3,client.turn);
 							map.castToBoard();
-							s_data.set_line(4);
+							s_data.set_line(3);
 							s_data.set_row(i);
 							
 							map.checkMap(client.turn);
@@ -302,7 +315,7 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 						else if(e.getSource()==E[i]) {
 							map.updateMap(i, 4,client.turn);
 							map.castToBoard();
-							s_data.set_line(5);
+							s_data.set_line(4);
 							s_data.set_row(i);
 			
 							map.checkMap(client.turn);
@@ -310,7 +323,7 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 						else if(e.getSource()==F[i]) {
 							map.updateMap(i, 5,client.turn);
 							map.castToBoard();
-							s_data.set_line(6);
+							s_data.set_line(5);
 							s_data.set_row(i);
 
 							map.checkMap(client.turn);
@@ -318,7 +331,7 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 						else if(e.getSource()==G[i]) {
 							map.updateMap(i, 6,client.turn);
 							map.castToBoard();
-							s_data.set_line(7);
+							s_data.set_line(6);
 							s_data.set_row(i);
 
 							map.checkMap(client.turn);
@@ -326,17 +339,29 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 						else if(e.getSource()==H[i]) {
 							map.updateMap(i, 7,client.turn);
 							map.castToBoard();
-							s_data.set_line(8);
+							s_data.set_line(7);
 							s_data.set_row(i);
 
 							map.checkMap(client.turn);
 						}
+						
 					}
-					oos.writeObject(s_data);
+					//client.oos.flush();
+					//client.oos.shutdown();
+					System.out.println("s_data="+s_data.get_row()+","+s_data.get_line());
+					client.oos.writeObject(s_data);
 					System.out.println("send!!");
 					client.your_turn = 0;	
 					//client.BattleReceiver(map);
-					new Reciever(client, map);
+					if(count==0) {
+						rec = new Reciever(client, map, client.ois);
+						rec.start();
+						count++;
+					}else {
+						rec = new Reciever(client, map, client.ois);
+						rec.start();
+					}
+					
 				}
 
 			}catch(ArithmeticException pe) {

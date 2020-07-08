@@ -357,8 +357,10 @@ public class Room {
 			            ois_room = new ObjectInputStream(is_room);
 			            System.out.println("start oserov4");
 			            new Oserov4(client, oos_room, ois_room);
+			            
 			        }catch (Exception e1){
 			            //e.printStackTrace();
+			        	
 			        }finally {
 
 			        }

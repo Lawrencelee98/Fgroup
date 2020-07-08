@@ -180,12 +180,14 @@ public class Client {
 
         try{
             System.out.println("room_obj start");
+            //room info 受け取る
             transData room_obj = (transData)ois.readObject();
             System.out.println("room_obj end");
 
             Map<Integer, Integer> room_info = room_obj.get_room_info();
 			System.out.println(room_info);
 			room = new Room(this,room_info, oos, ois);
+			
 			//Scanner scan = new Scanner(System.in);
 			//room_num = scan.nextInt();
             // todo chose room having 0or1 player

@@ -16,6 +16,7 @@ public class Server {
     };
 
 
+
     public static void connect(){
         int first_port=10000, port_1=10100, port_2=10200, port_3=10300, port_4=10400, port_5=10500, port_6=10600, port_7=10700, port_8=10800;
 
