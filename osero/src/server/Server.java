@@ -390,7 +390,7 @@ public class Server {
         }
     }
 
-    public static boolean register(transData obj){
+    public static boolean register(transData obj, ObjectOutputStream oos){
         FileInputStream fi = null;
         InputStreamReader is = null;
         BufferedReader br = null;
@@ -458,6 +458,14 @@ public class Server {
                 ans = "Register failed : this name is already used";
                 System.out.println(ans);
             }
+
+            // 送信用インスタンス作成
+            transData register_ans = new transData(11);
+            change_ans.set_login_answer(ans);
+
+
+            //send
+            oos.writeObject (register_ans);
 
 
         } catch (IOException ex) {
