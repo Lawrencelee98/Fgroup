@@ -3,6 +3,30 @@ import java.io.Serializable;
 import java.util.*;
 
 public class transData implements Serializable{
+
+    /*
+    client ---> server
+    10 : login
+    13 : room_choice
+    20 : register
+    36 : battle_end_info
+    37 : change_pass
+    50 : battle end
+
+    server ---> client
+    11 : login_answer
+    12 : room_info
+    80 : battle_start
+    85 : port_send
+    1000 : your turn notice
+
+    client ---> server ---> client
+    3 : board_info
+
+    share between server and client
+    35 : dummy
+    */
+
     private static final long serialVersionUID = 1L;
 
     int protocol=3;
@@ -13,8 +37,17 @@ public class transData implements Serializable{
     public int get_protocol() {
         return protocol;
     }
+    public void set_protocol(int p){
+        this.protocol = p;
+    }
 
+    // your turn notice--------------
+    // protocol = 1000
+    // --------------your turn notice
 
+    // dummy----------------------
+    // protocol = 35
+    // ----------------------dummy
 
 
 
@@ -140,4 +173,49 @@ public class transData implements Serializable{
     }
     // ------------------------------register
 
+    // battle_end_info------------------------
+    // client ---> server
+    // protocol = 36
+    private String winner, loser;
+    boolean draw_flag = false; // if the battle end with draw ---> true
+    public String get_winner(){
+        return winner;
+    }
+    public String get_loser(){
+        return loser;
+    }
+    public boolean get_draw_flag(){
+        return draw_flag;
+    }
+    public void set_draw_result(String winner, String loser){
+        this.draw_flag = true;
+        this.winner = winner;
+        this.loser = loser;
+    }
+    public void set_no_draw_result(String winner, String loser){
+        this.winner = winner;
+        this.loser = loser;
+    }
+    // ------------------------battle_end_info
+
+    // change_pass---------------------------
+    // client ---> server
+    // protocol = 37
+    private String change_name="no set", change_pass="no set", change_question="sogabe";
+    public String get_change_name(){
+        return change_name;
+    }
+    public String get_change_pass(){
+        return change_pass;
+    }
+    public String get_change_secret_question(){
+        return change_question;
+    }
+    public void set_change_name_pass_question(String change_name, String change_pass, String change_question){
+        this.change_name = change_name;
+        this.change_pass = change_pass;
+        this.change_question = change_question;
+    }
+
+    // ---------------------------change_pass
 }
