@@ -102,6 +102,8 @@ public class Room_server extends Thread {
                 }
 
 
+
+
             } else {
                 // 2 が先手の場合
                 while (battle_end) {
@@ -132,6 +134,10 @@ public class Room_server extends Thread {
                 }
 
             }
+
+            // 戦績更新
+            transData end = (transData) ois_1.readObject();
+            Server.update_record(end);
 
 
         } catch (Exception e) {
