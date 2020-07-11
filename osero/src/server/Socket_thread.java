@@ -123,7 +123,33 @@ public class Socket_thread extends Thread{
                     }
 
 
-                } else {
+                } else if (protocol_1 == 37) {
+                    if(Server.change_pass(data)){
+                        // name set
+                        this.username = data.get_change_name();
+                        if (num==1){
+                            Server.name_p1 = this.username;
+                        }else if (num==2){
+                            Server.name_p2 = this.username;
+                        }else if (num==3){
+                            Server.name_p3 = this.username;
+                        }else if (num==4){
+                            Server.name_p4 = this.username;
+                        }else if (num==5){
+                            Server.name_p5 = this.username;
+                        }else if (num==6){
+                            Server.name_p6 = this.username;
+                        }else if (num==7){
+                            Server.name_p7 = this.username;
+                        }else if (num==8){
+                            Server.name_p8 = this.username;
+                        }
+
+                        break;
+                    }else{
+
+                    }
+                }else{
                     // todo no login and no register data
 
                 }
