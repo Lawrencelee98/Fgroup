@@ -1,24 +1,8 @@
-# Updata Log
-7月11日--commit from lee
+# Fgroup
+click the Fork button on the up-right side of this page
 
-1．Loginした後、Loginの画面を消した。
+upload your code files, choose your own branch, and please don't commit to the master branch
 
-2．手番の情報を表す機能を実装した。
+utill the respository's ower comfirmed the commit, it will not be shown.
 
-3．残り時間を表す機能を実装した。
-
-4．自分の駒の数と相手の駒の数を表す機能を実装した。
-
-5．盤面の色を変える機能を実装した。
-
-6．CPU対戦の機能を実装した。
-
-7．勝敗の判定と、勝敗を表す機能を実装した。
-
-残りの作業：
-
-1．対局の途中に終了を押した場合。
-
-2．時間選択
-
-3．ルーム選択の画面と対局の画面で対局成績を表す。
+Another point that should be aware of is when you commit your changes, please add some particular explainations for it, it gonna be easy to see what changes you do the the project!
