@@ -455,7 +455,7 @@ public class Server {
 
             }else {
 
-                ans = "Register failed : this name is already used";
+                ans = "register failed : this name is already used";
                 System.out.println(ans);
             }
 
