@@ -10,8 +10,8 @@ public class Explain extends JFrame implements ActionListener{
 	JTextArea txt = new JTextArea("オセロのゲーム説明。123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890");
 	JScrollPane scr = new JScrollPane(txt);
 	JButton btn = new JButton("戻る");
-	client client;
-	public Explain(String title,client client){
+	Client client;
+	public Explain(String title,Client client){
 		super(title);
 		this.client = client;
 		JPanel p = (JPanel)getContentPane();
@@ -36,6 +36,7 @@ public class Explain extends JFrame implements ActionListener{
 		//onclick
 		if(e.getSource()==btn){
 			new Login_display("Login",client);
+			this.dispose();
 		}
 	}
 }

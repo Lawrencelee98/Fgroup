@@ -5,15 +5,14 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
 import java.net.*;
-import transData.*;
 
 public class Register_display extends JFrame implements ActionListener{
 	static final long serialVersionUID = 1;
 	JLabel label[] = new JLabel[3];
 	JTextArea txt[] = new JTextArea[2];
 	JButton btn = new JButton("送信する");
-	client client2;
-	public Register_display(String title,client client2){
+	Client client2;
+	public Register_display(String title,Client client2){
 		super(title);
 		this.client2 = client2;
 		JPanel p = (JPanel)getContentPane();
@@ -48,7 +47,7 @@ public class Register_display extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==btn) {
 			client2.send_register_name_pass(txt[0].getText(), txt[0].getText());
-		
+
 		//return to display login
 		new Login_display("Login",client2);
 		}
