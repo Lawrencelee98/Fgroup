@@ -60,7 +60,7 @@ public class Socket_thread extends Thread{
                     if (Server.login(data, os)) {
                         // login success
 
-                        System.out.println("thread [ " + String.valueOf(num) + " ] : room info sent");
+//                        System.out.println("thread [ " + String.valueOf(num) + " ] : room info sent");
 //                        os.flush();
 
                         // name set
@@ -93,6 +93,29 @@ public class Socket_thread extends Thread{
                     // todo register
                     if(Server.register(data)){
                         // register success
+
+                        // name set
+                        this.username = data.get_register_name();
+                        if (num==1){
+                            Server.name_p1 = this.username;
+                        }else if (num==2){
+                            Server.name_p2 = this.username;
+                        }else if (num==3){
+                            Server.name_p3 = this.username;
+                        }else if (num==4){
+                            Server.name_p4 = this.username;
+                        }else if (num==5){
+                            Server.name_p5 = this.username;
+                        }else if (num==6){
+                            Server.name_p6 = this.username;
+                        }else if (num==7){
+                            Server.name_p7 = this.username;
+                        }else if (num==8){
+                            Server.name_p8 = this.username;
+                        }
+
+
+
                         break;
                     }else{
                         // register fail
