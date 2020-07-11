@@ -132,7 +132,7 @@ public class Socket_thread extends Thread{
             }
             // send room info
             transData room_obj = new transData(12);
-            room_obj.set_room_info(Server.room_info);
+            room_obj.set_room_info(Server.room_info, Server.get_record());
             os.writeObject(room_obj);
 
 

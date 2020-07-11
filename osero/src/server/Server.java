@@ -483,7 +483,113 @@ public class Server {
 
     }
 
+    public static List get_record(){
+        //ファイル読み込みで使用する３つのクラス
+        FileInputStream fi = null;
+        InputStreamReader is = null;
+        BufferedReader br = null;
 
+        List<String> strList = new ArrayList<String>();
+
+        String rec_11="", rec_12="", rec_21="", rec_22="", rec_31="", rec_32="", rec_41="", rec_42="";
+
+
+        if (name_r1_1==null){
+            rec_11 = "room 1-1 : empty";
+        }
+        if (name_r1_2==null){
+            rec_12 = "room 1-2 : empty";
+        }
+        if (name_r2_1==null){
+            rec_21 = "room 2-1 : empty";
+        }
+        if (name_r2_2==null){
+            rec_22 = "room 2-2 : empty";
+        }
+        if (name_r3_1==null){
+            rec_31 = "room 3-1 : empty";
+        }
+        if (name_r3_2==null){
+            rec_32 = "room 3-2 : empty";
+        }
+        if (name_r4_1==null){
+            rec_41 = "room 4-1 : empty";
+        }
+        if (name_r4_2==null){
+            rec_42 = "room 4-2 : empty";
+        }
+
+        try{
+            //読み込みファイルのインスタンス生成
+            //ファイル名を指定する
+            fi = new FileInputStream("csv/record.csv");
+            is = new InputStreamReader(fi);
+            br = new BufferedReader(is);
+
+
+
+            //読み込み行
+            String line;
+
+            //列名を管理する為の配列
+            String[] arr = null;
+
+            //1行ずつ読み込みを行う
+            //1行目から検索して名前が一致したらパスを確認
+            //一致したら "true" 違えば "false password" を返す
+            int i = 0;
+            while ((line = br.readLine()) != null){
+                if (i == 0){
+//                    System.out.println("line 1");
+                }else{
+                    arr = line.split(",");
+//                    System.out.println(arr[0]);
+
+                    if(name_r1_1!=null&&arr[0].equals(name_r1_1)) {
+                        rec_11 = "room 1-1 : name:"+name_r1_1+", win:"+arr[1]+", lose:"+arr[2]+", draw:"+arr[3]+", rate:"+arr[4];
+                    }else if(name_r1_2!=null&&arr[0].equals(name_r1_2)) {
+                        rec_12 = "room 1-2 : name:"+name_r1_2+", win:"+arr[1]+", lose:"+arr[2]+", draw:"+arr[3]+", rate:"+arr[4];
+                    }else if(name_r2_1!=null&&arr[0].equals(name_r2_1)) {
+                        rec_21 = "room 2-1 : name:"+name_r2_1+", win:"+arr[1]+", lose:"+arr[2]+", draw:"+arr[3]+", rate:"+arr[4];
+                    }else if(name_r2_2!=null&&arr[0].equals(name_r2_2)) {
+                        rec_22 = "room 2-2 : name:"+name_r2_2+", win:"+arr[1]+", lose:"+arr[2]+", draw:"+arr[3]+", rate:"+arr[4];
+                    }else if(name_r3_1!=null&&arr[0].equals(name_r3_1)) {
+                        rec_31 = "room 3-1 : name:"+name_r3_1+", win:"+arr[1]+", lose:"+arr[2]+", draw:"+arr[3]+", rate:"+arr[4];
+                    }else if(name_r3_2!=null&&arr[0].equals(name_r3_2)) {
+                        rec_32 = "room 3-2 : name:"+name_r3_2+", win:"+arr[1]+", lose:"+arr[2]+", draw:"+arr[3]+", rate:"+arr[4];
+                    }else if(name_r4_1!=null&&arr[0].equals(name_r4_1)) {
+                        rec_41 = "room 4-1 : name:"+name_r4_1+", win:"+arr[1]+", lose:"+arr[2]+", draw:"+arr[3]+", rate:"+arr[4];
+                    }else if(name_r4_2!=null&&arr[0].equals(name_r4_2)) {
+                        rec_42 = "room 4-2 : name:"+name_r4_2+", win:"+arr[1]+", lose:"+arr[2]+", draw:"+arr[3]+", rate:"+arr[4];
+                    }
+                }
+                i++;
+            }
+
+
+
+            strList.add(rec_11);
+            strList.add(rec_12);
+            strList.add(rec_21);
+            strList.add(rec_22);
+            strList.add(rec_31);
+            strList.add(rec_32);
+            strList.add(rec_41);
+            strList.add(rec_42);
+
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            try {
+                br.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return strList;
+    }
 
     public static void main(String[] args){
         System.out.println("main start--------------------");
