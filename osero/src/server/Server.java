@@ -599,11 +599,35 @@ public class Server {
         return strList;
     }
 
+    public static void dummy(){
+        Timer time_1 = new Timer();
+        Timer time_2 = new Timer();
+        Timer time_3 = new Timer();
+        Timer time_4 = new Timer();
+        Timer time_5 = new Timer();
+        Timer time_6 = new Timer();
+        Timer time_7 = new Timer();
+        Timer time_8 = new Timer();
+
+        time_1.scheduleAtFixedRate(new Dummy(d_p_1, 1), 100, 1000);
+        time_2.scheduleAtFixedRate(new Dummy(d_p_2, 2), 100, 1000);
+        time_3.scheduleAtFixedRate(new Dummy(d_p_3, 3), 100, 1000);
+        time_4.scheduleAtFixedRate(new Dummy(d_p_4, 4), 100, 1000);
+        time_5.scheduleAtFixedRate(new Dummy(d_p_5, 5), 100, 1000);
+        time_6.scheduleAtFixedRate(new Dummy(d_p_6, 6), 100, 1000);
+        time_7.scheduleAtFixedRate(new Dummy(d_p_7, 7), 100, 1000);
+        time_8.scheduleAtFixedRate(new Dummy(d_p_8, 8), 100, 1000);
+
+
+    }
+
     public static void main(String[] args){
         System.out.println("main start--------------------");
 
 
         connect();
+
+        dummy();
 
         room();
 
