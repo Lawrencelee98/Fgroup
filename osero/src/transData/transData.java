@@ -201,6 +201,26 @@ public class transData implements Serializable{
         this.winner = winner;
         this.loser = loser;
     }
+
+    private boolean draw=false, win=false, lose=false;
+    public void set_endinfo_draw(){
+        this.draw = true;
+    }
+    public void set_endinfo_win(){
+        this.win = true;
+    }
+    public void set_endinfo_lose(){
+        this.lose = true;
+    }
+    public boolean get_endinfo_draw(){
+        return draw;
+    }
+    public boolean get_endinfo_win(){
+        return win;
+    }
+    public boolean get_endinfo_lose(){
+        return lose;
+    }
     // ------------------------battle_end_info
 
     // change_pass---------------------------
