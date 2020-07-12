@@ -60,6 +60,7 @@ public class Login_display extends JFrame implements ActionListener {
 		
 		try{
 			s = new Socket(client.ServerAddress,client.getLoginPort());
+			client.s = s;
 			OutputStream os = s.getOutputStream();
 			oos = new ObjectOutputStream(os);
 			InputStream is = s.getInputStream();
@@ -77,28 +78,23 @@ public class Login_display extends JFrame implements ActionListener {
 
 		//button 新規登録
 		if (e.getSource() == btn[0]) {
-			try {
-				s.close();
-			} catch (IOException e1) {
-				// TODO 自動生成された catch ブロック
-				e1.printStackTrace();
-			}
 			new Register_display("Register", client);
 			this.dispose();
 		}
 
 		//button ログイン
 		if (e.getSource() == btn[1]) {
-			//String username = txt.getText();
-			String username = "usr_1";
+			String username = txt.getText();
+			//String username = "usr_1";
 			char[] password = pwd.getPassword();
-			//String passwordstr = new String(password);
-			String passwordstr = "pass_1";
+			String passwordstr = new String(password);
+			//String passwordstr = "pass_1";
 			System.out.println("username="+username+",password="+passwordstr);
 			boolean flag = client.send_login_info(username, passwordstr, ois, oos);
 			if(flag){
 				//login success
 				client.choose_room(oos, ois);
+				this.dispose();
 				/*try {
 					System.out.println("Login_display:socket close");
 					//s.close();
@@ -133,11 +129,8 @@ public class Login_display extends JFrame implements ActionListener {
 		//button ルール説明
 		if(e.getSource()==btn[3]){
 			new Explain("Explaination", client);
+			this.dispose();
 		}
 	}
 
-	public static void main(String[] args) {
-		Client client2 = new Client();
-		new Login_display("Display-1", client2);
-	}
 }

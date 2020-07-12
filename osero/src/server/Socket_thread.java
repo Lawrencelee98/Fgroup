@@ -48,154 +48,45 @@ public class Socket_thread extends Thread{
             InputStream is = s.getInputStream();
             ObjectInputStream ois = new ObjectInputStream(is);
 
-            while(true){
-                // todo break if login success
-                transData data = (transData) ois.readObject();
-
+            //login data読み込み
+            while(true) {
+	            transData data =(transData)ois.readObject();
+	            if(data instanceof transData) {
+	                //System.out.println("read:"+ss.isBound());
                 int protocol_1 = data.get_protocol();
 
                 // check data is for login?
-                if (protocol_1 == 10) {
-                    // login
-                    if (Server.login(data, os)) {
-                        // login success
+								//M:protocol-10-obj is used for login data
+	                if (protocol_1==10){
+	                    // login
+	                    if (Server.login(data, os)){
+	                        // 認証成功
+	                        // ルーム情報送信
+													//M:protocol-12-obj is used to exchange room info
+	                        transData room_obj = new transData(12);
+	                        room_obj.set_room_info(Server.room_info);
+	                        os.writeObject(room_obj);
+	
+	                        System.out.println("thread [ " + String.valueOf(num) + " ] : room info sent");
+	//                        os.flush();
+	
+	                        // ユーザネーム設定
+	                        this.username = data.get_login_name();
+	                        break;
+	
+	                    }else{
+	                        // 失敗
+	
+	                    }
+	                }else{
+	                    // ログイン用のデータでは無いエラー
+	
+	                }
+	            }else{
 
-//                        System.out.println("thread [ " + String.valueOf(num) + " ] : room info sent");
-//                        os.flush();
-
-                        // name set
-                        this.username = data.get_login_name();
-                        if (num==1){
-                            Server.name_p1 = this.username;
-                        }else if (num==2){
-                            Server.name_p2 = this.username;
-                        }else if (num==3){
-                            Server.name_p3 = this.username;
-                        }else if (num==4){
-                            Server.name_p4 = this.username;
-                        }else if (num==5){
-                            Server.name_p5 = this.username;
-                        }else if (num==6){
-                            Server.name_p6 = this.username;
-                        }else if (num==7){
-                            Server.name_p7 = this.username;
-                        }else if (num==8){
-                            Server.name_p8 = this.username;
-                        }
-
-
-                        break;
-                    } else {
-                        // login fail
-
-                    }
-                } else if (protocol_1 == 20) {
-                    // todo register
-                    if(Server.register(data)){
-                        // register success
-
-                        // name set
-                        this.username = data.get_register_name();
-                        if (num==1){
-                            Server.name_p1 = this.username;
-                        }else if (num==2){
-                            Server.name_p2 = this.username;
-                        }else if (num==3){
-                            Server.name_p3 = this.username;
-                        }else if (num==4){
-                            Server.name_p4 = this.username;
-                        }else if (num==5){
-                            Server.name_p5 = this.username;
-                        }else if (num==6){
-                            Server.name_p6 = this.username;
-                        }else if (num==7){
-                            Server.name_p7 = this.username;
-                        }else if (num==8){
-                            Server.name_p8 = this.username;
-                        }
-
-
-
-                        break;
-                    }else{
-                        // register fail
-
-                    }
-
-
-                } else if (protocol_1 == 37) {
-                    if(Server.change_pass(data)){
-                        // name set
-                        this.username = data.get_change_name();
-                        if (num==1){
-                            Server.name_p1 = this.username;
-                        }else if (num==2){
-                            Server.name_p2 = this.username;
-                        }else if (num==3){
-                            Server.name_p3 = this.username;
-                        }else if (num==4){
-                            Server.name_p4 = this.username;
-                        }else if (num==5){
-                            Server.name_p5 = this.username;
-                        }else if (num==6){
-                            Server.name_p6 = this.username;
-                        }else if (num==7){
-                            Server.name_p7 = this.username;
-                        }else if (num==8){
-                            Server.name_p8 = this.username;
-                        }
-
-                        break;
-                    }else{
-
-                    }
-                }else{
-                    // todo no login and no register data
-
-                }
-
-
+	            }
             }
-            // send room info
-            transData room_obj = new transData(12);
-            room_obj.set_room_info(Server.room_info, Server.get_record());
-            os.writeObject(room_obj);
-
-
-//            transData data =(transData)ois.readObject();
-//            if(data instanceof transData) {
-//                //System.out.println("read:"+ss.isBound());
-//                int protocol_1 = data.get_protocol();
-//
-//                // check data is for login?
-//								//M:protocol-10-obj is used for login data
-//                if (protocol_1==10){
-//                    // login
-//                    if (Server.login(data, os)){
-//                        // 認証成功
-//                        // ルーム情報送信
-//												//M:protocol-12-obj is used to exchange room info
-//                        transData room_obj = new transData(12);
-//                        room_obj.set_room_info(Server.room_info);
-//                        os.writeObject(room_obj);
-//
-//                        System.out.println("thread [ " + String.valueOf(num) + " ] : room info sent");
-////                        os.flush();
-//
-//                        // ユーザネーム設定
-//                        this.username = data.get_login_name();
-//
-//                    }else{
-//                        // 失敗
-//
-//                    }
-//                }else{
-//                    // ログイン用のデータでは無いエラー
-//
-//                }
-//            }else{
-//
-//            }
+            
 
 
             //選択ルーム受信
@@ -226,25 +117,6 @@ public class Socket_thread extends Thread{
                     }else if(num==4){
                         port_send = 10041;
                     }
-
-                    if (num==1){
-                        Server.name_p1 = null;
-                    }else if (num==2){
-                        Server.name_p2 = null;
-                    }else if (num==3){
-                        Server.name_p3 = null;
-                    }else if (num==4){
-                        Server.name_p4 = null;
-                    }else if (num==5){
-                        Server.name_p5 = null;
-                    }else if (num==6){
-                        Server.name_p6 = null;
-                    }else if (num==7){
-                        Server.name_p7 = null;
-                    }else if (num==8){
-                        Server.name_p8 = null;
-                    }
-
                     transData port_send_obj = new transData(85);
                     port_send_obj.set_port_send(port_send);
                     os.writeObject(port_send_obj);
@@ -265,25 +137,6 @@ public class Socket_thread extends Thread{
                     }else if(num==4){
                         port_send = 10042;
                     }
-
-                    if (num==1){
-                        Server.name_p1 = null;
-                    }else if (num==2){
-                        Server.name_p2 = null;
-                    }else if (num==3){
-                        Server.name_p3 = null;
-                    }else if (num==4){
-                        Server.name_p4 = null;
-                    }else if (num==5){
-                        Server.name_p5 = null;
-                    }else if (num==6){
-                        Server.name_p6 = null;
-                    }else if (num==7){
-                        Server.name_p7 = null;
-                    }else if (num==8){
-                        Server.name_p8 = null;
-                    }
-
                     transData port_send_obj = new transData(85);
                     port_send_obj.set_port_send(port_send);
                     os.writeObject(port_send_obj);
@@ -319,8 +172,11 @@ public class Socket_thread extends Thread{
 
 
     public void run() {
-
+//        while (running){
+//            run_inside();
+//        }
         run_inside();
+
 
     }
 }

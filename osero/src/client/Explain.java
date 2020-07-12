@@ -36,6 +36,7 @@ public class Explain extends JFrame implements ActionListener{
 		//onclick
 		if(e.getSource()==btn){
 			new Login_display("Login",client);
+			this.dispose();
 		}
 	}
 }

@@ -66,6 +66,7 @@ public class Room {
 		JButton b32 = null; 
 		JButton b41 = null;
 		JButton b42 = null;
+		JButton CPU_match = null;
 
 		public Display4()	{
 			System.out.println("Display4 method");
@@ -102,8 +103,11 @@ public class Room {
 			setLayout(new BorderLayout());
 			JPanel w = new JPanel();
 			JButton b = new JButton("ログアウト");
+			CPU_match = new JButton("CPU対戦");
+			CPU_match.addActionListener(this);
 			b.addActionListener(this);
 			w.add(b);
+			w.add(CPU_match);
 			add(w, "West");
 			JPanel m = new JPanel();
 			m.setLayout(new BorderLayout());
@@ -267,7 +271,7 @@ public class Room {
 			m.add(p, "Center");
 			add(m, "Center");
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			setSize(800, 600);
+			setSize(1000, 600);
 			setTitle("ルーム選択画面");
 			setVisible(true);
 			
@@ -335,6 +339,8 @@ public class Room {
 					if (room_player[6] == 1) {
 						//new Display5();
 					}
+				}else if(e.getSource()==CPU_match){
+					new Oserov4_cpu();
 				}
 				transData room_choice = new transData(13);
 	            room_choice.set_room_num(room_num);
@@ -355,6 +361,9 @@ public class Room {
 
 			            InputStream is_room = s_room.getInputStream();
 			            ois_room = new ObjectInputStream(is_room);
+			            
+			            client.s.close();
+			            client.s = s_room;
 			            System.out.println("start oserov4");
 			            new Oserov4(client, oos_room, ois_room);
 			            

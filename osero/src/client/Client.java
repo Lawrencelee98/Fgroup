@@ -21,6 +21,7 @@ public class Client {
 	int room_port = 0;
 	private int login_port = 0;
 	
+	Socket s = null;
 	ObjectOutputStream oos = null;
 	ObjectInputStream ois = null;
 	

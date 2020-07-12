@@ -25,7 +25,7 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 	Container c;
 	JLabel l1 = new JLabel("対戦相手"+" vs "+"相手の成績");
 	JLabel l2 = new JLabel("残り時間");
-	JLabel l3 = new JLabel("相手の持ち時間");
+	JLabel l3 = new JLabel("");
 	JLabel l4 = new JLabel("黒の数：白の数");
 	JLabel l5 = new JLabel("あなたの番");
 	JButton b1 = new JButton("設定");
@@ -41,7 +41,7 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 	JButton[] G = new JButton[10];
 	JButton[] H = new JButton[10];
 
-	JLabel chessboard ;
+	JLabel chessboard;
 	JLabel chess;
 	double x = 0;
 	double y = 0;
@@ -53,6 +53,7 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 	//static int your_turn = 0; //自分のターン1, 相手のターン0
 	Client client = null;
 	int count=0;
+	int result=5;
 	
 	transData s_data = new transData(3);
 	
@@ -60,8 +61,10 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 	HashMap<Integer,transData>hash = new HashMap<Integer,transData>();
 	
 	Reciever rec = null;
-	
+	int time_limit=30;
+	Timer_count_down time_count_down= new Timer_count_down(time_limit); ;
 	JFrame j = new JFrame();
+	
 	public Oserov4(Client client, ObjectOutputStream oos, ObjectInputStream ois) {
 		this.client = client;
 		//this.oos = oos;
@@ -85,7 +88,7 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 			j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	
 			JLayeredPane lp = new JLayeredPane();
-	
+			
 			ImageIcon img = new ImageIcon(getClass().getResource("frame.jpg"));
 			chessboard= new JLabel();
 			chessboard.setIcon(img);
@@ -105,7 +108,23 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 			b1.addActionListener(this);
 			b2.setBounds(380,500,100,30);
 			int buttonSize =46, i=0;
-	
+			
+			Timer chess_number_count = new Timer();
+			chess_number_count.schedule(new TimerTask(){
+			
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					l4.setText("Black:"+String.valueOf(map.countNumber(0))+"vs"+"White:"+String.valueOf(map.countNumber(1)));
+					if(client.your_turn==1){
+						l5.setText("あなたの番");
+					}
+					else{
+						l5.setText("相手の番");
+					}
+				}
+			},100,100);
+
 			for(i=0;i<8;i++) {
 				A[i]=new JButton();
 	
@@ -190,7 +209,7 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 			j.setResizable(false);
 			map.initMap();
 			map.castToBoard();
-			
+			time_count_down.start();
 			//data exchange
 			transData r_data = null;
 			try {
@@ -226,7 +245,7 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 						client.turn = 1;
 						client.your_turn = 0;
 						//client.BattleReceiver(map);
-						rec = new Reciever(client, map, client.ois);
+						rec = new Reciever(client, map, client.ois, client.oos);
 						count++;
 						System.out.println("re12");
 						rec.start();
@@ -243,25 +262,23 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 			}finally  {
 			
 			}
+		
 		}
+		
 		
 		public void actionPerformed(ActionEvent e) {
 			/*
 			if(e.getSource()==A[0]) {
 				System.out.println("A[0]");
 				try {
-
 					Socket s = new Socket("localhost",10301);
-
 					OutputStream os = s.getOutputStream();
 					ObjectOutputStream oos = new ObjectOutputStream(os);
-
 					transData data =new transData(0,0);
 					//hash.put(3,data);
 					oos.writeObject(data);
 					oos.close();
 					s.close();
-
 				}catch(Exception erro) {erro.printStackTrace();}
 			}
 		*/
@@ -273,12 +290,13 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 			}
 			if(e.getSource()==b1) {
 				System.out.println("open new window");
-				//osero_setting = new Osero_setting(this);
+				new Osero_setting(chessboard);
 
 			}
 
 			try {
 				if(client.your_turn ==  1) {
+					
 					for(int i=0; i<8;i++) {
 						if(e.getSource()==A[i]) {
 							map.updateMap(i, 0,client.turn);
@@ -287,6 +305,8 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 							s_data.set_row(i);
 							
 							map.checkMap(client.turn);
+							time_count_down.reset();
+							
 						}
 						else if(e.getSource()==B[i]) {
 							map.updateMap(i, 1,client.turn);
@@ -295,6 +315,8 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 							s_data.set_row(i);
 							
 							map.checkMap(client.turn);
+							time_count_down.reset();
+							
 						}
 						else if(e.getSource()==C[i]) {
 							map.updateMap(i, 2,client.turn);
@@ -303,6 +325,8 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 							s_data.set_row(i);
 							
 							map.checkMap(client.turn);
+							time_count_down.reset();
+							
 						}
 						else if(e.getSource()==D[i]) {
 							map.updateMap(i, 3,client.turn);
@@ -311,6 +335,8 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 							s_data.set_row(i);
 							
 							map.checkMap(client.turn);
+							time_count_down.reset();
+							
 						}
 						else if(e.getSource()==E[i]) {
 							map.updateMap(i, 4,client.turn);
@@ -319,6 +345,8 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 							s_data.set_row(i);
 			
 							map.checkMap(client.turn);
+							time_count_down.reset();
+							
 						}
 						else if(e.getSource()==F[i]) {
 							map.updateMap(i, 5,client.turn);
@@ -327,6 +355,8 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 							s_data.set_row(i);
 
 							map.checkMap(client.turn);
+							time_count_down.reset();
+							
 						}
 						else if(e.getSource()==G[i]) {
 							map.updateMap(i, 6,client.turn);
@@ -335,6 +365,8 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 							s_data.set_row(i);
 
 							map.checkMap(client.turn);
+							time_count_down.reset();
+							
 						}
 						else if(e.getSource()==H[i]) {
 							map.updateMap(i, 7,client.turn);
@@ -343,6 +375,27 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 							s_data.set_row(i);
 
 							map.checkMap(client.turn);
+							time_count_down.reset();
+							
+						}
+						//終了判定
+						if(map.isGameFinish() != 3) {
+							new Result(map.isGameFinish());
+							
+							try {
+								client.s.close();
+								client.setLoginPort(client.FirstConnect(client.ServerAddress, client.first_port));
+								Socket s = new Socket(client.ServerAddress,client.getLoginPort());
+								client.s = s;
+								OutputStream os = s.getOutputStream();
+								ObjectOutputStream oos = new ObjectOutputStream(os);
+								InputStream is = s.getInputStream();
+								ObjectInputStream ois = new ObjectInputStream(is);
+								client.choose_room(oos, ois);
+							} catch (IOException e1) {
+								// TODO 自動生成された catch ブロック
+								e1.printStackTrace();
+							}
 						}
 						
 					}
@@ -354,13 +407,17 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 					client.your_turn = 0;	
 					//client.BattleReceiver(map);
 					if(count==0) {
-						rec = new Reciever(client, map, client.ois);
+						rec = new Reciever(client, map, client.ois, client.oos);
 						rec.start();
 						count++;
+						time_count_down.reset();
 					}else {
-						rec = new Reciever(client, map, client.ois);
+						rec = new Reciever(client, map, client.ois, client.oos);
 						rec.start();
+						time_count_down.reset();
 					}
+					
+					
 					
 				}
 
@@ -370,6 +427,7 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 			catch(Exception erro) {
 				erro.printStackTrace();
 			}finally {
+				
 			}
 		}
 		
@@ -444,6 +502,10 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 			this.l = 8;
 		}
 
+		public void timeupdater(){
+			time_count_down.reset();
+		}
+		
 		public void initMap() {
 			for(int i=0;i<8;i++) {
 				Arrays.fill(map[i], 3);//空白で埋める
@@ -787,17 +849,31 @@ public class Oserov4 /*extends JFrame implements ActionListener*/{
 		}//castToBoard 将棋子投射到棋盘上
 	}
 
-	class Iner_Thread extends Thread{
-		Oserov4 osero;
-		Iner_Thread(Oserov4 osero){
-			this.osero = osero;
-		}
-		@Override
-		public void run() {
-			new Osero_setting(osero);
-		}
+class Timer_count_down extends Thread {
+	int time_limit;
+	int time;
+	Timer_count_down(int time_limit){
+		this.time_limit = time_limit;
 	}
-
+	public void run(){
+		time = time_limit;
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask(){
+		@Override
+			public void run(){
+				time = time - 1;
+			l2.setText("Left time: " + String.valueOf(time));
+			if (time_limit == 0) {
+				System.out.println("Time out");
+				this.cancel();
+			}
+			}
+		},0,1000);
+	}
+	public void reset(){
+		time = time_limit;
+	}
+}
 } //Oserov4
 
 

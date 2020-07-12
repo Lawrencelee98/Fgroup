@@ -1,32 +1,31 @@
 package server;
-
 import java.io.*;
 import java.net.*;
 import java.util.*;
-
 import transData.*;
 
-public class Room_server extends Thread {
+public class Room_server extends Thread{
     private boolean running = true;
 
     private int port_1, port_2, room_num;
 
-    public Room_server(int port_1, int port_2, int room_num) {
+    public Room_server(int port_1, int port_2, int room_num){
         this.port_1 = port_1;
         this.port_2 = port_2;
         this.room_num = room_num;
     }
 
 
-    public void run_inside() {
+    public void run_inside(){
 
     }
+
 
 
     public void run() {
         System.out.println("Room [ " + String.valueOf(room_num) + " ] is running");
 
-        try {
+        try{
             ServerSocket ss_1 = new ServerSocket(port_1);
             ServerSocket ss_2 = new ServerSocket(port_2);
 
@@ -35,6 +34,7 @@ public class Room_server extends Thread {
             System.out.println("Room [ " + String.valueOf(room_num) + " ] : socket [1] accept");
             Socket s_2 = ss_2.accept();
             System.out.println("Room [ " + String.valueOf(room_num) + " ] : socket [2] accept");
+
 
 
             //  入出力ストリーム 1
@@ -56,43 +56,41 @@ public class Room_server extends Thread {
 
             boolean battle_end = true;
 
-            if (first_turn == 1) {
+            if (first_turn==1){
                 // 1 が先手の場合
-                transData start = new transData(1000);
-                os_1.writeObject(start);
-                transData koukou = new transData(1200);
-                os_2.writeObject(koukou);
-                os_2.flush();
-                System.out.println("send --start-- to player1");
+								transData start = new transData(1000);
+								os_1.writeObject(start);
+								transData koukou = new transData(1200);
+								os_2.writeObject(koukou);
+								os_2.flush();
+								System.out.println("send --start-- to player1");
 
-
-                while (battle_end) {
-                    transData data_1 = (transData) ois_1.readObject();
-                    System.out.println("read Object");
-                    System.out.println(data_1.get_protocol());
-                    if (data_1 instanceof transData) {
-                        if (data_1.get_protocol() == 3) {
+								
+                while(battle_end){
+                    transData data_1 =(transData)ois_1.readObject();
+										System.out.println("read Object");
+										System.out.println(data_1.get_protocol());
+                    if(data_1 instanceof transData) {
+                        if (data_1.get_protocol()==3 || data_1.get_protocol()==3000){
                             os_2.writeObject(data_1);
-                            System.out.println("send Object to 2");
-                        } else if (data_1.get_protocol() == 50) {
+														System.out.println("send Object to 2");
+                        }else if(data_1.get_protocol()==50){
                             battle_end = data_1.get_battle_end();
 
                             Server.update_record();
                         }
                     }
 
-                    if (!battle_end) {
-                        break;
-                    }
+                    if (!battle_end) {break;}
 
-                    //	os_2.writeObject(start);
-                    //System.out.println("send --start-- to player2");
-                    transData data_2 = (transData) ois_2.readObject();
-                    if (data_2 instanceof transData) {
-                        if (data_2.get_protocol() == 3) {
+									//	os_2.writeObject(start);
+										//System.out.println("send --start-- to player2");
+                    transData data_2 =(transData)ois_2.readObject();
+                    if(data_2 instanceof transData) {
+                        if (data_2.get_protocol()==3 || data_1.get_protocol()==3000){
                             os_1.writeObject(data_2);
-                            System.out.println("send Object to 1");
-                        } else if (data_2.get_protocol() == 50) {
+														System.out.println("send Object to 1");
+                        }else if(data_2.get_protocol()==50){
                             battle_end = data_2.get_battle_end();
 
                             Server.update_record();
@@ -102,16 +100,14 @@ public class Room_server extends Thread {
                 }
 
 
-
-
-            } else {
+            }else{
                 // 2 が先手の場合
-                while (battle_end) {
-                    transData data_2 = (transData) ois_2.readObject();
-                    if (data_2 instanceof transData) {
-                        if (data_2.get_protocol() == 3) {
+                while(battle_end){
+                    transData data_2 =(transData)ois_2.readObject();
+                    if(data_2 instanceof transData) {
+                        if (data_2.get_protocol()==3){
                             os_1.writeObject(data_2);
-                        } else if (data_2.get_protocol() == 50) {
+                        }else if(data_2.get_protocol()==50){
                             battle_end = data_2.get_battle_end();
 
                             Server.update_record();
@@ -120,11 +116,11 @@ public class Room_server extends Thread {
 
                     if (battle_end) break;
 
-                    transData data_1 = (transData) ois_1.readObject();
-                    if (data_1 instanceof transData) {
-                        if (data_1.get_protocol() == 3) {
+                    transData data_1 =(transData)ois_1.readObject();
+                    if(data_1 instanceof transData) {
+                        if (data_1.get_protocol()==3){
                             os_1.writeObject(data_1);
-                        } else if (data_1.get_protocol() == 50) {
+                        }else if(data_1.get_protocol()==50){
                             battle_end = data_1.get_battle_end();
 
                             Server.update_record();
@@ -135,14 +131,12 @@ public class Room_server extends Thread {
 
             }
 
-            // 戦績更新
-            transData end = (transData) ois_1.readObject();
-            Server.update_record(end);
 
 
-        } catch (Exception e) {
+
+        }catch (Exception e) {
             e.printStackTrace();
-        } finally {
+        }finally {
 
         }
 
