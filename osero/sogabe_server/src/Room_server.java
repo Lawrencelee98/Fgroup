@@ -120,14 +120,8 @@ public class Room_server extends Thread{
 //                            Server.update_record();
                         }
                     }
-
                 }
-
             }
-
-
-
-
         }catch (Exception e) {
             e.printStackTrace();
         }finally {
