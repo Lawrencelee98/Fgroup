@@ -10,8 +10,10 @@ import transData.*;
 public class Result extends JFrame {
     JLabel l = new JLabel("");
     Client client = null;
-    public Result(int result, Client client) {
-    	this.client = client;
+    Oserov4.Display display;
+    public Result(int result, Client client, Oserov4.Display display) {
+        this.client = client;
+        this.display = display;
         switch (result) {
             case 0:
                 l.setText("白の勝ち");
@@ -21,7 +23,8 @@ public class Result extends JFrame {
                 l.setText("引き分け");
         }
         try {
-			client.s.close();
+            display.dispose();
+            client.s.close();
 			client.setLoginPort(client.FirstConnect(client.ServerAddress, client.first_port));
 			Socket s = new Socket(client.ServerAddress,client.getLoginPort());
 			client.s = s;

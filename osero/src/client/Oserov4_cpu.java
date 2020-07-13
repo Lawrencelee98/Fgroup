@@ -28,7 +28,7 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
     JLabel l4 = new JLabel("黒の数：白の数");
     JLabel l5 = new JLabel("あなたの番");
     JButton b1 = new JButton("設定");
-    JButton b2 = new JButton("終了");
+    
 
     JButton[] A = new JButton[10];
     JButton[] B = new JButton[10];
@@ -50,6 +50,7 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
     Osero_setting_cpu osero_setting;
     ImageIcon iconB = new ImageIcon(getClass().getResource("00Black.jpg"));
     ImageIcon iconW = new ImageIcon(getClass().getResource("00White.jpg"));
+    ImageIcon iconG = new ImageIcon(getClass().getResource("green.jpg"));
     static int turn = 0;// 初始化先手 黑色为0 白色为1
     Map map = new Map();
     HashMap<Integer, transData> hash = new HashMap<Integer, transData>();
@@ -83,7 +84,7 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
         l5.setBounds(50, 500, 100, 30);
         b1.setBounds(200, 500, 100, 30);
         b1.addActionListener(this);
-        b2.setBounds(380, 500, 100, 30);
+    
         int buttonSize = 46;
         time_count_down.start();
         // Timer
@@ -172,7 +173,7 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
         c.add(l4);
         c.add(l5);
         c.add(b1);
-        c.add(b2);
+       
         j.getLayeredPane().add(chessboard, 100);
 
         for (int i = 0; i < 8; i++) {
@@ -603,6 +604,9 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                             osero.A[j].setIcon(iconB);
                             osero.A[j].setOpaque(true);
                         }
+                        else if(map[j][i]==2){
+							H[j].setIcon(iconG);
+						}
                     }
                 } else if (i == 1) {
                     for (int j = 0; j < 8; j++) {
@@ -613,6 +617,9 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                             osero.B[j].setIcon(iconB);
                             osero.B[j].setOpaque(true);
                         }
+                        else if(map[j][i]==2){
+							H[j].setIcon(iconG);
+						}
                     }
                 } else if (i == 2) {
                     for (int j = 0; j < 8; j++) {
@@ -623,6 +630,9 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                             osero.C[j].setIcon(iconB);
                             osero.C[j].setOpaque(true);
                         }
+                        else if(map[j][i]==2){
+							H[j].setIcon(iconG);
+						}
                     }
                 } else if (i == 3) {
                     for (int j = 0; j < 8; j++) {
@@ -633,6 +643,9 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                             osero.D[j].setIcon(iconB);
                             osero.D[j].setOpaque(true);
                         }
+                        else if(map[j][i]==2){
+							H[j].setIcon(iconG);
+						}
                     }
                 } else if (i == 4) {
                     for (int j = 0; j < 8; j++) {
@@ -643,6 +656,9 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                             osero.E[j].setIcon(iconB);
                             osero.E[j].setOpaque(true);
                         }
+                        else if(map[j][i]==2){
+							H[j].setIcon(iconG);
+						}
                     }
                 } else if (i == 5) {
                     for (int j = 0; j < 8; j++) {
@@ -653,6 +669,9 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                             osero.F[j].setIcon(iconB);
                             osero.F[j].setOpaque(true);
                         }
+                        else if(map[j][i]==2){
+							H[j].setIcon(iconG);
+						}
                     }
                 } else if (i == 6) {
                     for (int j = 0; j < 8; j++) {
@@ -663,6 +682,9 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                             osero.G[j].setIcon(iconB);
                             osero.G[j].setOpaque(true);
                         }
+                        else if(map[j][i]==2){
+							H[j].setIcon(iconG);
+						}
                     }
                 } else if (i == 7) {
                     for (int j = 0; j < 8; j++) {
@@ -673,6 +695,9 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                             osero.H[j].setIcon(iconB);
                             osero.H[j].setOpaque(true);
                         }
+                        else if(map[j][i]==2){
+							H[j].setIcon(iconG);
+						}
                     }
                 }
             } // for
