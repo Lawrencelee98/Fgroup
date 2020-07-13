@@ -1,8 +1,28 @@
 # Fgroup
-click the Fork button on the up-right side of this page
+7.13更新ローグ：
 
-upload your code files, choose your own branch, and please don't commit to the master branch
+サーバ
 
-utill the respository's ower comfirmed the commit, it will not be shown.
+・時間制限機能
 
-Another point that should be aware of is when you commit your changes, please add some particular explainations for it, it gonna be easy to see what changes you do the the project!
+・タイマーの話し合いの部分
+
+（・ダミーデータの送受信）
+
+クライアント
+
+・（完成）おけるところの色を変える　→　リー
+
+・置けないところに置けないようにする　→　さいのう
+
+（・パスワード変更機能）
+
+・（完成）タイマー切れの判定　→　やろう
+
+・終了判定部分（ソケットの切り替え）→松本
+
+・タイマーの話し合い部分　→　やろう
+
+（・ダミーデータの送受信） （編集済み） 
+
+・ルームに入って一人だったらCPU戦を開始する  →　松本 （編集済み）
