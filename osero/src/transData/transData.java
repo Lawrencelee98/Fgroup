@@ -182,25 +182,44 @@ public class transData implements Serializable{
     // battle_end_info------------------------
     // client ---> server
     // protocol = 36
-    private String winner, loser;
-    boolean draw_flag = false; // if the battle end with draw ---> true
-    public String get_winner(){
-        return winner;
+//    private String winner, loser;
+//    boolean draw_flag = false; // if the battle end with draw ---> true
+//    public String get_winner(){
+//        return winner;
+//    }
+//    public String get_loser(){
+//        return loser;
+//    }
+//    public boolean get_draw_flag(){
+//        return draw_flag;
+//    }
+//    public void set_draw_result(String winner, String loser){
+//        this.draw_flag = true;
+//        this.winner = winner;
+//        this.loser = loser;
+//    }
+//    public void set_no_draw_result(String winner, String loser){
+//        this.winner = winner;
+//        this.loser = loser;
+//    }
+    private boolean draw=false, win=false, lose=false;
+    public void set_endinfo_draw(){
+        this.draw = true;
     }
-    public String get_loser(){
-        return loser;
+    public void set_endinfo_win(){
+        this.win = true;
     }
-    public boolean get_draw_flag(){
-        return draw_flag;
+    public void set_endinfo_lose(){
+        this.lose = true;
     }
-    public void set_draw_result(String winner, String loser){
-        this.draw_flag = true;
-        this.winner = winner;
-        this.loser = loser;
+    public boolean get_endinfo_draw(){
+        return draw;
     }
-    public void set_no_draw_result(String winner, String loser){
-        this.winner = winner;
-        this.loser = loser;
+    public boolean get_endinfo_win(){
+        return win;
+    }
+    public boolean get_endinfo_lose(){
+        return lose;
     }
     // ------------------------battle_end_info
 
@@ -221,26 +240,6 @@ public class transData implements Serializable{
         this.change_name = change_name;
         this.change_pass = change_pass;
         this.change_question = change_question;
-    }
-
-    private boolean draw=false, win=false, lose=false;
-    public void set_endinfo_draw(){
-        this.draw = true;
-    }
-    public void set_endinfo_win(){
-        this.win = true;
-    }
-    public void set_endinfo_lose(){
-        this.lose = true;
-    }
-    public boolean get_endinfo_draw(){
-        return draw;
-    }
-    public boolean get_endinfo_win(){
-        return win;
-    }
-    public boolean get_endinfo_lose(){
-        return lose;
     }
     // ---------------------------change_pass
 }
