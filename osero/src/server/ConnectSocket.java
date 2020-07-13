@@ -1,7 +1,4 @@
 package server;
-
-//Matsumoto coding
-//package server;
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -11,7 +8,7 @@ public class ConnectSocket extends Thread{
     private boolean running = true;
 
     private int port;
-		int port_send = 10100;
+    int port_send = 10100;
 
     public ConnectSocket(int port){
         this.port = port;
@@ -36,9 +33,9 @@ public class ConnectSocket extends Thread{
             InputStream is = s.getInputStream();
             ObjectInputStream ois = new ObjectInputStream(is);
 
-						transData port_send_obj = new transData(85);
- 				 		port_send_obj.set_port_send(port_send);
- 					 	os.writeObject(port_send_obj);
+            transData port_send_obj = new transData(85);
+            port_send_obj.set_port_send(port_send);
+            os.writeObject(port_send_obj);
 
         }catch(Exception e) {
             e.printStackTrace();
@@ -54,16 +51,19 @@ public class ConnectSocket extends Thread{
             } catch (IOException e) {
                 e.printStackTrace();
             }
-						port_send = port_send + 100;
-						if(port_send > 10800){
-							port_send = 10100;
-						}
-						run_inside();
+            port_send = port_send + 100;
+            if(port_send > 10800){
+                port_send = 10100;
+            }
+            run_inside();
         }
     }
 
 
     public void run() {
+//        while (running){
+//            run_inside();
+//        }
         run_inside();
     }
 }

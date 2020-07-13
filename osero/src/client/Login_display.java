@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.io.*;
 import java.util.*;
 import java.net.*;
+import transData.*;
 
 public class Login_display extends JFrame implements ActionListener {
 	static final long serialVersionUID = 1;
@@ -64,6 +65,8 @@ public class Login_display extends JFrame implements ActionListener {
 			oos = new ObjectOutputStream(os);
 			InputStream is = s.getInputStream();
 			ois = new ObjectInputStream(is);
+			client.ois = ois;
+			client.oos = oos;
 		}catch(Exception se) {
 			System.out.println("Error(Login_display):Socket error");
 			se.printStackTrace();
