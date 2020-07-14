@@ -20,6 +20,7 @@ public class transData implements Serializable{
     1000 : your turn notice
 
     client ---> server ---> client
+    2 : time_choice
     3 : board_info
 
     share between server and client
@@ -50,7 +51,17 @@ public class transData implements Serializable{
     // protocol = 35
     // ----------------------dummy
 
-
+    // time_choice------------------------
+    // client ---> server ---> client
+    // protocol = 2
+    private int time_choice=10; // sec
+    public int get_time_choice(){
+        return time_choice;
+    }
+    public void set_time_choice(int time_choice){
+        this.time_choice = time_choice;
+    }
+    // ------------------------time_choice
 
     // board_info--------------------------
     // client ---> server ---> client
