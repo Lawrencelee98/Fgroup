@@ -8,6 +8,8 @@ public class Room_server extends Thread{
 
     private int port_1, port_2, room_num;
 
+    private String name_p1, name_p2;
+
     public Room_server(int port_1, int port_2, int room_num){
         this.port_1 = port_1;
         this.port_2 = port_2;
@@ -37,6 +39,18 @@ public class Room_server extends Thread{
 
             s_1 = ss_1.accept();
             System.out.println("Room [ " + String.valueOf(room_num) + " ] : socket [1] accept");
+
+            // set name
+            if(room_num==1){
+                name_p1 = Server.name_r1_1;
+            }else if(room_num==2){
+                name_p1 = Server.name_r2_1;
+            }else if(room_num==3){
+                name_p1 = Server.name_r3_1;
+            }else if(room_num==4){
+                name_p1 = Server.name_r4_1;
+            }
+
             //  入出力ストリーム 1
             ObjectOutputStream os_1 = new ObjectOutputStream(s_1.getOutputStream());
             InputStream is_1 = s_1.getInputStream();
@@ -45,6 +59,18 @@ public class Room_server extends Thread{
 
             s_2 = ss_2.accept();
             System.out.println("Room [ " + String.valueOf(room_num) + " ] : socket [2] accept");
+
+            // set name
+            if(room_num==1){
+                name_p2 = Server.name_r1_2;
+            }else if(room_num==2){
+                name_p2 = Server.name_r2_2;
+            }else if(room_num==3){
+                name_p2 = Server.name_r3_2;
+            }else if(room_num==4){
+                name_p2 = Server.name_r4_2;
+            }
+
             //  入出力ストリーム 2
             ObjectOutputStream os_2 = new ObjectOutputStream(s_2.getOutputStream());
             InputStream is_2 = s_2.getInputStream();
@@ -129,6 +155,24 @@ public class Room_server extends Thread{
                     }
                 }
             }
+
+            //対戦記録更新
+            transData end_info =(transData)ois_1.readObject();
+            transData temp_end_info = new transData(36);
+            if (end_info.get_protocol()==36){
+                if(end_info.get_endinfo_draw()){
+                    temp_end_info.set_draw_result(name_p1, name_p2);
+
+                }else if (end_info.get_endinfo_win()){
+                    temp_end_info.set_no_draw_result(name_p1, name_p2);
+
+                }else if (end_info.get_endinfo_lose()){
+                    temp_end_info.set_no_draw_result(name_p1, name_p2);
+
+                }
+            }
+            Server.update_record(temp_end_info);
+
         }catch (Exception e) {
             e.printStackTrace();
         }finally {
