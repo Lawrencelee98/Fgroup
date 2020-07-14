@@ -182,26 +182,26 @@ public class transData implements Serializable{
     // battle_end_info------------------------
     // client ---> server
     // protocol = 36
-//    private String winner, loser;
-//    boolean draw_flag = false; // if the battle end with draw ---> true
-//    public String get_winner(){
-//        return winner;
-//    }
-//    public String get_loser(){
-//        return loser;
-//    }
-//    public boolean get_draw_flag(){
-//        return draw_flag;
-//    }
-//    public void set_draw_result(String winner, String loser){
-//        this.draw_flag = true;
-//        this.winner = winner;
-//        this.loser = loser;
-//    }
-//    public void set_no_draw_result(String winner, String loser){
-//        this.winner = winner;
-//        this.loser = loser;
-//    }
+    private String winner, loser;
+    boolean draw_flag = false; // if the battle end with draw ---> true
+    public String get_winner(){
+        return winner;
+    }
+    public String get_loser(){
+        return loser;
+    }
+    public boolean get_draw_flag(){
+        return draw_flag;
+    }
+    public void set_draw_result(String winner, String loser){
+        this.draw_flag = true;
+        this.winner = winner;
+        this.loser = loser;
+    }
+    public void set_no_draw_result(String winner, String loser){
+        this.winner = winner;
+        this.loser = loser;
+    }
     private boolean draw=false, win=false, lose=false;
     public void set_endinfo_draw(){
         this.draw = true;
