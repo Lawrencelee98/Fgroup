@@ -126,12 +126,20 @@ public class Room_server extends Thread{
         }catch (Exception e) {
             e.printStackTrace();
         }finally {
+            try{
+                if (s_1!=null) s_1.close();
+                if (s_2!=null) s_2.close();
 
+
+                if (ss_1!=null) ss_1.close();
+                if (ss_2!=null) ss_2.close();
+
+                System.out.println("Room [ " + String.valueOf(room_num) + " ] : socket close");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            System.out.println("Room [ " + String.valueOf(room_num) + " ] is finished");
+            run();
         }
-
-
-//        while (running){
-//            run_inside();
-//        }
     }
 }
