@@ -290,7 +290,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 				if (client.your_turn == 1) {
 
 					for (int i = 0; i < 8; i++) {
-						if (e.getSource() == A[i]) {
+						if (e.getSource() == A[i] && map.getMapValue(i, 0) == 2) {
 							map.updateMap(i, 0, client.turn);
 							map.castToBoard();
 							s_data.set_line(0);
@@ -299,7 +299,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 							map.checkMap(client.turn);
 							time_count_down.reset();
 
-						} else if (e.getSource() == B[i]) {
+						} else if (e.getSource() == B[i] && map.getMapValue(i, 1) == 2) {
 							map.updateMap(i, 1, client.turn);
 							map.castToBoard();
 							s_data.set_line(1);
@@ -308,7 +308,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 							map.checkMap(client.turn);
 							time_count_down.reset();
 
-						} else if (e.getSource() == C[i]) {
+						} else if (e.getSource() == C[i] && map.getMapValue(i, 2) == 2) {
 							map.updateMap(i, 2, client.turn);
 							map.castToBoard();
 							s_data.set_line(2);
@@ -317,7 +317,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 							map.checkMap(client.turn);
 							time_count_down.reset();
 
-						} else if (e.getSource() == D[i]) {
+						} else if (e.getSource() == D[i] && map.getMapValue(i, 3) == 2) {
 							map.updateMap(i, 3, client.turn);
 							map.castToBoard();
 							s_data.set_line(3);
@@ -326,7 +326,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 							map.checkMap(client.turn);
 							time_count_down.reset();
 
-						} else if (e.getSource() == E[i]) {
+						} else if (e.getSource() == E[i] && map.getMapValue(i, 4) == 2) {
 							map.updateMap(i, 4, client.turn);
 							map.castToBoard();
 							s_data.set_line(4);
@@ -335,7 +335,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 							map.checkMap(client.turn);
 							time_count_down.reset();
 
-						} else if (e.getSource() == F[i]) {
+						} else if (e.getSource() == F[i] && map.getMapValue(i, 5) == 2) {
 							map.updateMap(i, 5, client.turn);
 							map.castToBoard();
 							s_data.set_line(5);
@@ -344,7 +344,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 							map.checkMap(client.turn);
 							time_count_down.reset();
 
-						} else if (e.getSource() == G[i]) {
+						} else if (e.getSource() == G[i] && map.getMapValue(i, 6) == 2) {
 							map.updateMap(i, 6, client.turn);
 							map.castToBoard();
 							s_data.set_line(6);
@@ -353,7 +353,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 							map.checkMap(client.turn);
 							time_count_down.reset();
 
-						} else if (e.getSource() == H[i]) {
+						} else if (e.getSource() == H[i] && map.getMapValue(i, 7) == 2) {
 							map.updateMap(i, 7, client.turn);
 							map.castToBoard();
 							s_data.set_line(7);
@@ -488,6 +488,10 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 			// 先手が黒なので黒に対する”置ける場所”を探索する
 			checkMap(0);
 			printMap(0);
+		}
+
+		public int getMapValue(int r, int l) {
+			return map[r][l];
 		}
 
 		public void printSign(int p) {
