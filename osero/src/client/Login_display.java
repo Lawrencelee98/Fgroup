@@ -92,11 +92,11 @@ public class Login_display extends JFrame implements ActionListener {
 
 		//button ログイン
 		if (e.getSource() == btn[1]) {
-			//String username = txt.getText();
-			String username = "usr_1";
+			String username = txt.getText();
+			//String username = "usr_1";
 			char[] password = pwd.getPassword();
-			//String passwordstr = new String(password);
-			String passwordstr = "pass_1";
+			String passwordstr = new String(password);
+			//String passwordstr = "pass_1";
 			System.out.println("username="+username+",password="+passwordstr);
 			boolean flag = client.send_login_info(username, passwordstr, ois, oos);
 			if(flag){

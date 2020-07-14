@@ -458,7 +458,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		// new Oserov4();
+		// Oserov4();
 	}
 
 	public class Ban {
@@ -732,7 +732,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 							A[j].setIcon(iconB);
 							A[j].setOpaque(true);
 						} else if (map[j][i] == 2) {
-							H[j].setIcon(iconG);
+							A[j].setIcon(iconG);
 						}
 					}
 				} else if (i == 1) {
@@ -744,7 +744,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 							B[j].setIcon(iconB);
 							B[j].setOpaque(true);
 						} else if (map[j][i] == 2) {
-							H[j].setIcon(iconG);
+							B[j].setIcon(iconG);
 						}
 					}
 				} else if (i == 2) {
@@ -756,7 +756,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 							C[j].setIcon(iconB);
 							C[j].setOpaque(true);
 						} else if (map[j][i] == 2) {
-							H[j].setIcon(iconG);
+							C[j].setIcon(iconG);
 						}
 					}
 				} else if (i == 3) {
@@ -768,7 +768,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 							D[j].setIcon(iconB);
 							D[j].setOpaque(true);
 						} else if (map[j][i] == 2) {
-							H[j].setIcon(iconG);
+							D[j].setIcon(iconG);
 						}
 					}
 				} else if (i == 4) {
@@ -780,7 +780,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 							E[j].setIcon(iconB);
 							E[j].setOpaque(true);
 						} else if (map[j][i] == 2) {
-							H[j].setIcon(iconG);
+							E[j].setIcon(iconG);
 						}
 					}
 				} else if (i == 5) {
@@ -792,7 +792,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 							F[j].setIcon(iconB);
 							F[j].setOpaque(true);
 						} else if (map[j][i] == 2) {
-							H[j].setIcon(iconG);
+							F[j].setIcon(iconG);
 						}
 					}
 				} else if (i == 6) {
@@ -804,7 +804,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 							G[j].setIcon(iconB);
 							G[j].setOpaque(true);
 						} else if (map[j][i] == 2) {
-							H[j].setIcon(iconG);
+							G[j].setIcon(iconG);
 						}
 					}
 				} else if (i == 7) {
@@ -816,7 +816,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 							H[j].setIcon(iconB);
 							H[j].setOpaque(true);
 						} else if (map[j][i] == 2) {
-							H[j].setIcon(iconG);
+							A[j].setIcon(iconG);
 						}
 					}
 				}

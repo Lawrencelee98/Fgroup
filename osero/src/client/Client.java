@@ -78,7 +78,8 @@ public class Client {
 					oos.writeObject(user);
 					transData answer = (transData)ois.readObject();
 					String ans = answer.get_login_answer();
-					if (ans.equals("login success")){
+					System.out.println("read info from server"+ans);
+					if (ans.equals("login succeed")){
 							// todo
 							System.out.println("receive login success");
 							flag = true;
