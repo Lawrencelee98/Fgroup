@@ -3,6 +3,7 @@ import java.io.Serializable;
 import java.util.*;
 
 public class transData implements Serializable{
+
     /*
     client ---> server
     10 : login
@@ -26,7 +27,6 @@ public class transData implements Serializable{
     35 : dummy
     */
 
-
     private static final long serialVersionUID = 1L;
 
     int protocol=3;
@@ -37,7 +37,6 @@ public class transData implements Serializable{
     public int get_protocol() {
         return protocol;
     }
-
     public void set_protocol(int p){
         this.protocol = p;
     }
@@ -52,7 +51,7 @@ public class transData implements Serializable{
 
 
 
-    // board_info--------------------------
+    // board info--------------------------
     // client ---> server ---> client
     // protocol = 3
     private int row=-1;
@@ -69,7 +68,7 @@ public class transData implements Serializable{
     public void set_line(int line){
         this.line = line;
     }
-    // --------------------------board_info
+    // --------------------------board info
 
 
     // battle end---------------------------
@@ -89,11 +88,16 @@ public class transData implements Serializable{
     // protocol = 12
     // room_info
     private Map<Integer,Integer> room_info = new HashMap<Integer, Integer>();
-    public Map<Integer, Integer> get_room_info(){
+    private List<String> players_info;
+    public Map get_room_info(){
         return room_info;
     }
-    public void set_room_info(Map<Integer, Integer> room_info){
+    public List get_players_info(){
+        return players_info;
+    }
+    public void set_room_info(Map room_info, List players_info){
         this.room_info = room_info;
+        this.players_info = players_info;
     }
     // ------------------------------room_info
 
@@ -161,47 +165,43 @@ public class transData implements Serializable{
     // register------------------------------
     // client ---> server
     // protocol = 20
-    private String register_name="no set", register_pass="no set", secret_question="sogabe";
+    private String register_name="no set", register_pass="no set";
     public String get_register_name(){
         return register_name;
     }
     public String get_register_pass(){
         return register_pass;
     }
-    public String get_register_secret_question(){
-        return secret_question;
-    }
-    public void set_register_name_pass_question(String register_name, String register_pass, String secret_question){
+    public void set_register_name_pass(String register_name, String register_pass){
         this.register_name = register_name;
         this.register_pass = register_pass;
-        this.secret_question = secret_question;
     }
     // ------------------------------register
-
 
     // battle_end_info------------------------
     // client ---> server
     // protocol = 36
-//    private String winner, loser;
-//    boolean draw_flag = false; // if the battle end with draw ---> true
-//    public String get_winner(){
-//        return winner;
-//    }
-//    public String get_loser(){
-//        return loser;
-//    }
-//    public boolean get_draw_flag(){
-//        return draw_flag;
-//    }
-//    public void set_draw_result(String winner, String loser){
-//        this.draw_flag = true;
-//        this.winner = winner;
-//        this.loser = loser;
-//    }
-//    public void set_no_draw_result(String winner, String loser){
-//        this.winner = winner;
-//        this.loser = loser;
-//    }
+    private String winner, loser;
+    boolean draw_flag = false; // if the battle end with draw ---> true
+    public String get_winner(){
+        return winner;
+    }
+    public String get_loser(){
+        return loser;
+    }
+    public boolean get_draw_flag(){
+        return draw_flag;
+    }
+    public void set_draw_result(String winner, String loser){
+        this.draw_flag = true;
+        this.winner = winner;
+        this.loser = loser;
+    }
+    public void set_no_draw_result(String winner, String loser){
+        this.winner = winner;
+        this.loser = loser;
+    }
+
     private boolean draw=false, win=false, lose=false;
     public void set_endinfo_draw(){
         this.draw = true;
@@ -241,5 +241,6 @@ public class transData implements Serializable{
         this.change_pass = change_pass;
         this.change_question = change_question;
     }
+
     // ---------------------------change_pass
 }
