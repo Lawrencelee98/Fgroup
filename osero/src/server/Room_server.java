@@ -24,14 +24,20 @@ public class Room_server extends Thread{
     public void run() {
         System.out.println("Room [ " + String.valueOf(room_num) + " ] is running");
 
+        ServerSocket ss_1 = null;
+        ServerSocket ss_2 = null;
+
+        Socket s_1 = null;
+        Socket s_2 = null;
+
         try{
-            ServerSocket ss_1 = new ServerSocket(port_1);
-            ServerSocket ss_2 = new ServerSocket(port_2);
+            ss_1 = new ServerSocket(port_1);
+            ss_2 = new ServerSocket(port_2);
 
 
-            Socket s_1 = ss_1.accept();
+            s_1 = ss_1.accept();
             System.out.println("Room [ " + String.valueOf(room_num) + " ] : socket [1] accept");
-            Socket s_2 = ss_2.accept();
+            s_2 = ss_2.accept();
             System.out.println("Room [ " + String.valueOf(room_num) + " ] : socket [2] accept");
 
 
