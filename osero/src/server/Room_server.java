@@ -37,19 +37,19 @@ public class Room_server extends Thread{
 
             s_1 = ss_1.accept();
             System.out.println("Room [ " + String.valueOf(room_num) + " ] : socket [1] accept");
-            s_2 = ss_2.accept();
-            System.out.println("Room [ " + String.valueOf(room_num) + " ] : socket [2] accept");
-
-
-
             //  入出力ストリーム 1
             ObjectOutputStream os_1 = new ObjectOutputStream(s_1.getOutputStream());
             InputStream is_1 = s_1.getInputStream();
             ObjectInputStream ois_1 = new ObjectInputStream(is_1);
+
+
+            s_2 = ss_2.accept();
+            System.out.println("Room [ " + String.valueOf(room_num) + " ] : socket [2] accept");
             //  入出力ストリーム 2
             ObjectOutputStream os_2 = new ObjectOutputStream(s_2.getOutputStream());
             InputStream is_2 = s_2.getInputStream();
             ObjectInputStream ois_2 = new ObjectInputStream(is_2);
+
 
             // 対局スタート通知
             transData battle_start = new transData(80);
@@ -135,7 +135,6 @@ public class Room_server extends Thread{
             try{
                 if (s_1!=null) s_1.close();
                 if (s_2!=null) s_2.close();
-
 
                 if (ss_1!=null) ss_1.close();
                 if (ss_2!=null) ss_2.close();
