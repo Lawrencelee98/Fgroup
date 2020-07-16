@@ -816,7 +816,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 							H[j].setIcon(iconB);
 							H[j].setOpaque(true);
 						} else if (map[j][i] == 2) {
-							A[j].setIcon(iconG);
+							H[j].setIcon(iconG);
 						}
 					}
 				}
