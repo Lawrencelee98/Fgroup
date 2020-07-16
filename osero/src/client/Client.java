@@ -26,6 +26,9 @@ public class Client {
 	int your_turn = 0;
 	String secret_ans = null;
 	
+	boolean CPUflag = false;
+	Oserov4_cpu oserov4_cpu = null;
+	
 	transData r_data = null;
 	Oserov4 osero = null;
 	public  Client() {
@@ -78,8 +81,7 @@ public class Client {
 					oos.writeObject(user);
 					transData answer = (transData)ois.readObject();
 					String ans = answer.get_login_answer();
-					System.out.println("read info from server"+ans);
-					if (ans.equals("login succeed")){
+					if (ans.equals("login success")){
 							// todo
 							System.out.println("receive login success");
 							flag = true;
