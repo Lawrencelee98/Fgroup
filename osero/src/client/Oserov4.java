@@ -2,13 +2,11 @@ package client;
 
 import javax.swing.*;
 import transData.*;
-
+import java.net.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.Point;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.net.*;
 import java.io.*;
 import java.util.Arrays;
 import java.util.*;
@@ -53,6 +51,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 	int result = 5;
 
 	transData s_data = new transData(3);
+	transData r_data = null;
 
 	Ban map = new Ban();
 	HashMap<Integer, transData> hash = new HashMap<Integer, transData>();
@@ -60,7 +59,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 	Reciever rec = null;
 	int time_limit = 30;
 	int my_turn = -1;
-	Timer_count_down time_count_down = new Timer_count_down(time_limit);;
+	Timer_count_down time_count_down;
 	JFrame j = new JFrame();
 	Room.Display4 room;
 
@@ -89,7 +88,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 			// j.setSize(800,600);
 			j.setBounds(0, 0, 800, 600);
 			j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+			time_count_down= new Timer_count_down(time_limit,this);
 			JLayeredPane lp = new JLayeredPane();
 
 			ImageIcon img = new ImageIcon(getClass().getResource("frame.jpg"));
@@ -221,25 +220,37 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 			map.castToBoard();
 			time_count_down.start();
 			// data exchange
-			transData r_data = null;
-			try {
-				// receive battle start notice
-				r_data = (transData) client.ois.readObject();
-			} catch (ClassNotFoundException e11) {
-				e11.printStackTrace();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			} finally {
+		
+			System.out.println("b if receive");
+			if(client.CPUflag == false) {
+				try {
+					// receive battle start notice
+					System.out.println("before 80 receive: CPUflag = " + client.CPUflag);
+					//while(r_data.get_protocol() != 80) {
+						r_data = (transData) client.ois.readObject();
+				//}
+					System.out.println("after 80 receive");
+				} catch (ClassNotFoundException e11) {
+					e11.printStackTrace();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				} finally {
 
+				}
+				if (r_data.get_protocol() == 80) {
+					System.out.println("Battle start!");
+				} else {
+					System.out.println("cant receive start");
+				}
+			}else {
+				System.out.println("not receive 80 in Oserov4");
 			}
-			if (r_data.get_protocol() == 80) {
-				System.out.println("Battle start!");
-			} else {
-				System.out.println("cant receive start");
-			}
+			//次以降の時のため
+			client.CPUflag = false;
 
 			System.out.println("please wait for opponent");
 			try {
+				//先攻、後攻の受け取り
 				r_data = (transData) client.ois.readObject();
 
 				if (r_data instanceof transData) {
@@ -828,9 +839,10 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 	class Timer_count_down extends Thread {
 		int time_limit;
 		int time;
-
-		Timer_count_down(int time_limit) {
+		Display display;
+		Timer_count_down(int time_limit,Display display) {
 			this.time_limit = time_limit;
+			this.display = display;
 		}
 
 		public void run() {
@@ -843,7 +855,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 					l2.setText("Left time: " + String.valueOf(time));
 					if (time_limit == 0) {
 						System.out.println("Time out");
-						new Result(1 - my_turn, client, this);
+						new Result(1 - my_turn,client,display);
 						try {
 							transData end = new transData(36);
 							ObjectOutputStream oos = new ObjectOutputStream(client.s.getOutputStream());
