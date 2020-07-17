@@ -104,7 +104,6 @@ public class Room_server extends Thread{
                         }else if(data_1.get_protocol()==50){
                             battle_end = data_1.get_battle_end();
 
-//                            Server.update_record();
                         }
                     }
 
@@ -120,7 +119,6 @@ public class Room_server extends Thread{
                         }else if(data_2.get_protocol()==50){
                             battle_end = data_2.get_battle_end();
 
-//                            Server.update_record();
                         }
                     }
 
@@ -137,7 +135,6 @@ public class Room_server extends Thread{
                         }else if(data_2.get_protocol()==50){
                             battle_end = data_2.get_battle_end();
 
-//                            Server.update_record();
                         }
                     }
 
@@ -150,7 +147,6 @@ public class Room_server extends Thread{
                         }else if(data_1.get_protocol()==50){
                             battle_end = data_1.get_battle_end();
 
-//                            Server.update_record();
                         }
                     }
                 }
