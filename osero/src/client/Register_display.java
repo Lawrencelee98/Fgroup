@@ -52,33 +52,28 @@ public class Register_display extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		boolean flag = false;
 		if (e.getSource() == btn) {
-			// updata 7.20 start from here
+
 			try {
+				// updata 7.20 start from here
 				// need register port
 				// at Socket s = new Socket(client2.ServerAddress,client2.getLoginPort());
-				Socket s = new Socket(client2.ServerAddress, client2.getLoginPort());
-				OutputStream os = s.getOutputStream();
-				ObjectOutputStream oos = new ObjectOutputStream(os);
-				InputStream is = s.getInputStream();
-				ObjectInputStream ois = new ObjectInputStream(is);
-				client2.ois = ois;
-				client2.oos = oos;
-				flag = client2.send_register_name_pass(txt[0].getText(), txt[1].getText(), txt[2].getText(), oos, ois);
-				if (flag) {
-					// login success
-					client2.choose_room(client2.oos, client2.ois);
-					this.dispose();
-				} else {
-					// login failed
-					// TODO show "login failed"
-					System.out.println("Register Failed");
-				}
+				/*
+				 * Socket s = new Socket(client2.ServerAddress, client2.getLoginPort());
+				 * OutputStream os = s.getOutputStream(); ObjectOutputStream oos = new
+				 * ObjectOutputStream(os); InputStream is = s.getInputStream();
+				 * ObjectInputStream ois = new ObjectInputStream(is); client2.ois = ois;
+				 * client2.oos = oos; flag = client2.send_register_name_pass(txt[0].getText(),
+				 * txt[1].getText(), txt[2].getText(), oos, ois); if (flag) { // login success
+				 * client2.choose_room(client2.oos, client2.ois); this.dispose(); } else { //
+				 * login failed // TODO show "login failed"
+				 * System.out.println("Register Failed"); }
+				 */
+				// updata 7.20 till here
 			} catch (Exception se) {
 				System.out.println("Error(Login_display):Socket error");
 				se.printStackTrace();
 			}
 		}
-		// updata 7.20 untill here
 
 	}
 }
