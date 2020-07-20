@@ -341,7 +341,7 @@ public class Server {
                 return false;
             }
         }
-    }
+    
 
     public static void manage(){
         Manage m = new Manage();

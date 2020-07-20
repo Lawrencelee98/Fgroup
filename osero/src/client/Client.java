@@ -81,7 +81,7 @@ public class Client {
 					oos.writeObject(user);
 					transData answer = (transData)ois.readObject();
 					String ans = answer.get_login_answer();
-					if (ans.equals("login success")){
+					if (ans.equals("login succeed")){
 							// todo
 							System.out.println("receive login success");
 							flag = true;
@@ -118,7 +118,7 @@ public class Client {
 			System.out.println("Send room number failed");
 		}
 	}*/
-	public boolean send_register_name_pass(String register_name,String register_pass, String secret_ans) {
+	public boolean send_register_name_pass(String register_name,String register_pass, String secret_ans,ObjectOutputStream oos,ObjectInputStream ois) {
 		int protocol = 20;
 		transData data = new transData(protocol);
 		boolean flag=false;
