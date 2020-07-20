@@ -100,11 +100,13 @@ public class transData implements Serializable{
     // protocol = 12
     // room_info
     private Map<Integer,Integer> room_info = new HashMap<Integer, Integer>();
+    private List<String> players_info = new ArrayList<String>();
     public Map<Integer, Integer> get_room_info(){
         return room_info;
     }
-    public void set_room_info(Map<Integer, Integer> room_info){
+    public void set_room_info(Map<Integer, Integer> room_info, List<String> players_info){
         this.room_info = room_info;
+        this.players_info = players_info;
     }
     // ------------------------------room_info
 

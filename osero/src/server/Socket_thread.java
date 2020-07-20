@@ -50,7 +50,7 @@ public class Socket_thread extends Thread{
 
 
             while(true){
-                // todo break if login success
+                // break if login or register or change pass success
                 transData data = (transData) ois.readObject();
 
                 int protocol_1 = data.get_protocol();
@@ -91,14 +91,67 @@ public class Socket_thread extends Thread{
 
                     }
                 } else if (protocol_1 == 20) {
-                    // todo register
-                    if(Server.register(data)){
+                    // register
+                    if (Server.register(data, os)) {
                         // register success
+
+                        // name set
+                        this.username = data.get_register_name();
+                        if (num==1){
+                            Server.name_p1 = this.username;
+                        }else if (num==2){
+                            Server.name_p2 = this.username;
+                        }else if (num==3){
+                            Server.name_p3 = this.username;
+                        }else if (num==4){
+                            Server.name_p4 = this.username;
+                        }else if (num==5){
+                            Server.name_p5 = this.username;
+                        }else if (num==6){
+                            Server.name_p6 = this.username;
+                        }else if (num==7){
+                            Server.name_p7 = this.username;
+                        }else if (num==8){
+                            Server.name_p8 = this.username;
+                        }
                         break;
-                    }else{
+                    } else {
                         // register fail
 
                     }
+
+
+                }else if (protocol_1==37){
+                    // pass change
+
+                    if (Server.change_pass(data, os)) {
+                        // change apss success
+
+                        // name set
+                        this.username = data.get_change_name();
+                        if (num==1){
+                            Server.name_p1 = this.username;
+                        }else if (num==2){
+                            Server.name_p2 = this.username;
+                        }else if (num==3){
+                            Server.name_p3 = this.username;
+                        }else if (num==4){
+                            Server.name_p4 = this.username;
+                        }else if (num==5){
+                            Server.name_p5 = this.username;
+                        }else if (num==6){
+                            Server.name_p6 = this.username;
+                        }else if (num==7){
+                            Server.name_p7 = this.username;
+                        }else if (num==8){
+                            Server.name_p8 = this.username;
+                        }
+                        break;
+                    } else {
+                        // change pass fail
+
+                    }
+
 
 
                 } else {
@@ -112,7 +165,7 @@ public class Socket_thread extends Thread{
 
             // send room info
             transData room_obj = new transData(12);
-            room_obj.set_room_info(Server.room_info);
+            room_obj.set_room_info(Server.room_info, Server.get_record());
             os.writeObject(room_obj);
 
 
