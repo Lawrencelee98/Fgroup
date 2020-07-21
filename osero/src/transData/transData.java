@@ -274,4 +274,10 @@ public class transData implements Serializable{
     public String get_result_time(){
         return String.valueOf(result_time);
     }
+
+    //CPU対戦から出るのSWITCH
+    private boolean cpu_switch = false;
+    public boolean get_time_switch(){
+        return cpu_switch;
+    }
 }

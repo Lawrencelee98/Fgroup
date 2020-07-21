@@ -1,4 +1,4 @@
-package client;
+{package client;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -288,7 +288,7 @@ public class Room {
 					room_num = 1;
 				setVisible(false);
 				if (room_player[1] == 1) {
-					new Display5(client);
+					new Oserov4_cpu(client,client.ois,client.oos);
 				}
 				
 				} else if (e.getSource() == b12) {
@@ -296,52 +296,52 @@ public class Room {
 					room_num = 1;
 					setVisible(false);
 					if (room_player[0] == 1) {
-						//new Display5();
+						new Oserov4_cpu(client,client.ois,client.oos);
 					}
 				} else if (e.getSource() == b21) {
 					room_player[2] = 1;
 					room_num = 2;
 					setVisible(false);
 					if (room_player[3] == 1) {
-						//new Display5();
+						new Oserov4_cpu(client,client.ois,client.oos);
 					}
 				} else if (e.getSource() == b22) {
 					room_player[3] = 1;
 					room_num = 2;
 					setVisible(false);
 					if (room_player[2] == 1) {
-						//new Display5();
+						new Oserov4_cpu(client,client.ois,client.oos);
 					}
 				} else if (e.getSource() == b31) {
 					room_player[4] = 1;
 					room_num = 3;
 					setVisible(false);
 					if (room_player[5] == 1) {
-						//new Display5();
+						new Oserov4_cpu(client,client.ois,client.oos);
 					}
 				} else if (e.getSource() == b32) {
 					room_player[5] = 1;
 					room_num = 3;
 					setVisible(false);
 					if (room_player[4] == 1) {
-						//new Display5();
+						new Oserov4_cpu(client,client.ois,client.oos);
 					}
 				} else if (e.getSource() == b41) {
 					room_player[6] = 1;
 					room_num = 4;
 					setVisible(false);
 					if (room_player[7] == 1) {
-						//new Display5();
+						new Oserov4_cpu(client,client.ois,client.oos);
 					}
 				} else if (e.getSource() == b42) {
 					room_player[7] = 1;
 					room_num = 4;
 					setVisible(false);
 					if (room_player[6] == 1) {
-						//new Display5();
+						new Oserov4_cpu(client,client.ois,client.oos);
 					}
 				}else if(e.getSource()==CPU_match){
-					new Oserov4_cpu();
+					new Oserov4_cpu(client,client.ois,client.oos);
 				}
 				transData room_choice = new transData(13);
 	            room_choice.set_room_num(room_num);
@@ -363,7 +363,6 @@ public class Room {
 			            InputStream is_room = s_room.getInputStream();
 			            ois_room = new ObjectInputStream(is_room);
 			            System.out.println("start oserov4");
-			            new Oserov4(client, oos_room, ois_room);
 			        }catch (Exception e1){
 			            //e.printStackTrace();
 			        	

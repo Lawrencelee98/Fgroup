@@ -56,9 +56,11 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
     HashMap<Integer, transData> hash = new HashMap<Integer, transData>();
     JFrame j = new JFrame();
     Timer_count_down time_count_down = new Timer_count_down(time_limit, l2);
-
-    public Oserov4_cpu() {
-
+    Client client = null;
+    ObjectInputStream ois;
+    ObjectOutputStream oos;
+    public Oserov4_cpu(Client client,ObjectInputStream ois, ObjectOutputStream oos) {
+        this.client = client;
         c = j.getContentPane();
 
         // j.setSize(800,600);
@@ -192,6 +194,15 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
         j.setResizable(false);
         map.initMap();
         map.castToBoard(this);
+        try{
+                boolean cpu_switch=false;
+                transData data = null;
+                data=(transData)ois.readObject();
+                cpu_switch=data.get_time_switch();
+                if(cpu_switch){
+                    new Room.Display5(client);
+                }
+        }
     }
 
     @Override
