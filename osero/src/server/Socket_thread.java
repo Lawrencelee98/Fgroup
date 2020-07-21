@@ -183,8 +183,8 @@ public class Socket_thread extends Thread{
 
             //  get selected room
             transData data_room_num =(transData)ois.readObject();
-            System.out.println("thread [ " + String.valueOf(num) + " ] selected room recieve");
             if (data_room_num.get_protocol()==13){
+                System.out.println("thread [ " + String.valueOf(num) + " ] selected room recieve");
                 int room_num = data_room_num.get_room_num();
 
                 if(Server.room_info.get(room_num)==0){
