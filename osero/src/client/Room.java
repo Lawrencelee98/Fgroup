@@ -29,6 +29,7 @@ public class Room {
 	Client client = null;
 	private static int room_port = 0;
 	private static int room_num = -1;
+	static String final_time; 
 
 	public Room(Client client, Map<Integer, Integer> room_info, ObjectOutputStream oos, ObjectInputStream ois) {
 		this.client=client;
@@ -287,7 +288,7 @@ public class Room {
 					room_num = 1;
 				setVisible(false);
 				if (room_player[1] == 1) {
-					//new Display5();
+					new Display5(client);
 				}
 				
 				} else if (e.getSource() == b12) {
@@ -401,8 +402,9 @@ public class Room {
 	public static class Display6 extends JFrame implements ActionListener {
 
 		JLabel label = new JLabel("<html>対戦相手の希望時間は、<br/>" + str + "です。<br/>合意しますか？</html>");
-
-		Display6() {
+		Client client = null;
+		Display6(Client client) {
+			this.client = client;
 			setLayout(new FlowLayout());
 			JPanel p = new JPanel();
 			p.setLayout(new BorderLayout());
@@ -438,10 +440,11 @@ public class Room {
 
 		public void actionPerformed(ActionEvent e) {
 			if (e.getActionCommand().equals("合意する")) {
-				setVisible(false);
+				new Oserov4(this.client,client.oos,client.ois,final_time);
 			} else if (e.getActionCommand().equals("合意しない")) {
 				setVisible(false);
-				new Display5();
+				new Display5(client);
+				this.dispose();
 			}
 		}
 
@@ -450,8 +453,8 @@ public class Room {
 	public static class Display5 extends JFrame implements ActionListener {
 
 		JLabel label = new JLabel("<html>自分の持ち時間の希望を<br/>対戦相手に送信します。<br/>以下から選んでください。</html>");
-
-		Display5() {
+		Client client = null;
+		Display5(Client client) {
 			setLayout(new FlowLayout());
 			JPanel p = new JPanel();
 			p.setLayout(new BorderLayout());
@@ -468,10 +471,7 @@ public class Room {
 			p.add(pn, "North");
 			JPanel pc = new JPanel();
 			pc.setLayout(new FlowLayout());
-			JButton b1 = new JButton("5秒");
-			b1.setPreferredSize(new Dimension(90, 30));
-			b1.addActionListener(this);
-			pc.add(b1);
+		
 			JButton b2 = new JButton("10秒");
 			b2.setPreferredSize(new Dimension(90, 30));
 			b2.addActionListener(this);
@@ -487,14 +487,6 @@ public class Room {
 			b4.setPreferredSize(new Dimension(90, 30));
 			b4.addActionListener(this);
 			ps.add(b4);
-			JButton b5 = new JButton("無制限");
-			b5.setPreferredSize(new Dimension(90, 30));
-			b5.addActionListener(this);
-			ps.add(b5);
-			JButton b6 = new JButton("ランダム");
-			b6.setPreferredSize(new Dimension(90, 30));
-			b6.addActionListener(this);
-			ps.add(b6);
 			p.add(ps, "South");
 			add(p, "Center");
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -504,24 +496,34 @@ public class Room {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			if (e.getActionCommand().equals("5秒")) {
-				str = "5秒";
-				setVisible(false);
-			} else if (e.getActionCommand().equals("10秒")) {
+			int time ;
+			
+			boolean flag = false;
+			if (e.getActionCommand().equals("10秒")) {
 				str = "10秒";
-				setVisible(false);
+				time =10;
+				final_time=client.send_wait_time(time,client.ois,client.oos);
+				new Display6(this.client);
+				this.dispose();
 			} else if (e.getActionCommand().equals("15秒")) {
 				str = "15秒";
-				setVisible(false);
+				time=15;
+				final_time=client.send_wait_time(time,client.ois,client.oos);
+				new Display6(this.client);
+				this.dispose();
 			} else if (e.getActionCommand().equals("30秒")) {
 				str = "30秒";
-				setVisible(false);
-			} else if (e.getActionCommand().equals("無制限")) {
-				str = "無制限";
-				setVisible(false);
-			} else if (e.getActionCommand().equals("ランダム")) {
-				str = "ランダム";
-				setVisible(false);
+				time=30;
+				final_time=client.send_wait_time(time,client.ois,client.oos);
+				new Display6(this.client);
+				this.dispose();
+			} 
+			if(flag){
+				System.out.println("send waiting time successed");
+
+
+			}else{
+				System.out.println("send waiting time fail");
 			}
 		}
 

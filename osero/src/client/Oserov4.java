@@ -63,13 +63,14 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 	JFrame j = new JFrame();
 	Room.Display4 room;
 
-	public Oserov4(Client client, ObjectOutputStream oos, ObjectInputStream ois) {
+	public Oserov4(Client client, ObjectOutputStream oos, ObjectInputStream ois,String time) {
 		this.client = client;
 		// this.oos = oos;
 		// this.ois = ois;
 		client.oos = oos;
 		client.ois = ois;
 		this.room = room;
+		this.time_limit = Integer.parseInt(time);
 		new Display();
 		// System.out.println("Battlereceiver");
 		// client.BattleReceiver(map);

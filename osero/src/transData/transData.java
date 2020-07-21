@@ -264,4 +264,14 @@ public class transData implements Serializable{
         this.change_question = change_question;
     }
     // ---------------------------change_pass
+    
+    //時間選択に使う
+    private int wait_time = 0;
+    public void set_wait_time(int time){
+		this.wait_time = time;
+    }
+    private int result_time=0;
+    public String get_result_time(){
+        return String.valueOf(result_time);
+    }
 }

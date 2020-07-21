@@ -192,9 +192,24 @@ public class Client {
             //return room_port;
         }
 	}
-	public boolean time_out_reciever(ObjectInputStream ois){
-		transData timeout = (transData)ois.readObject();
-		return timeout.time_out_flag;
+	
+	public String send_wait_time(int time,ObjectInputStream ois,ObjectOutputStream oos){
+		int protocal = 0;
+		String result;
+		transData data = new transData(protocal);
+		data.set_wait_time(time);
+		try{
+			oos.writeObject(data);
+			oos.reset();
+			data = (transData)ois.readObject();
+			result = data.get_result_time();
+			return result;
+		}catch(Exception e){
+			e.printStackTrace();
+		    result = "fail";
+			return result;
+			
+		}
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
