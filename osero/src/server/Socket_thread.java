@@ -49,7 +49,11 @@ public class Socket_thread extends Thread{
             ObjectInputStream ois = new ObjectInputStream(is);
 
 
+            int loop_count=0;
             while(true){
+                loop_count+=1;
+                System.out.println("thread [ " + String.valueOf(num) + " ] login loop : " + String.valueOf(loop_count));
+
                 // break if login or register or change pass success
                 transData data = (transData) ois.readObject();
 
