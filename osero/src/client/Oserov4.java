@@ -88,7 +88,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 			// j.setSize(800,600);
 			j.setBounds(0, 0, 800, 600);
 			j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			time_count_down= new Timer_count_down(time_limit,this);
+			time_count_down = new Timer_count_down(time_limit, this);
 			JLayeredPane lp = new JLayeredPane();
 
 			ImageIcon img = new ImageIcon(getClass().getResource("frame.jpg"));
@@ -220,15 +220,15 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 			map.castToBoard();
 			time_count_down.start();
 			// data exchange
-		
+
 			System.out.println("b if receive");
-			if(client.CPUflag == false) {
+			if (client.CPUflag == false) {
 				try {
 					// receive battle start notice
 					System.out.println("before 80 receive: CPUflag = " + client.CPUflag);
-					//while(r_data.get_protocol() != 80) {
-						r_data = (transData) client.ois.readObject();
-				//}
+					// while(r_data.get_protocol() != 80) {
+					r_data = (transData) client.ois.readObject();
+					// }
 					System.out.println("after 80 receive");
 				} catch (ClassNotFoundException e11) {
 					e11.printStackTrace();
@@ -242,15 +242,15 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 				} else {
 					System.out.println("cant receive start");
 				}
-			}else {
+			} else {
 				System.out.println("not receive 80 in Oserov4");
 			}
-			//次以降の時のため
+			// 次以降の時のため
 			client.CPUflag = false;
 
 			System.out.println("please wait for opponent");
 			try {
-				//先攻、後攻の受け取り
+				// 先攻、後攻の受け取り
 				r_data = (transData) client.ois.readObject();
 
 				if (r_data instanceof transData) {
@@ -280,6 +280,16 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 				e.printStackTrace();
 			} finally {
 
+			}
+			System.out.println("Waiting for timeout info");
+			int timeout_protocol = 2000;
+			try {
+				r_data = (transData) client.ois.readObject();
+				if (r_data.get_protocol() == timeout_protocol) {
+					new Result(1 - my_turn, client, this);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 
 		}
@@ -840,7 +850,8 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 		int time_limit;
 		int time;
 		Display display;
-		Timer_count_down(int time_limit,Display display) {
+
+		Timer_count_down(int time_limit, Display display) {
 			this.time_limit = time_limit;
 			this.display = display;
 		}
@@ -853,11 +864,11 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 				public void run() {
 					time = time - 1;
 					l2.setText("Left time: " + String.valueOf(time));
-					//time out の処理
+					// time out の処理
 					if (time_limit == 0) {
 						System.out.println("Time out");
-						
-						new Result(1 - my_turn,client,display);
+
+						new Result(1 - my_turn, client, display);
 						try {
 							transData end = new transData(36);
 							ObjectOutputStream oos = new ObjectOutputStream(client.s.getOutputStream());
