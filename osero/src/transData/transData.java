@@ -5,6 +5,7 @@ import java.util.*;
 public class transData implements Serializable{
     /*
     client ---> server
+    0 : 時間選択に使う
     10 : login
     13 : room_choice
     20 : register
@@ -265,7 +266,9 @@ public class transData implements Serializable{
     }
     // ---------------------------change_pass
     
-    //時間選択に使う
+    // 時間選択に使う--------------------------
+    // client ---> server
+    // protocol = 0
     private int wait_time = 0;
     public void set_wait_time(int time){
 		this.wait_time = time;
@@ -274,4 +277,5 @@ public class transData implements Serializable{
     public String get_result_time(){
         return String.valueOf(result_time);
     }
+    // --------------------------時間選択に使う
 }
