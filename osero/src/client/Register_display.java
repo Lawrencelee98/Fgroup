@@ -13,14 +13,13 @@ public class Register_display extends JFrame implements ActionListener {
 	JLabel label[] = new JLabel[4];
 	JTextArea txt[] = new JTextArea[3];
 	JButton btn = new JButton("送信する");
-	Client client2;
-	Login_display login_display;
+	Client client=null;
 	ObjectInputStream ois=null;
 	ObjectOutputStream oos=null;
 
-	public Register_display(String title, Client client2) {
+	public Register_display(String title, Client client) {
 		super(title);
-		this.client2 = client2;
+		this.client = client;
 		JPanel p = (JPanel) getContentPane();
 		p.setLayout(null);
 		label[0] = new JLabel("プレイヤ名と誕生日の回答を入力してください");
@@ -56,16 +55,12 @@ public class Register_display extends JFrame implements ActionListener {
 		boolean flag = false;
 		if (e.getSource() == btn) {
 
-			try {
-				// updata 7.20 start from here
-				// need register port
-				// at Socket s = new Socket(client2.ServerAddress,client2.getLoginPort());
-				
-				  flag = client2.send_register_name_pass(txt[0].getText(),txt[1].getText(), txt[2].getText(), client2.oos, client2.ois); 
+			try {				
+				  flag = client.send_register_name_pass(txt[0].getText(),txt[1].getText(), txt[2].getText(),client.ois,client.oos); 
 				  if (flag) { // login success
-				  client2.choose_room(client2.oos, client2.ois);
-
-				   this.dispose(); } 
+				   client.choose_room(client.oos, client.ois);
+				   this.dispose();
+				 } 
 				   else { //
 				  //login failed // TODO show "login failed"
 				  System.out.println("Register Failed"); }

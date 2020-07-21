@@ -19,7 +19,9 @@ public class Login_display extends JFrame implements ActionListener {
 	Socket s = null;
 	ObjectOutputStream oos = null;
 	ObjectInputStream ois = null;
-
+	JLabel label1[] = new JLabel[4];
+	JTextArea txt1[] = new JTextArea[3];
+	JButton btn1 = new JButton("送信する");
 	public Login_display(String title, Client client) {
 		super(title);
 		this.client = client;
@@ -75,19 +77,23 @@ public class Login_display extends JFrame implements ActionListener {
 		}
 	}
 
+	
+
 	public void actionPerformed(ActionEvent e) {
 		// onclick
-
+		
 		// button 新規登録
 		if (e.getSource() == btn[0]) {
 			try {
-				s.close();
-			} catch (IOException e1) {
+				new Register_display("Register",this.client);
+				this.dispose();
+			} catch (Exception e1) {
 				// TODO 自動生成された catch ブロック
 				e1.printStackTrace();
 			}
-			new Register_display("Register", client);
-			this.dispose();
+			
+			
+			//this.setVisible(false);
 		}
 
 		// button ログイン
@@ -127,6 +133,7 @@ public class Login_display extends JFrame implements ActionListener {
 				System.out.println("Login Failed");
 			}
 		}
+		
 		// osero 対局の終了
 
 		// button ルール説明
@@ -134,11 +141,5 @@ public class Login_display extends JFrame implements ActionListener {
 			new Explain("Explaination", client);
 			this.dispose();
 		}
-	}
-	public ObjectOutputStream getOOS(){
-		return oos;
-	}
-	public ObjectInputStream getOIS(){
-		return ois;
 	}
 }

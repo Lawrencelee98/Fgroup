@@ -17,8 +17,8 @@ public class Client {
 	private int login_port = 0;
 	
 	Socket s = null;
-	ObjectOutputStream oos = null;
-	ObjectInputStream ois = null;
+	public ObjectOutputStream oos = null;
+	public ObjectInputStream ois = null;
 	
 	int first_port = 10000;
 	String ServerAddress = "localhost";
@@ -118,19 +118,21 @@ public class Client {
 			System.out.println("Send room number failed");
 		}
 	}*/
-	public boolean send_register_name_pass(String register_name,String register_pass, String secret_ans,ObjectOutputStream oos,ObjectInputStream ois) {
+	public boolean send_register_name_pass(String register_name,String register_pass, String secret_ans,ObjectInputStream ois,ObjectOutputStream oos) {
 		int protocol = 20;
 		transData data = new transData(protocol);
 		boolean flag=false;
+		
 		this.register_name = register_name;
 		this.register_pass = register_pass;
 		this.secret_ans = secret_ans;
 		data.set_register_name_pass_question(register_name, register_pass, secret_ans);
+		System.out.println("set the register data suceess");
 		try {
 			oos.writeObject(data);
-			oos.flush();
 			transData answer = (transData)ois.readObject();
 			String ans = answer.get_login_answer();
+			System.out.println("answer.get login answer : "+ans);
 			if (ans.equals("register succeed")){
 				// todo
 				System.out.println("receive register succeed");
@@ -190,8 +192,9 @@ public class Client {
             //return room_port;
         }
 	}
-	public boolean time_out_reciever(){
-		transData timeout = ois.readObject();
+	public boolean time_out_reciever(ObjectInputStream ois){
+		transData timeout = (transData)ois.readObject();
+		return timeout.time_out_flag;
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
