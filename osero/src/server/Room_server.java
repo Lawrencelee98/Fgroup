@@ -95,7 +95,14 @@ public class Room_server extends Thread {
                 System.out.println("send --turn-- to player2");
 
                 while (battle_end) {
+
+                    Timer_manage_server timer_1 = new Timer_manage_server(time, os_1);
+                    timer_1.start();
+
                     transData data_1 = (transData) ois_1.readObject();
+
+                    timer_1.stop();
+
                     System.out.println("read Object");
                     System.out.println(data_1.get_protocol());
                     if (data_1 instanceof transData) {
@@ -114,7 +121,14 @@ public class Room_server extends Thread {
 
                     // os_2.writeObject(start);
                     // System.out.println("send --start-- to player2");
+
+                    Timer_manage_server timer_2 = new Timer_manage_server(time, os_2);
+                    timer_2.start();
+
                     transData data_2 = (transData) ois_2.readObject();
+
+                    timer_2.stop();
+
                     if (data_2 instanceof transData) {
                         if (data_2.get_protocol() == 3 || data_1.get_protocol() == 3000) {
                             os_1.writeObject(data_2);
@@ -130,7 +144,14 @@ public class Room_server extends Thread {
             } else {
                 // 2 が先手の場合
                 while (battle_end) {
+
+                    Timer_manage_server timer_2 = new Timer_manage_server(time, os_2);
+                    timer_2.start();
+
                     transData data_2 = (transData) ois_2.readObject();
+
+                    timer_2.stop();
+
                     if (data_2 instanceof transData) {
                         if (data_2.get_protocol() == 3) {
                             os_1.writeObject(data_2);
@@ -143,7 +164,13 @@ public class Room_server extends Thread {
                     if (battle_end)
                         break;
 
+                    Timer_manage_server timer_1 = new Timer_manage_server(time, os_1);
+                    timer_1.start();
+
                     transData data_1 = (transData) ois_1.readObject();
+
+                    timer_1.stop();
+
                     if (data_1 instanceof transData) {
                         if (data_1.get_protocol() == 3) {
                             os_1.writeObject(data_1);

@@ -51,6 +51,12 @@ public class transData implements Serializable{
     // protocol = 35
     // ----------------------dummy
 
+    // time_over---------------------------
+    // server ---> client
+    // protocol = 2000
+    // ---------------------------time_over
+
+
     // time_choice------------------------
     // client ---> server ---> client
     // protocol = 2
