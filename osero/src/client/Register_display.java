@@ -1,5 +1,4 @@
 package client;
-
 import java.awt.*;
 import java.awt.List;
 import java.awt.event.*;
@@ -8,12 +7,16 @@ import java.util.*;
 import java.net.*;
 import java.io.*;
 
+
 public class Register_display extends JFrame implements ActionListener {
 	static final long serialVersionUID = 1;
 	JLabel label[] = new JLabel[4];
 	JTextArea txt[] = new JTextArea[3];
 	JButton btn = new JButton("送信する");
 	Client client2;
+	Login_display login_display;
+	ObjectInputStream ois=null;
+	ObjectOutputStream oos=null;
 
 	public Register_display(String title, Client client2) {
 		super(title);
@@ -57,17 +60,16 @@ public class Register_display extends JFrame implements ActionListener {
 				// updata 7.20 start from here
 				// need register port
 				// at Socket s = new Socket(client2.ServerAddress,client2.getLoginPort());
-				/*
-				 * Socket s = new Socket(client2.ServerAddress, client2.getLoginPort());
-				 * OutputStream os = s.getOutputStream(); ObjectOutputStream oos = new
-				 * ObjectOutputStream(os); InputStream is = s.getInputStream();
-				 * ObjectInputStream ois = new ObjectInputStream(is); client2.ois = ois;
-				 * client2.oos = oos; flag = client2.send_register_name_pass(txt[0].getText(),
-				 * txt[1].getText(), txt[2].getText(), oos, ois); if (flag) { // login success
-				 * client2.choose_room(client2.oos, client2.ois); this.dispose(); } else { //
-				 * login failed // TODO show "login failed"
-				 * System.out.println("Register Failed"); }
-				 */
+				
+				  flag = client2.send_register_name_pass(txt[0].getText(),txt[1].getText(), txt[2].getText(), client2.oos, client2.ois); 
+				  if (flag) { // login success
+				  client2.choose_room(client2.oos, client2.ois);
+
+				   this.dispose(); } 
+				   else { //
+				  //login failed // TODO show "login failed"
+				  System.out.println("Register Failed"); }
+				 
 				// updata 7.20 till here
 			} catch (Exception se) {
 				System.out.println("Error(Login_display):Socket error");

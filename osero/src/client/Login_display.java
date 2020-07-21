@@ -135,5 +135,10 @@ public class Login_display extends JFrame implements ActionListener {
 			this.dispose();
 		}
 	}
-
+	public ObjectOutputStream getOOS(){
+		return oos;
+	}
+	public ObjectInputStream getOIS(){
+		return ois;
+	}
 }

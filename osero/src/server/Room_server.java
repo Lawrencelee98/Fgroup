@@ -6,7 +6,13 @@ import transData.*;
 public class Room_server extends Thread{
     private boolean running = true;
     private int port_1, port_2, room_num;
-    public Room_server(int port_1, int port_2, int room_num){
+
+    private String name_p1, name_p2;
+
+    private int time;
+
+    public Room_server(int port_1, int port_2, int room_num) {
+
         this.port_1 = port_1;
         this.port_2 = port_2;
         this.room_num = room_num;

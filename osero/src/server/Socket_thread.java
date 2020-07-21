@@ -57,6 +57,7 @@ public class Socket_thread extends Thread{
 
                 // check data is for login?
                 if (protocol_1 == 10) {
+                    System.out.println("thread [ " + String.valueOf(num) + " ] login start");
                     // login
                     if (Server.login(data, os)) {
                         // login success
@@ -83,13 +84,16 @@ public class Socket_thread extends Thread{
                         }
 
 
+                        System.out.println("thread [ " + String.valueOf(num) + " ] login ok");
                         break;
                     } else {
                         // login fail
 
+                        System.out.println("thread [ " + String.valueOf(num) + " ] login fail");
                     }
                 } else if (protocol_1 == 20) {
                     // register
+                    System.out.println("thread [ " + String.valueOf(num) + " ] register process");
                     if (Server.register(data, os)) {
                         // register success
 
@@ -112,15 +116,18 @@ public class Socket_thread extends Thread{
                         }else if (num==8){
                             Server.name_p8 = this.username;
                         }
+                        System.out.println("thread [ " + String.valueOf(num) + " ] register ok");
                         break;
                     } else {
                         // register fail
 
+                        System.out.println("thread [ " + String.valueOf(num) + " ] register fail");
                     }
 
 
                 }else if (protocol_1==37){
                     // pass change
+                    System.out.println("thread [ " + String.valueOf(num) + " ] change pass start");
 
                     if (Server.change_pass(data, os)) {
                         // change apss success
@@ -144,10 +151,12 @@ public class Socket_thread extends Thread{
                         }else if (num==8){
                             Server.name_p8 = this.username;
                         }
+                        System.out.println("thread [ " + String.valueOf(num) + " ] change pass ok");
                         break;
                     } else {
                         // change pass fail
 
+                        System.out.println("thread [ " + String.valueOf(num) + " ] change pass fail");
                     }
 
 
@@ -165,10 +174,12 @@ public class Socket_thread extends Thread{
             transData room_obj = new transData(12);
             room_obj.set_room_info(Server.room_info, Server.get_record());
             os.writeObject(room_obj);
+            System.out.println("thread [ " + String.valueOf(num) + " ] room info sent");
 
 
             //  get selected room
             transData data_room_num =(transData)ois.readObject();
+            System.out.println("thread [ " + String.valueOf(num) + " ] selected room recieve");
             if (data_room_num.get_protocol()==13){
                 int room_num = data_room_num.get_room_num();
                 if(Server.room_info.get(room_num)==0){

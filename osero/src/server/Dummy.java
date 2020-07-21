@@ -43,16 +43,6 @@ public class Dummy extends TimerTask{
             e.printStackTrace();
 
         }finally {
-//            try{
-//                if (s!=null){
-//                    s.close();
-//                }
-//                if (ss!=null){
-//                    ss.close();
-//                }
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
 
         }
     }
