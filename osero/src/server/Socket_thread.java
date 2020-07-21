@@ -186,6 +186,7 @@ public class Socket_thread extends Thread{
             System.out.println("thread [ " + String.valueOf(num) + " ] selected room recieve");
             if (data_room_num.get_protocol()==13){
                 int room_num = data_room_num.get_room_num();
+
                 if(Server.room_info.get(room_num)==0){
                     // CPU battle
                     Server.room_info.put(room_num,1);
@@ -235,16 +236,16 @@ public class Socket_thread extends Thread{
                     this.running = false;
 
                     int port_send=0;
-                    if(num==1){
+                    if(room_num==1){
                         port_send = 10012;
                         Server.name_r1_2 = this.username;
-                    }else if(num==2){
+                    }else if(room_num==2){
                         port_send = 10022;
                         Server.name_r2_2 = this.username;
-                    }else if(num==3){
+                    }else if(room_num==3){
                         port_send = 10032;
                         Server.name_r3_2 = this.username;
-                    }else if(num==4){
+                    }else if(room_num==4){
                         port_send = 10042;
                         Server.name_r4_2 = this.username;
                     }
