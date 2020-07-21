@@ -15,8 +15,8 @@ public class Login_display extends JFrame implements ActionListener {
 	JTextField txt = new JTextField();
 	JPasswordField pwd = new JPasswordField();
 	JButton btn[] = new JButton[4];
-	Client client=null;
-	Socket s  = null;
+	Client client = null;
+	Socket s = null;
 	ObjectOutputStream oos = null;
 	ObjectInputStream ois = null;
 
@@ -58,19 +58,19 @@ public class Login_display extends JFrame implements ActionListener {
 		setSize(250, 250);
 		setVisible(true);
 		setResizable(false);
-		
-		try{
-			s = new Socket(client.ServerAddress,client.getLoginPort());
+
+		try {
+			s = new Socket(client.ServerAddress, client.getLoginPort());
 			OutputStream os = s.getOutputStream();
 			oos = new ObjectOutputStream(os);
 			InputStream is = s.getInputStream();
 			ois = new ObjectInputStream(is);
 			client.ois = ois;
 			client.oos = oos;
-		}catch(Exception se) {
+		} catch (Exception se) {
 			System.out.println("Error(Login_display):Socket error");
 			se.printStackTrace();
-		}finally {
+		} finally {
 
 		}
 	}
@@ -78,7 +78,7 @@ public class Login_display extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// onclick
 
-		//button 新規登録
+		// button 新規登録
 		if (e.getSource() == btn[0]) {
 			try {
 				s.close();
@@ -90,52 +90,47 @@ public class Login_display extends JFrame implements ActionListener {
 			this.dispose();
 		}
 
-		//button ログイン
+		// button ログイン
 		if (e.getSource() == btn[1]) {
 			String username = txt.getText();
-			//String username = "usr_1";
+			// String username = "usr_1";
 			char[] password = pwd.getPassword();
 			String passwordstr = new String(password);
-			//String passwordstr = "pass_1";
-			System.out.println("username="+username+",password="+passwordstr);
+			// String passwordstr = "pass_1";
+			System.out.println("username=" + username + ",password=" + passwordstr);
 			boolean flag = client.send_login_info(username, passwordstr, ois, oos);
-			if(flag){
-				//login success
+			if (flag) {
+				// login success
 				client.choose_room(oos, ois);
 				this.dispose();
-				/*try {
-					System.out.println("Login_display:socket close");
-					//s.close();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}finally {*/
-				/*	ObjectOutputStream oos_room = null;
-			        ObjectInputStream ois_room = null;
-			        try{
-			            Socket s_room = new Socket(client.ServerAddress,client.room_port);
-			            OutputStream os_room = s_room.getOutputStream();
-			            oos_room = new ObjectOutputStream(os_room);
-
-			            InputStream is_room = s_room.getInputStream();
-			            ois_room = new ObjectInputStream(is_room);
-			            System.out.println("start oserov4");
-			            new Oserov4(client, oos_room, ois_room);
-			        }catch (Exception e1){
-			            //e.printStackTrace();
-			        }finally {
-
-			        }*/ //->Display4 Action
-				//}
-			}else{
-				//login failed
-				//TODO show "login failed"
+				/*
+				 * try { System.out.println("Login_display:socket close"); //s.close(); } catch
+				 * (IOException e1) { e1.printStackTrace(); }finally {
+				 */
+				/*
+				 * ObjectOutputStream oos_room = null; ObjectInputStream ois_room = null; try{
+				 * Socket s_room = new Socket(client.ServerAddress,client.room_port);
+				 * OutputStream os_room = s_room.getOutputStream(); oos_room = new
+				 * ObjectOutputStream(os_room);
+				 * 
+				 * InputStream is_room = s_room.getInputStream(); ois_room = new
+				 * ObjectInputStream(is_room); System.out.println("start oserov4"); new
+				 * Oserov4(client, oos_room, ois_room); }catch (Exception e1){
+				 * //e.printStackTrace(); }finally {
+				 * 
+				 * }
+				 */ // ->Display4 Action
+				// }
+			} else {
+				// login failed
+				// TODO show "login failed"
 				System.out.println("Login Failed");
 			}
 		}
-		//osero 対局の終了
-	
-		//button ルール説明
-		if(e.getSource()==btn[3]){
+		// osero 対局の終了
+
+		// button ルール説明
+		if (e.getSource() == btn[3]) {
 			new Explain("Explaination", client);
 			this.dispose();
 		}
