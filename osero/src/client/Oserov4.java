@@ -63,7 +63,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 	JFrame j = new JFrame();
 	Room.Display4 room;
 
-	public Oserov4(Client client, ObjectOutputStream oos, ObjectInputStream ois, Room.Display4 room) {
+	public Oserov4(Client client, ObjectOutputStream oos, ObjectInputStream ois) {
 		this.client = client;
 		// this.oos = oos;
 		// this.ois = ois;
@@ -853,8 +853,10 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 				public void run() {
 					time = time - 1;
 					l2.setText("Left time: " + String.valueOf(time));
+					//time out の処理
 					if (time_limit == 0) {
 						System.out.println("Time out");
+						
 						new Result(1 - my_turn,client,display);
 						try {
 							transData end = new transData(36);

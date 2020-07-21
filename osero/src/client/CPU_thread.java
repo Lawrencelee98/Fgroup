@@ -35,7 +35,7 @@ public class CPU_thread extends Thread{
 				client.oserov4_cpu.j.setVisible(false);
 				System.out.println("Battle start!");
 				client.CPUflag = true;
-				new Oserov4(client, client.oos, client.ois,);
+				new Oserov4(client, client.oos, client.ois);
 			} else {
 				System.out.println("cant receive start");
 			}
