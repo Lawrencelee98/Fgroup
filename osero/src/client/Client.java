@@ -190,6 +190,9 @@ public class Client {
             //return room_port;
         }
 	}
+	public boolean time_out_reciever(){
+		transData timeout = ois.readObject();
+	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Client client = new Client();
