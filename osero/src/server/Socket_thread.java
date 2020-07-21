@@ -61,8 +61,6 @@ public class Socket_thread extends Thread{
                     if (Server.login(data, os)) {
                         // login success
 
-                        System.out.println("thread [ " + String.valueOf(num) + " ] : room info sent");
-//                        os.flush();
 
                         // name set
                         this.username = data.get_login_name();
