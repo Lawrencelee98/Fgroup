@@ -104,6 +104,9 @@ public class transData implements Serializable{
     public Map<Integer, Integer> get_room_info(){
         return room_info;
     }
+    public List<String> get_players_info(){
+        return players_info;
+    }
     public void set_room_info(Map<Integer, Integer> room_info, List<String> players_info){
         this.room_info = room_info;
         this.players_info = players_info;

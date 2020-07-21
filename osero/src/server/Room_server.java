@@ -12,6 +12,8 @@ public class Room_server extends Thread {
 
     private String name_p1, name_p2;
 
+    private int time;
+
     public Room_server(int port_1, int port_2, int room_num) {
         this.port_1 = port_1;
         this.port_2 = port_2;
