@@ -1,6 +1,8 @@
+package server;
 import java.io.*;
 import java.net.*;
 import java.util.*;
+import transData.*;
 
 public class Timer_manage_server extends Thread{
 

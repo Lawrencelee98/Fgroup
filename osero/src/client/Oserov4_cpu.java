@@ -57,8 +57,8 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
     JFrame j = new JFrame();
     Timer_count_down time_count_down = new Timer_count_down(time_limit, l2);
 
-    public Oserov4_cpu() {
-
+    public Oserov4_cpu(ObjectInputStream ois_room,ObjectOutputStream oos_room,int time) {
+        this.time_limit = time;
         c = j.getContentPane();
 
         // j.setSize(800,600);
@@ -192,7 +192,9 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
         j.setResizable(false);
         map.initMap();
         map.castToBoard(this);
-    }
+        Data_reciever data_reciever = new Data_reciever(ois_room,this);
+        data_reciever.start();
+    }   
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -744,8 +746,33 @@ class Timer_count_down extends Thread {
 
     public void reset() {
         time = time_limit;
+    } 
+} 
+class Data_reciever extends Thread{
+    ObjectInputStream ois_room =null;
+    Oserov4_cpu osero = null;
+     Data_reciever(ObjectInputStream ois_room,Oserov4_cpu osero){
+        this.ois_room = ois_room;
+        this.osero = osero;
     }
-} // Oserov4
+    public void run(){
+        try{
+            transData data = new transData(80);
+            
+            int f_time;
+            data = (transData)ois_room.readObject();
+            System.out.println("recieved battle start from server");
+            if(data.get_protocol()==80){
+               f_time = data.get_time();
+                new Room.Display6(f_time);
+                osero.dispose();
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+}
+// Oserov4
 
 // comment: 棋盘应该是横纵为偶数，并且初始化双方各两个子交叉排列在中心，只有旁边有棋子的时候才能下棋
 

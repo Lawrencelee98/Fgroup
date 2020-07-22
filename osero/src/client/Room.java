@@ -27,19 +27,20 @@ public class Room {
 	static ObjectOutputStream oos = null;
 	static ObjectInputStream ois = null;
 	Client client = null;
+	static ObjectOutputStream oos_room = null;
+	static ObjectInputStream ois_room = null;
 	private static int room_port = 0;
 	private static int room_num = -1;
-	static String final_time; 
 
 	public Room(Client client, Map<Integer, Integer> room_info, ObjectOutputStream oos, ObjectInputStream ois) {
-		this.client=client;
+		this.client = client;
 		this.room_info = room_info;
 		this.oos = oos;
 		this.ois = ois;
 		client.oos = oos;
 		client.ois = ois;
 		new Display4();
-		
+
 	}
 
 	// use function -- client.send_room_num(int room_number); to send information of
@@ -49,47 +50,48 @@ public class Room {
 		return room_port;
 	}
 
+	// ルームを選ぶ画面
 	public class Display4 extends JFrame implements ActionListener {
 		JLabel label1 = new JLabel("ルーム1");
 		JLabel label2 = new JLabel("ルーム2");
 		JLabel label3 = new JLabel("ルーム3");
 		JLabel label4 = new JLabel("ルーム4");
-		//M:空き情報などのラベルの格納
+		// M:空き情報などのラベルの格納
 		String[] room_label = new String[8];
-		//M:room内のプレイヤー管理(いるなら1, いないなら0)
-		int[] room_player= new int[8];
-		
+		// M:room内のプレイヤー管理(いるなら1, いないなら0)
+		int[] room_player = new int[8];
+
 		JButton b11 = null;
 		JButton b12 = null;
 		JButton b21 = null;
 		JButton b22 = null;
 		JButton b31 = null;
-		JButton b32 = null; 
+		JButton b32 = null;
 		JButton b41 = null;
 		JButton b42 = null;
 		JButton CPU_match = null;
 
-		public Display4()	{
+		public Display4() {
 			System.out.println("Display4 method");
-			for(int i=1, j=0;i<5;i++, j+=2) {
-				if(room_info.get(i)==0) {
+			for (int i = 1, j = 0; i < 5; i++, j += 2) {
+				if (room_info.get(i) == 0) {
 					room_label[j] = "空き";
-					room_label[j+1] = "空き";
+					room_label[j + 1] = "空き";
 					room_player[j] = 0;
-					room_player[j+1] = 0;
-				}else if(room_info.get(i)==1){
-					//M:プレイヤー情報の格納
+					room_player[j + 1] = 0;
+				} else if (room_info.get(i) == 1) {
+					// M:プレイヤー情報の格納
 					room_label[j] = "Player1";
-					room_label[j+1] = "空き";
+					room_label[j + 1] = "空き";
 					room_player[j] = 1;
-					room_player[j+1] = 0;
-				}else if(room_info.get(i)==2){
-					//M:プレイヤー情報の格納
+					room_player[j + 1] = 0;
+				} else if (room_info.get(i) == 2) {
+					// M:プレイヤー情報の格納
 					room_label[j] = "Player1";
-					room_label[j+1] = "Player2";
+					room_label[j + 1] = "Player2";
 					room_player[j] = 1;
-					room_player[j+1] = 1;
-				}else {
+					room_player[j + 1] = 1;
+				} else {
 					System.out.println("Room.Display4:room_info error");
 				}
 			}
@@ -275,7 +277,7 @@ public class Room {
 			setSize(1000, 600);
 			setTitle("ルーム選択画面");
 			setVisible(true);
-			
+
 		}
 
 		public void actionPerformed(ActionEvent e) {
@@ -286,125 +288,133 @@ public class Room {
 				if (e.getSource() == b11) {
 					room_player[0] = 1;
 					room_num = 1;
-				setVisible(false);
-				if (room_player[1] == 1) {
 					new Display5(client);
-				}
-				
+					setVisible(false);
+					if (room_player[1] == 1) {
+						new Display5(client);
+					}
+
 				} else if (e.getSource() == b12) {
 					room_player[1] = 1;
 					room_num = 1;
+					new Display5(client);
 					setVisible(false);
 					if (room_player[0] == 1) {
-						//new Display5();
+						new Display5(client);
 					}
 				} else if (e.getSource() == b21) {
 					room_player[2] = 1;
 					room_num = 2;
+					new Display5(client);
 					setVisible(false);
 					if (room_player[3] == 1) {
-						//new Display5();
+						new Display5(client);
 					}
 				} else if (e.getSource() == b22) {
 					room_player[3] = 1;
 					room_num = 2;
+					new Display5(client);
 					setVisible(false);
 					if (room_player[2] == 1) {
-						//new Display5();
+						new Display5(client);
 					}
 				} else if (e.getSource() == b31) {
 					room_player[4] = 1;
 					room_num = 3;
+					new Display5(client);
 					setVisible(false);
 					if (room_player[5] == 1) {
-						//new Display5();
+						new Display5(client);
 					}
 				} else if (e.getSource() == b32) {
 					room_player[5] = 1;
 					room_num = 3;
+					new Display5(client);
 					setVisible(false);
 					if (room_player[4] == 1) {
-						//new Display5();
+						new Display5(client);
 					}
 				} else if (e.getSource() == b41) {
 					room_player[6] = 1;
 					room_num = 4;
+					new Display5(client);
 					setVisible(false);
 					if (room_player[7] == 1) {
-						//new Display5();
+						new Display5(client);
 					}
 				} else if (e.getSource() == b42) {
 					room_player[7] = 1;
 					room_num = 4;
+					new Display5(client);
 					setVisible(false);
 					if (room_player[6] == 1) {
-						//new Display5();
+						new Display5(client);
 					}
-				}else if(e.getSource()==CPU_match){
-					new Oserov4_cpu();
+				} else if (e.getSource() == CPU_match) {
+					new Oserov4_cpu(ois_room, oos_room, 30);
 				}
 				transData room_choice = new transData(13);
-	            room_choice.set_room_num(room_num);
-	            System.out.println("room choice="+room_choice.get_room_num());
-	            try {
+				room_choice.set_room_num(room_num);
+				System.out.println("room choice=" + room_choice.get_room_num());
+				try {
 					oos.writeObject(room_choice);
 					System.out.println("sent room choice");
-					transData return_port = (transData)ois.readObject();
+					transData return_port = (transData) ois.readObject();
 					System.out.println("receive return port");
-		            client.room_port = return_port.get_port();
-		            System.out.println("Room:Action, room_port="+client.room_port);
-		            ObjectOutputStream oos_room = null;
-			        ObjectInputStream ois_room = null;
-			        try{
-			            Socket s_room = new Socket(client.ServerAddress,client.room_port);
-			            OutputStream os_room = s_room.getOutputStream();
-			            oos_room = new ObjectOutputStream(os_room);
+					client.room_port = return_port.get_port();
+					System.out.println("Room:Action, room_port=" + client.room_port);
 
-			            InputStream is_room = s_room.getInputStream();
-			            ois_room = new ObjectInputStream(is_room);
-			            System.out.println("start oserov4");
-			            new Oserov4(client, oos_room, ois_room);
-			        }catch (Exception e1){
-			            //e.printStackTrace();
-			        	
-			        }finally {
+					try {
+						Socket s_room = new Socket(client.ServerAddress, client.room_port);
+						OutputStream os_room = s_room.getOutputStream();
+						oos_room = new ObjectOutputStream(os_room);
 
-			        }
+						InputStream is_room = s_room.getInputStream();
+						ois_room = new ObjectInputStream(is_room);
+						// System.out.println("start oserov4");
+						// new Oserov4(client, oos_room, ois_room);
+					} catch (Exception e1) {
+						// e.printStackTrace();
+
+					} finally {
+
+					}
 				} catch (IOException | ClassNotFoundException e1) {
 					// TODO 自動生成された catch ブロック
 					e1.printStackTrace();
-				}finally {
-					
+				} finally {
+
 				}
-	            
-	            /*ObjectOutputStream oos_room = null;
-	            ObjectInputStream ois_room = null;
-	            try{
-	                Socket s_room = new Socket(,room_port);
-	                //s.close(); // close unnecessary socket
 
-	                OutputStream os_room = s_room.getOutputStream();
-	                oos_room = new ObjectOutputStream(os_room);
-
-	                InputStream is_room = s_room.getInputStream();
-	                ois_room = new ObjectInputStream(is_room);
-
-	            }catch (Exception er){
-	                //er.printStackTrace();
-	            }finally {
-	            	new Oserov4(oos_room, ois_room);
-	            }*/
+				/*
+				 * ObjectOutputStream oos_room = null; ObjectInputStream ois_room = null; try{
+				 * Socket s_room = new Socket(,room_port); //s.close(); // close unnecessary
+				 * socket
+				 * 
+				 * OutputStream os_room = s_room.getOutputStream(); oos_room = new
+				 * ObjectOutputStream(os_room);
+				 * 
+				 * InputStream is_room = s_room.getInputStream(); ois_room = new
+				 * ObjectInputStream(is_room);
+				 * 
+				 * }catch (Exception er){ //er.printStackTrace(); }finally { new
+				 * Oserov4(oos_room, ois_room); }
+				 */
 			}
 		}
 
 	}
 
 	public static class Display6 extends JFrame implements ActionListener {
-
-		JLabel label = new JLabel("<html>対戦相手の希望時間は、<br/>" + str + "です。<br/>合意しますか？</html>");
+		String time_str = "";
+		JLabel label = new JLabel("<html>対戦相手の希望時間は、<br/>" + time_str + "です。<br/>合意しますか？</html>");
 		Client client = null;
-		Display6(Client client) {
-			this.client = client;
+		int time;
+
+		Display6(int time) {
+
+			this.time = time;
+			time_str = String.valueOf(time);
 			setLayout(new FlowLayout());
 			JPanel p = new JPanel();
 			p.setLayout(new BorderLayout());
@@ -440,7 +450,8 @@ public class Room {
 
 		public void actionPerformed(ActionEvent e) {
 			if (e.getActionCommand().equals("合意する")) {
-				new Oserov4(this.client,client.oos,client.ois,final_time);
+
+				new Oserov4(client, client.oos, client.ois, this.time);
 			} else if (e.getActionCommand().equals("合意しない")) {
 				setVisible(false);
 				new Display5(client);
@@ -454,6 +465,7 @@ public class Room {
 
 		JLabel label = new JLabel("<html>自分の持ち時間の希望を<br/>対戦相手に送信します。<br/>以下から選んでください。</html>");
 		Client client = null;
+
 		Display5(Client client) {
 			setLayout(new FlowLayout());
 			JPanel p = new JPanel();
@@ -471,7 +483,7 @@ public class Room {
 			p.add(pn, "North");
 			JPanel pc = new JPanel();
 			pc.setLayout(new FlowLayout());
-		
+
 			JButton b2 = new JButton("10秒");
 			b2.setPreferredSize(new Dimension(90, 30));
 			b2.addActionListener(this);
@@ -496,42 +508,45 @@ public class Room {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			int time ;
-			
-			boolean flag = false;
+			int time = -1;
 			if (e.getActionCommand().equals("10秒")) {
 				str = "10秒";
-				time =10;
-				final_time=client.send_wait_time(time,client.ois,client.oos);
-				new Display6(this.client);
-				this.dispose();
+				time = 10;
+				this.setVisible(false);
+
+				// new Display6(this.client);
+
 			} else if (e.getActionCommand().equals("15秒")) {
 				str = "15秒";
-				time=15;
-				final_time=client.send_wait_time(time,client.ois,client.oos);
-				new Display6(this.client);
-				this.dispose();
+				time = 15;
+				this.setVisible(false);
+
+				// new Display6(this.client);
+
 			} else if (e.getActionCommand().equals("30秒")) {
 				str = "30秒";
-				time=30;
-				final_time=client.send_wait_time(time,client.ois,client.oos);
-				new Display6(this.client);
-				this.dispose();
-			} 
-			if(flag){
-				System.out.println("send waiting time successed");
+				time = 30;
+				this.setVisible(false);
 
+				// new Display6(this.client);
 
-			}else{
-				System.out.println("send waiting time fail");
+			}
+			try {
+				transData time_data = new transData(0);
+				time_data.set_wait_time(time);
+				oos_room.writeObject(time_data);
+				System.out.println("start osero_cpu");
+				new Oserov4_cpu(ois_room, oos_room, time);
+			} catch (Exception erro1) {
+				erro1.printStackTrace();
 			}
 		}
 
 	}
 
 	public static void main(String[] args) {
-		//System.out.println("Room:main");
-		//new Room();
+		// System.out.println("Room:main");
+		// new Room();
 	}
 
 }
