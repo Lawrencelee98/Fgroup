@@ -407,7 +407,7 @@ public class Room {
 
 	public static class Display6 extends JFrame implements ActionListener {
 		String time_str = "";
-		JLabel label = new JLabel("<html>対戦相手の希望時間は、<br/>" + time_str + "です。<br/>合意しますか？</html>");
+		JLabel label = new JLabel("<html>ユーザが選ぶ時間が違うため<br/>"+"システムが決める時間は" + time_str + "です。<br/>合意しますか？</html>");
 		Client client = null;
 		int time;
 
@@ -415,6 +415,7 @@ public class Room {
 
 			this.time = time;
 			time_str = String.valueOf(time);
+			label.setText("<html>ユーザが選ぶ時間が違うため<br/>"+"システムが決める時間は" + time_str + "です。<br/>合意しますか？</html>");
 			setLayout(new FlowLayout());
 			JPanel p = new JPanel();
 			p.setLayout(new BorderLayout());
@@ -451,7 +452,9 @@ public class Room {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getActionCommand().equals("合意する")) {
 
-				new Oserov4(client, client.oos, client.ois, this.time);
+				start_Osero start_osero = new start_Osero(client,ois,oos,this.time);
+				start_osero.start();
+				this.dispose();
 			} else if (e.getActionCommand().equals("合意しない")) {
 				setVisible(false);
 				new Display5(client);
@@ -549,4 +552,19 @@ public class Room {
 		// new Room();
 	}
 
+}
+class start_Osero extends Thread{
+	Client client;
+	ObjectInputStream ois;
+	ObjectOutputStream oos;
+	int time;
+	start_Osero(Client client , ObjectInputStream ois, ObjectOutputStream oos,int time){
+		this.client = client;
+		this.ois = ois;
+		this.oos = oos;
+		this.time = time;
+	}
+	public void run(){
+		Oserov4 osero = new Oserov4(client, oos ,ois ,time);
+	}
 }

@@ -67,9 +67,9 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 		this.client = client;
 		// this.oos = oos;
 		// this.ois = ois;
-		client.oos = oos;
-		client.ois = ois;
-		this.room = room;
+		//client.oos = oos;
+		//client.ois = ois;
+		//this.room = room;
 		this.time_limit =time;
 		new Display();
 		// System.out.println("Battlereceiver");

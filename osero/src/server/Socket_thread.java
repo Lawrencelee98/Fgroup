@@ -229,10 +229,10 @@ public class Socket_thread extends Thread{
                     port_send_obj.set_port_send(port_send);
                     os.writeObject(port_send_obj);
 
-                }else if(Server.room_info.get(num)==1){
+                }else if(Server.room_info.get(room_num)==1){
                     // battle start
-                    Server.room_info.put(num,2);
-                    this.room_num = num;
+                    Server.room_info.put(room_num,2);
+                    this.room_num = room_num;
                     this.running = false;
 
                     int port_send=0;
@@ -269,7 +269,7 @@ public class Socket_thread extends Thread{
                     }
 
 
-
+                    System.out.println("Socket thread : ready to send room port ");
                     transData port_send_obj = new transData(85);
                     port_send_obj.set_port_send(port_send);
                     os.writeObject(port_send_obj);
