@@ -148,9 +148,13 @@ public class transData implements Serializable{
     // battle_start--------------------------
     // server ---> client
     // protocol = 80
-//    boolean first_turn = false;
-
-
+    private int time;
+    public void set_time(int time){
+        this.time = time;
+    }
+    public int get_time(){
+        return time;
+    }
     // --------------------------battle_start
 
     // login------------------------------
@@ -269,13 +273,19 @@ public class transData implements Serializable{
     // 時間選択に使う--------------------------
     // client ---> server
     // protocol = 0
-    private int wait_time = 0;
+    private int wait_time = 10;
     public void set_wait_time(int time){
 		this.wait_time = time;
     }
-    private int result_time=0;
+    public int get_wait_time(){
+        return wait_time;
+    }
+    private int result_time=10;
     public String get_result_time(){
         return String.valueOf(result_time);
+    }
+    public void set_result_time(int time){
+        this.result_time = time;
     }
     // --------------------------時間選択に使う
 }
