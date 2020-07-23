@@ -454,6 +454,12 @@ public class Room {
 
 				start_Osero start_osero = new start_Osero(client,ois,oos,this.time);
 				start_osero.start();
+				try{
+					client.send_battle_start(client.oos);
+				}catch(Exception erro){
+					erro.printStackTrace();
+				}
+
 				this.dispose();
 			} else if (e.getActionCommand().equals("合意しない")) {
 				setVisible(false);

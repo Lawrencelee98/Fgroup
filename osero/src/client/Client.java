@@ -205,6 +205,17 @@ public class Client {
 			e.printStackTrace();
 		}
 	}
+	//send battle start information to server
+	public void send_battle_start(ObjectOutputStream oos){
+		transData battle_start = new transData(80);
+		try{
+			oos.writeObject(battle_start);
+			oos.flush();
+		}catch(Exception erro){
+			erro.printStackTrace();
+		}
+
+	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

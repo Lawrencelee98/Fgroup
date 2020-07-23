@@ -49,10 +49,10 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 	Client client = null;
 	int count = 0;
 	int result = 5;
-
+	// protocol番号3でオセロの駒の位置情報をs_dataでサーバに送る。
 	transData s_data = new transData(3);
 	transData r_data = null;
-
+	transData battle_start = null;
 	Ban map = new Ban();
 	HashMap<Integer, transData> hash = new HashMap<Integer, transData>();
 
@@ -63,14 +63,14 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 	JFrame j = new JFrame();
 	Room.Display4 room;
 
-	public Oserov4(Client client, ObjectOutputStream oos, ObjectInputStream ois,int time) {
+	public Oserov4(Client client, ObjectOutputStream oos, ObjectInputStream ois, int time) {
 		this.client = client;
 		// this.oos = oos;
 		// this.ois = ois;
-		//client.oos = oos;
-		//client.ois = ois;
-		//this.room = room;
-		this.time_limit =time;
+		// client.oos = oos;
+		// client.ois = ois;
+		// this.room = room;
+		this.time_limit = time;
 		new Display();
 		// System.out.println("Battlereceiver");
 		// client.BattleReceiver(map);
@@ -222,32 +222,19 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 			time_count_down.start();
 			// data exchange
 
-			System.out.println("b if receive");
-			if (client.CPUflag == false) {
-				try {
-					// receive battle start notice
-					System.out.println("before 80 receive: CPUflag = " + client.CPUflag);
-					// while(r_data.get_protocol() != 80) {
-					r_data = (transData) client.ois.readObject();
-					// }
-					System.out.println("after 80 receive");
-				} catch (ClassNotFoundException e11) {
-					e11.printStackTrace();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				} finally {
-
-				}
-				if (r_data.get_protocol() == 80) {
-					System.out.println("Battle start!");
+			// waiting for server send battle start info
+			try {
+				battle_start = (transData) client.ois.readObject();
+				if (battle_start.get_protocol() == 80) {
+					System.out.println("Recieve game start information");
 				} else {
-					System.out.println("cant receive start");
+					//
 				}
-			} else {
-				System.out.println("not receive 80 in Oserov4");
+			} catch (Exception erro) {
+				erro.printStackTrace();
 			}
+
 			// 次以降の時のため
-			client.CPUflag = false;
 
 			System.out.println("please wait for opponent");
 			try {
