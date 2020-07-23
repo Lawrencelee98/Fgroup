@@ -24,6 +24,7 @@ public class Room {
 	private PrintWriter out;
 	static String str;
 	static Map<Integer, Integer> room_info;
+	static List<String> players_info;
 	static ObjectOutputStream oos = null;
 	static ObjectInputStream ois = null;
 	Client client = null;
@@ -32,9 +33,10 @@ public class Room {
 	private static int room_port = 0;
 	private static int room_num = -1;
 
-	public Room(Client client, Map<Integer, Integer> room_info, ObjectOutputStream oos, ObjectInputStream ois) {
+	public Room(Client client, Map<Integer, Integer> room_info, List<String> players_info, ObjectOutputStream oos, ObjectInputStream ois) {
 		this.client = client;
 		this.room_info = room_info;
+		this.players_info = players_info;
 		this.oos = oos;
 		this.ois = ois;
 		client.oos = oos;
@@ -136,7 +138,7 @@ public class Room {
 				b11.setFont(b11.getFont().deriveFont(40.0f));
 				p1112.add(b11);
 			} else {
-				JLabel playera = new JLabel("<html>プレイヤ名A<br/>（成績）</html>");
+				JLabel playera = new JLabel(get_record_label(players_info.get(0)));
 				p1112.add(playera);
 				playera.setFont(playera.getFont().deriveFont(20.0f));
 			}
@@ -148,7 +150,7 @@ public class Room {
 				b12.setFont(b12.getFont().deriveFont(40.0f));
 				p1113.add(b12);
 			} else {
-				JLabel playerb = new JLabel("<html>プレイヤ名B<br/>（成績）</html>");
+				JLabel playerb = new JLabel(get_record_label(players_info.get(1)));
 				p1113.add(playerb);
 				playerb.setFont(playerb.getFont().deriveFont(20.0f));
 			}
@@ -174,7 +176,7 @@ public class Room {
 				b21.setFont(b21.getFont().deriveFont(40.0f));
 				p2222.add(b21);
 			} else {
-				JLabel playerc = new JLabel("<html>プレイヤ名C<br/>（成績）</html>");
+				JLabel playerc = new JLabel(get_record_label(players_info.get(2)));
 				p2222.add(playerc);
 				playerc.setFont(playerc.getFont().deriveFont(20.0f));
 			}
@@ -186,7 +188,7 @@ public class Room {
 				b22.setFont(b22.getFont().deriveFont(40.0f));
 				p2223.add(b22);
 			} else {
-				JLabel playerd = new JLabel("<html>プレイヤ名D<br/>（成績）</html>");
+				JLabel playerd = new JLabel(get_record_label(players_info.get(3)));
 				p2223.add(playerd);
 				playerd.setFont(playerd.getFont().deriveFont(20.0f));
 			}
@@ -212,7 +214,7 @@ public class Room {
 				b31.setFont(b31.getFont().deriveFont(40.0f));
 				p3332.add(b31);
 			} else {
-				JLabel playere = new JLabel("<html>プレイヤ名E<br/>（成績）</html>");
+				JLabel playere = new JLabel(get_record_label(players_info.get(4)));
 				p3332.add(playere);
 				playere.setFont(playere.getFont().deriveFont(20.0f));
 			}
@@ -224,7 +226,7 @@ public class Room {
 				b32.setFont(b32.getFont().deriveFont(40.0f));
 				p3333.add(b32);
 			} else {
-				JLabel playerf = new JLabel("<html>プレイヤ名F<br/>（成績）</html>");
+				JLabel playerf = new JLabel(get_record_label(players_info.get(5)));
 				p3333.add(playerf);
 				playerf.setFont(playerf.getFont().deriveFont(20.0f));
 			}
@@ -250,7 +252,7 @@ public class Room {
 				b41.setFont(b41.getFont().deriveFont(40.0f));
 				p4442.add(b41);
 			} else {
-				JLabel playerg = new JLabel("<html>プレイヤ名G<br/>（成績）</html>");
+				JLabel playerg = new JLabel(get_record_label(players_info.get(6)));
 				p4442.add(playerg);
 				playerg.setFont(playerg.getFont().deriveFont(20.0f));
 			}
@@ -262,7 +264,7 @@ public class Room {
 				b42.setFont(b42.getFont().deriveFont(40.0f));
 				p4443.add(b42);
 			} else {
-				JLabel playerh = new JLabel("<html>プレイヤ名H<br/>（成績）</html>");
+				JLabel playerh = new JLabel(get_record_label(players_info.get(7)));
 				p4443.add(playerh);
 				playerh.setFont(playerh.getFont().deriveFont(20.0f));
 			}
@@ -403,6 +405,19 @@ public class Room {
 			}
 		}
 
+	}
+
+	private String get_record_label(String str){//strには"name:usr_0, win:0, lose:0, draw:0, rate:0"を与える
+		String res = new String();
+		String[] arr = str.split(",", 0);
+		res = "<html>";
+		res += arr[0].substring(16).trim() + "<br/>";//name
+		res += arr[1].substring(5).trim() + "勝 ";//win
+		res += arr[2].substring(6).trim() + "負 ";//lose
+		res += arr[3].substring(6).trim() + "分 ";//draw
+		res += "レート" + arr[4].substring(6).trim();//rate
+		res += "</html>";
+		return res;
 	}
 
 	public static class Display6 extends JFrame implements ActionListener {

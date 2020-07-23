@@ -162,7 +162,9 @@ public class Client {
 			System.out.println("room_obj end");
 			Map<Integer, Integer> room_info = room_obj.get_room_info();
 			System.out.println(room_info);
-			room = new Room(this, room_info, oos, ois);
+			List<String> players_info = room_obj.get_players_info();
+			System.out.println(players_info);
+			room = new Room(this, room_info, players_info, oos, ois);
 
 			// Scanner scan = new Scanner(System.in);
 			// room_num = scan.nextInt();
