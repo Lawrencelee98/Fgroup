@@ -33,7 +33,8 @@ public class Room {
 	private static int room_port = 0;
 	private static int room_num = -1;
 
-	public Room(Client client, Map<Integer, Integer> room_info, List<String> players_info, ObjectOutputStream oos, ObjectInputStream ois) {
+	public Room(Client client, Map<Integer, Integer> room_info, List<String> players_info, ObjectOutputStream oos,
+			ObjectInputStream ois) {
 		this.client = client;
 		this.room_info = room_info;
 		this.players_info = players_info;
@@ -407,22 +408,22 @@ public class Room {
 
 	}
 
-	private String get_record_label(String str){//strには"name:usr_0, win:0, lose:0, draw:0, rate:0"を与える
+	private String get_record_label(String str) {// strには"name:usr_0, win:0, lose:0, draw:0, rate:0"を与える
 		String res = new String();
 		String[] arr = str.split(",", 0);
 		res = "<html>";
-		res += arr[0].substring(16).trim() + "<br/>";//name
-		res += arr[1].substring(5).trim() + "勝 ";//win
-		res += arr[2].substring(6).trim() + "負 ";//lose
-		res += arr[3].substring(6).trim() + "分 ";//draw
-		res += "レート" + arr[4].substring(6).trim();//rate
+		res += arr[0].substring(16).trim() + "<br/>";// name
+		res += arr[1].substring(5).trim() + "勝 ";// win
+		res += arr[2].substring(6).trim() + "負 ";// lose
+		res += arr[3].substring(6).trim() + "分 ";// draw
+		res += "レート" + arr[4].substring(6).trim();// rate
 		res += "</html>";
 		return res;
 	}
 
 	public static class Display6 extends JFrame implements ActionListener {
 		String time_str = "";
-		JLabel label = new JLabel("<html>ユーザが選ぶ時間が違うため<br/>"+"システムが決める時間は" + time_str + "です。<br/>合意しますか？</html>");
+		JLabel label = new JLabel("<html>ユーザが選ぶ時間が違うため<br/>" + "システムが決める時間は" + time_str + "です。<br/>合意しますか？</html>");
 		Client client = null;
 		int time;
 
@@ -430,7 +431,7 @@ public class Room {
 
 			this.time = time;
 			time_str = String.valueOf(time);
-			label.setText("<html>ユーザが選ぶ時間が違うため<br/>"+"システムが決める時間は" + time_str + "です。<br/>合意しますか？</html>");
+			label.setText("<html>ユーザが選ぶ時間が違うため<br/>" + "システムが決める時間は" + time_str + "です。<br/>合意しますか？</html>");
 			setLayout(new FlowLayout());
 			JPanel p = new JPanel();
 			p.setLayout(new BorderLayout());
@@ -467,11 +468,11 @@ public class Room {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getActionCommand().equals("合意する")) {
 
-				start_Osero start_osero = new start_Osero(client,ois,oos,this.time);
+				start_Osero start_osero = new start_Osero(client, ois, oos, this.time);
 				start_osero.start();
-				try{
+				try {
 					client.send_battle_start(client.oos);
-				}catch(Exception erro){
+				} catch (Exception erro) {
 					erro.printStackTrace();
 				}
 
@@ -537,6 +538,7 @@ public class Room {
 				str = "10秒";
 				time = 10;
 				this.setVisible(false);
+				this.dispose();
 
 				// new Display6(this.client);
 
@@ -544,6 +546,7 @@ public class Room {
 				str = "15秒";
 				time = 15;
 				this.setVisible(false);
+				this.dispose();
 
 				// new Display6(this.client);
 
@@ -551,6 +554,7 @@ public class Room {
 				str = "30秒";
 				time = 30;
 				this.setVisible(false);
+				this.dispose();
 
 				// new Display6(this.client);
 
@@ -574,18 +578,21 @@ public class Room {
 	}
 
 }
-class start_Osero extends Thread{
+
+class start_Osero extends Thread {
 	Client client;
 	ObjectInputStream ois;
 	ObjectOutputStream oos;
 	int time;
-	start_Osero(Client client , ObjectInputStream ois, ObjectOutputStream oos,int time){
+
+	start_Osero(Client client, ObjectInputStream ois, ObjectOutputStream oos, int time) {
 		this.client = client;
 		this.ois = ois;
 		this.oos = oos;
 		this.time = time;
 	}
-	public void run(){
-		Oserov4 osero = new Oserov4(client, oos ,ois ,time);
+
+	public void run() {
+		Oserov4 osero = new Oserov4(client, oos, ois, time);
 	}
 }

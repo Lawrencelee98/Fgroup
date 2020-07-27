@@ -742,6 +742,8 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 							A[j].setOpaque(true);
 						} else if (map[j][i] == 2) {
 							A[j].setIcon(iconG);
+						}else{
+							A[j].setIcon(null);
 						}
 					}
 				} else if (i == 1) {
@@ -754,6 +756,8 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 							B[j].setOpaque(true);
 						} else if (map[j][i] == 2) {
 							B[j].setIcon(iconG);
+						}else{
+							B[j].setIcon(null);
 						}
 					}
 				} else if (i == 2) {
@@ -766,6 +770,8 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 							C[j].setOpaque(true);
 						} else if (map[j][i] == 2) {
 							C[j].setIcon(iconG);
+						}else{
+							C[j].setIcon(null);
 						}
 					}
 				} else if (i == 3) {
@@ -778,6 +784,8 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 							D[j].setOpaque(true);
 						} else if (map[j][i] == 2) {
 							D[j].setIcon(iconG);
+						}else{
+							D[j].setIcon(null);
 						}
 					}
 				} else if (i == 4) {
@@ -790,6 +798,8 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 							E[j].setOpaque(true);
 						} else if (map[j][i] == 2) {
 							E[j].setIcon(iconG);
+						}else{
+							E[j].setIcon(null);
 						}
 					}
 				} else if (i == 5) {
@@ -802,6 +812,8 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 							F[j].setOpaque(true);
 						} else if (map[j][i] == 2) {
 							F[j].setIcon(iconG);
+						}else{
+							F[j].setIcon(null);
 						}
 					}
 				} else if (i == 6) {
@@ -814,6 +826,8 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 							G[j].setOpaque(true);
 						} else if (map[j][i] == 2) {
 							G[j].setIcon(iconG);
+						}else{
+							G[j].setIcon(null);
 						}
 					}
 				} else if (i == 7) {
@@ -826,6 +840,8 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 							H[j].setOpaque(true);
 						} else if (map[j][i] == 2) {
 							H[j].setIcon(iconG);
+						}else{
+							H[j].setIcon(null);
 						}
 					}
 				}

@@ -46,6 +46,7 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
     int time_limit = 30;
     boolean interuput = false;
     int CPU_switch = 1;
+    boolean cpu_switch = true;
 
     Osero_setting_cpu osero_setting;
     ImageIcon iconB = new ImageIcon(getClass().getResource("00Black.jpg"));
@@ -55,7 +56,7 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
     Map map = new Map();
     HashMap<Integer, transData> hash = new HashMap<Integer, transData>();
     JFrame j = new JFrame();
-    Timer_count_down time_count_down = new Timer_count_down(time_limit, l2);
+   // Timer_count_down time_count_down = new Timer_count_down(time_limit, l2);
 
     public Oserov4_cpu(ObjectInputStream ois_room,ObjectOutputStream oos_room,int time) {
         this.time_limit = time;
@@ -86,7 +87,7 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
         b1.addActionListener(this);
     
         int buttonSize = 46;
-        time_count_down.start();
+       // time_count_down.start();
         // Timer
 
         Timer chess_number_count = new Timer();
@@ -192,8 +193,11 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
         j.setResizable(false);
         map.initMap();
         map.castToBoard(this);
-        Data_reciever data_reciever = new Data_reciever(ois_room,this);
+        Data_reciever data_reciever = new Data_reciever(ois_room,cpu_switch);
         data_reciever.start();
+        if(this.cpu_switch){
+            this.dispose();
+        }
     }   
 
     @Override
@@ -221,83 +225,99 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
             for (int i = 0; i < 8; i++) {
                 if (e.getSource() == A[i]&&map.getMapValue(i, 0) == 2) {
                     map.updateMap(i, 0, turn);
+                    
                     map.castToBoard(this);
                     turn = 1 - turn;
                     map.checkMap(turn);
                     matchCPU(turn);
                     turn = 1 - turn;
+                    map.checkMap(0);
                     map.castToBoard(this);
-                    time_count_down.reset();
+                    //time_count_down.reset();
 
                 } else if (e.getSource() == B[i]&&map.getMapValue(i, 1) == 2) {
                     map.updateMap(i, 1, turn);
+                
                     map.castToBoard(this);
                     turn = 1 - turn;
                     map.checkMap(turn);
                     matchCPU(turn);
                     turn = 1 - turn;
+                    map.checkMap(0);
                     map.castToBoard(this);
-                    time_count_down.reset();
+                    //time_count_down.reset();
 
                 } else if (e.getSource() == C[i]&&map.getMapValue(i, 2) == 2) {
                     map.updateMap(i, 2, turn);
+                  
                     map.castToBoard(this);
                     turn = 1 - turn;
                     map.checkMap(turn);
                     matchCPU(turn);
                     turn = 1 - turn;
+                    map.checkMap(0);
                     map.castToBoard(this);
-                    time_count_down.reset();
+                    //time_count_down.reset();
 
                 } else if (e.getSource() == D[i]&&map.getMapValue(i, 3) == 2) {
                     map.updateMap(i, 3, turn);
+                   
                     map.castToBoard(this);
                     turn = 1 - turn;
                     map.checkMap(turn);
                     matchCPU(turn);
                     turn = 1 - turn;
+                    map.checkMap(0);
                     map.castToBoard(this);
-                    time_count_down.reset();
+                   // time_count_down.reset();
 
                 } else if (e.getSource() == E[i]&&map.getMapValue(i, 4) == 2) {
                     map.updateMap(i, 4, turn);
+                   
                     map.castToBoard(this);
                     turn = 1 - turn;
                     map.checkMap(turn);
                     matchCPU(turn);
                     turn = 1 - turn;
+                    map.checkMap(0);
                     map.castToBoard(this);
-                    time_count_down.reset();
+                   // time_count_down.reset();
 
                 } else if (e.getSource() == F[i]&&map.getMapValue(i, 5) == 2) {
                     map.updateMap(i, 5, turn);
+              
                     map.castToBoard(this);
                     turn = 1 - turn;
                     map.checkMap(turn);
                     matchCPU(turn);
                     turn = 1 - turn;
+                    map.checkMap(0);
                     map.castToBoard(this);
-                    time_count_down.reset();
+                   // time_count_down.reset();
 
                 } else if (e.getSource() == G[i]&&map.getMapValue(i, 6) == 2) {
                     map.updateMap(i, 6, turn);
+                   
                     map.castToBoard(this);
                     turn = 1 - turn;
                     map.checkMap(turn);
                     matchCPU(turn);
                     turn = 1 - turn;
+                    map.checkMap(0);
                     map.castToBoard(this);
-                    time_count_down.reset();
+                   // time_count_down.reset();
 
                 } else if (e.getSource() == H[i]&&map.getMapValue(i, 7) == 2) {
                     map.updateMap(i, 7, turn);
+                
                     map.castToBoard(this);
                     turn = 1 - turn;
                     map.checkMap(turn);
                     matchCPU(turn);
                     turn = 1 - turn;
+                    map.checkMap(0);
                     map.castToBoard(this);
-                    time_count_down.reset();
+                   // time_count_down.reset();
 
                 }
 
@@ -610,6 +630,8 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                         }
                         else if(map[j][i]==2){
 							A[j].setIcon(iconG);
+						}else{
+							A[j].setIcon(null);
 						}
                     }
                 } else if (i == 1) {
@@ -623,6 +645,8 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                         }
                         else if(map[j][i]==2){
 							B[j].setIcon(iconG);
+						}else{
+							B[j].setIcon(null);
 						}
                     }
                 } else if (i == 2) {
@@ -636,6 +660,8 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                         }
                         else if(map[j][i]==2){
 							C[j].setIcon(iconG);
+						}else{
+							C[j].setIcon(null);
 						}
                     }
                 } else if (i == 3) {
@@ -649,6 +675,8 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                         }
                         else if(map[j][i]==2){
 							D[j].setIcon(iconG);
+						}else{
+							D[j].setIcon(null);
 						}
                     }
                 } else if (i == 4) {
@@ -662,6 +690,8 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                         }
                         else if(map[j][i]==2){
 							E[j].setIcon(iconG);
+						}else{
+							E[j].setIcon(null);
 						}
                     }
                 } else if (i == 5) {
@@ -675,6 +705,8 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                         }
                         else if(map[j][i]==2){
 							F[j].setIcon(iconG);
+						}else{
+							F[j].setIcon(null);
 						}
                     }
                 } else if (i == 6) {
@@ -688,6 +720,8 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                         }
                         else if(map[j][i]==2){
 							G[j].setIcon(iconG);
+						}else{
+							G[j].setIcon(null);
 						}
                     }
                 } else if (i == 7) {
@@ -701,6 +735,8 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                         }
                         else if(map[j][i]==2){
 							H[j].setIcon(iconG);
+						}else{
+							H[j].setIcon(null);
 						}
                     }
                 }
@@ -750,10 +786,10 @@ class Timer_count_down extends Thread {
 } 
 class Data_reciever extends Thread{
     ObjectInputStream ois_room =null;
-    Oserov4_cpu osero = null;
-     Data_reciever(ObjectInputStream ois_room,Oserov4_cpu osero){
+    boolean cpu_switch;
+     Data_reciever(ObjectInputStream ois_room,boolean cpu_switch){
         this.ois_room = ois_room;
-        this.osero = osero;
+        this.cpu_switch = cpu_switch;
     }
     public void run(){
         try{
@@ -764,8 +800,9 @@ class Data_reciever extends Thread{
             System.out.println("recieved battle start from server");
             if(data.get_protocol()==80){
                f_time = data.get_time();
+               cpu_switch = true;
                 new Room.Display6(f_time);
-                osero.dispose();
+                
             }
         }catch(Exception e){
             e.printStackTrace();
