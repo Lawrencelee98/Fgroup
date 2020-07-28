@@ -14,7 +14,7 @@ public class Reciever extends Thread{
 	Client client =  null;
 	Ban map = null;
 	ObjectInputStream ois = null;
-	transData r_data = null;
+	
 	public Reciever(Client client, Ban map, ObjectInputStream ois) {
 		this.client = client;
 		this.map = map;
@@ -22,7 +22,7 @@ public class Reciever extends Thread{
 	}
 	@Override
 	public void run (){
-		
+		transData r_data = null;
 		try {
 			
 			System.out.println("receiver start ");
@@ -37,6 +37,7 @@ public class Reciever extends Thread{
 						System.out.println("opponent:row="+r_data.get_row()+",line="+r_data.get_line());
 						//client.r_data = r_data;
 						client.your_turn = 1;
+						System.out.println("row: "+r_data.get_row()+" line: "+r_data.get_line());
 						map.updateMap(r_data.get_row(), r_data.get_line(),1-client.turn);
 						map.castToBoard();
 						map.timeupdater();

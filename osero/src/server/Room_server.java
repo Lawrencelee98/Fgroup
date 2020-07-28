@@ -107,11 +107,6 @@ public class Room_server extends Thread {
             os_1.writeObject(battle_start);
             os_2.writeObject(battle_start);
 
-            // lee から依頼の部分
-            transData lee_trans = new transData(81);
-            os_1.writeObject(lee_trans);
-            os_2.writeObject(lee_trans);
-
 
             int first_turn = 1;// 1 or 2
             boolean battle_end = true;

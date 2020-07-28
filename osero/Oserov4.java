@@ -234,16 +234,15 @@ public class Oserov4 extends JFrame {
 						client.turn = 1;
 						client.your_turn = 0;
 						//client.BattleReceiver(map);
+					}else{
 						rec = new Reciever(client, map, client.ois);
 						count++;
 						System.out.println("re12");
 						rec.start();
 						System.out.println("toppa");
-					}
-						
 					
 					//client.ois.reset();
-					
+					}
 						
 				}
 			} catch (ClassNotFoundException e1) {
@@ -360,8 +359,7 @@ public class Oserov4 extends JFrame {
 
 						}
 					}
-						
-					result = map.isGameFinish();
+						result = map.isGameFinish();
 						if(result ==3){
 							try {
 								transData end = new transData(36);
