@@ -19,6 +19,9 @@ public class transData implements Serializable{
     80 : battle_start
     85 : port_send
     1000 : your turn notice
+    1200 : koukou
+    2000 : time over
+    3000 : pass
 
     client ---> server ---> client
     2 : time_choice
