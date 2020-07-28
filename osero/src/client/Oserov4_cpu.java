@@ -1,18 +1,25 @@
 package client;
 
-import javax.swing.*;
-
-import transData.*;
-
-import java.awt.*;
-import java.awt.event.*;
-
+import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.net.*;
-import java.io.*;
-import java.util.Arrays;
-import java.util.*;
+
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
+import javax.swing.JRadioButton;
+
+import transData.transData;
 
 public class Oserov4_cpu extends JFrame implements ActionListener {
     /**
@@ -28,6 +35,9 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
     JLabel l4 = new JLabel("黒の数：白の数");
     JLabel l5 = new JLabel("あなたの番");
     JButton b1 = new JButton("設定");
+    JLabel l6 = new JLabel("置ける場所表現 : ");
+    JRadioButton r1 = new JRadioButton("0n", true);
+    JRadioButton r2 = new JRadioButton("Off", false);
     
 
     JButton[] A = new JButton[10];
@@ -47,6 +57,8 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
     boolean interuput = false;
     int CPU_switch = 1;
     boolean cpu_switch = true;
+    
+    boolean G_switch = true;
 
     Osero_setting_cpu osero_setting;
     ImageIcon iconB = new ImageIcon(getClass().getResource("00Black.jpg"));
@@ -85,6 +97,16 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
         l5.setBounds(50, 500, 100, 30);
         b1.setBounds(200, 500, 100, 30);
         b1.addActionListener(this);
+        
+        l6.setBounds(350, 500, 100, 30);
+        ButtonGroup group = new ButtonGroup();
+        group.add(r1);
+        group.add(r2);
+        r1.setBounds(450, 500, 50, 30);
+        r2.setBounds(500, 500, 50, 30);
+        
+        r1.addActionListener(this);
+        r2.addActionListener(this);
     
         int buttonSize = 46;
        // time_count_down.start();
@@ -174,6 +196,10 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
         c.add(l4);
         c.add(l5);
         c.add(b1);
+        
+        c.add(l6);
+        c.add(r1);
+        c.add(r2);
        
         j.getLayeredPane().add(chessboard, 100);
 
@@ -202,6 +228,21 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+    	
+    	boolean status1 = r1.isSelected();
+        boolean status2 = r2.isSelected();
+        
+        
+        if (e.getSource() == r1 || e.getSource() == r2) {
+        	if(status1 == true) {
+            	G_switch = true;
+            }else if(status2 == true) {
+            	G_switch = false;
+            }
+        	map.castToBoard(this);
+
+        }
+        
         /*
          * if(e.getSource()==A[0]) { System.out.println("A[0]"); try {
          * 
@@ -628,7 +669,7 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                             osero.A[j].setIcon(iconB);
                             osero.A[j].setOpaque(true);
                         }
-                        else if(map[j][i]==2){
+                        else if(map[j][i]==2 && G_switch == true){
 							A[j].setIcon(iconG);
 						}else{
 							A[j].setIcon(null);
@@ -643,7 +684,7 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                             osero.B[j].setIcon(iconB);
                             osero.B[j].setOpaque(true);
                         }
-                        else if(map[j][i]==2){
+                        else if(map[j][i]==2 && G_switch == true){
 							B[j].setIcon(iconG);
 						}else{
 							B[j].setIcon(null);
@@ -658,7 +699,7 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                             osero.C[j].setIcon(iconB);
                             osero.C[j].setOpaque(true);
                         }
-                        else if(map[j][i]==2){
+                        else if(map[j][i]==2 && G_switch == true){
 							C[j].setIcon(iconG);
 						}else{
 							C[j].setIcon(null);
@@ -673,7 +714,7 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                             osero.D[j].setIcon(iconB);
                             osero.D[j].setOpaque(true);
                         }
-                        else if(map[j][i]==2){
+                        else if(map[j][i]==2 && G_switch == true){
 							D[j].setIcon(iconG);
 						}else{
 							D[j].setIcon(null);
@@ -688,7 +729,7 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                             osero.E[j].setIcon(iconB);
                             osero.E[j].setOpaque(true);
                         }
-                        else if(map[j][i]==2){
+                        else if(map[j][i]==2 && G_switch == true){
 							E[j].setIcon(iconG);
 						}else{
 							E[j].setIcon(null);
@@ -703,7 +744,7 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                             osero.F[j].setIcon(iconB);
                             osero.F[j].setOpaque(true);
                         }
-                        else if(map[j][i]==2){
+                        else if(map[j][i]==2 && G_switch == true){
 							F[j].setIcon(iconG);
 						}else{
 							F[j].setIcon(null);
@@ -718,7 +759,7 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                             osero.G[j].setIcon(iconB);
                             osero.G[j].setOpaque(true);
                         }
-                        else if(map[j][i]==2){
+                        else if(map[j][i]==2 && G_switch == true){
 							G[j].setIcon(iconG);
 						}else{
 							G[j].setIcon(null);
@@ -733,7 +774,7 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                             osero.H[j].setIcon(iconB);
                             osero.H[j].setOpaque(true);
                         }
-                        else if(map[j][i]==2){
+                        else if(map[j][i]==2 && G_switch == true){
 							H[j].setIcon(iconG);
 						}else{
 							H[j].setIcon(null);
