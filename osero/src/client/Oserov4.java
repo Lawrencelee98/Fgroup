@@ -25,6 +25,9 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 	JLabel l4 = new JLabel("黒の数：白の数");
 	JLabel l5 = new JLabel("あなたの番");
 	JButton b1 = new JButton("設定");
+	JLabel l6 = new JLabel("置ける場所表現 : ");
+	JRadioButton r1 = new JRadioButton("0n", true);
+    	JRadioButton r2 = new JRadioButton("Off", false);
 
 	JButton[] A = new JButton[10];
 	JButton[] B = new JButton[10];
@@ -40,6 +43,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 	double x = 0;
 	double y = 0;
 	boolean interuput = false;
+	boolean G_switch = true;
 	Osero_setting osero_setting;
 	ImageIcon iconB = new ImageIcon(getClass().getResource("00Black.jpg"));
 	ImageIcon iconW = new ImageIcon(getClass().getResource("00White.jpg"));
@@ -109,6 +113,16 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 			l5.setBounds(50, 500, 100, 30);
 			b1.setBounds(200, 500, 100, 30);
 			b1.addActionListener(this);
+			
+			l6.setBounds(350, 500, 100, 30);
+        		ButtonGroup group = new ButtonGroup();
+       			group.add(r1);
+        		group.add(r2);
+        		r1.setBounds(450, 500, 50, 30);
+        		r2.setBounds(500, 500, 50, 30);
+
+		        r1.addActionListener(this);
+		        r2.addActionListener(this);
 
 			int buttonSize = 46, i = 0;
 
@@ -200,6 +214,9 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 			c.add(l4);
 			c.add(l5);
 			c.add(b1);
+			c.add(l6);	
+		        c.add(r1);
+        		c.add(r2);
 
 			j.getLayeredPane().add(chessboard, 100);
 
@@ -294,6 +311,16 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 				System.out.println("open new window");
 				new Osero_setting(chessboard);
 
+			}
+			boolean status1 = r1.isSelected();
+       			boolean status2 = r2.isSelected();
+			if (e.getSource() == r1 || e.getSource() == r2) {
+        			if(status1 == true) {
+            				G_switch = true;
+            			}else if(status2 == true) {
+            				G_switch = false;
+            			}
+        			map.castToBoard(this);
 			}
 			try {
 				if (client.your_turn == 1) {
@@ -740,7 +767,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 						} else if (map[j][i] == 0) {
 							A[j].setIcon(iconB);
 							A[j].setOpaque(true);
-						} else if (map[j][i] == 2) {
+						} else if (map[j][i] == 2 && G_switch == true) {
 							A[j].setIcon(iconG);
 						}else{
 							A[j].setIcon(null);
@@ -754,7 +781,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 						} else if (map[j][i] == 0) {
 							B[j].setIcon(iconB);
 							B[j].setOpaque(true);
-						} else if (map[j][i] == 2) {
+						} else if (map[j][i] == 2 && G_switch == true) {
 							B[j].setIcon(iconG);
 						}else{
 							B[j].setIcon(null);
@@ -768,7 +795,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 						} else if (map[j][i] == 0) {
 							C[j].setIcon(iconB);
 							C[j].setOpaque(true);
-						} else if (map[j][i] == 2) {
+						} else if (map[j][i] == 2 && G_switch == true) {
 							C[j].setIcon(iconG);
 						}else{
 							C[j].setIcon(null);
@@ -782,7 +809,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 						} else if (map[j][i] == 0) {
 							D[j].setIcon(iconB);
 							D[j].setOpaque(true);
-						} else if (map[j][i] == 2) {
+						} else if (map[j][i] == 2 && G_switch == true) {
 							D[j].setIcon(iconG);
 						}else{
 							D[j].setIcon(null);
@@ -796,7 +823,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 						} else if (map[j][i] == 0) {
 							E[j].setIcon(iconB);
 							E[j].setOpaque(true);
-						} else if (map[j][i] == 2) {
+						} else if (map[j][i] == 2 && G_switch == true) {
 							E[j].setIcon(iconG);
 						}else{
 							E[j].setIcon(null);
@@ -810,7 +837,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 						} else if (map[j][i] == 0) {
 							F[j].setIcon(iconB);
 							F[j].setOpaque(true);
-						} else if (map[j][i] == 2) {
+						} else if (map[j][i] == 2 && G_switch == true) {
 							F[j].setIcon(iconG);
 						}else{
 							F[j].setIcon(null);
@@ -824,7 +851,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 						} else if (map[j][i] == 0) {
 							G[j].setIcon(iconB);
 							G[j].setOpaque(true);
-						} else if (map[j][i] == 2) {
+						} else if (map[j][i] == 2 && G_switch == true) {
 							G[j].setIcon(iconG);
 						}else{
 							G[j].setIcon(null);
@@ -838,7 +865,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 						} else if (map[j][i] == 0) {
 							H[j].setIcon(iconB);
 							H[j].setOpaque(true);
-						} else if (map[j][i] == 2) {
+						} else if (map[j][i] == 2 && G_switch == true) {
 							H[j].setIcon(iconG);
 						}else{
 							H[j].setIcon(null);
