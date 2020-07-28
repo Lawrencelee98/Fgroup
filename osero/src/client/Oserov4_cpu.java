@@ -45,9 +45,9 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
     double y = 0;
     int time_limit = 30;
     boolean interuput = false;
-    int CPU_switch = 1;
-    boolean cpu_switch = true;
-
+    //int CPU_switch = 1;
+    boolean cpu_switch = false;
+    Client client = null;
     Osero_setting_cpu osero_setting;
     ImageIcon iconB = new ImageIcon(getClass().getResource("00Black.jpg"));
     ImageIcon iconW = new ImageIcon(getClass().getResource("00White.jpg"));
@@ -55,11 +55,12 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
     static int turn = 0;// 初始化先手 黑色为0 白色为1
     Map map = new Map();
     HashMap<Integer, transData> hash = new HashMap<Integer, transData>();
-    JFrame j = new JFrame();
+    JFrame j = new JFrame("CPU");
    // Timer_count_down time_count_down = new Timer_count_down(time_limit, l2);
-
-    public Oserov4_cpu(ObjectInputStream ois_room,ObjectOutputStream oos_room,int time) {
+    Room room = null;
+    public Oserov4_cpu(Client client,ObjectInputStream ois_room,ObjectOutputStream oos_room,int time) {
         this.time_limit = time;
+        this.client = client;
         c = j.getContentPane();
 
         // j.setSize(800,600);
@@ -193,11 +194,20 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
         j.setResizable(false);
         map.initMap();
         map.castToBoard(this);
-        Data_reciever data_reciever = new Data_reciever(ois_room,cpu_switch);
+        Data_reciever data_reciever = new Data_reciever(client,ois_room,oos_room,j);
         data_reciever.start();
-        if(this.cpu_switch){
-            this.dispose();
-        }
+        Timer Switch = new Timer();
+        Switch.schedule(new TimerTask(){
+            @Override
+            public void run(){
+                System.out.println("cpu_switch"+data_reciever.cpu_switch());
+                if(data_reciever.cpu_switch()){
+                    
+                    j.dispose();
+                    cancel();
+                }
+            }
+        }, 0,500);
     }   
 
     @Override
@@ -786,27 +796,39 @@ class Timer_count_down extends Thread {
 } 
 class Data_reciever extends Thread{
     ObjectInputStream ois_room =null;
-    boolean cpu_switch;
-     Data_reciever(ObjectInputStream ois_room,boolean cpu_switch){
+    ObjectOutputStream oos_room = null;
+    Client client = null;
+    boolean cpu_switch=false;
+    JFrame j;
+     Data_reciever(Client client,ObjectInputStream ois_room,ObjectOutputStream oos_room,JFrame j){
         this.ois_room = ois_room;
-        this.cpu_switch = cpu_switch;
+        this.oos_room = oos_room;
+        this.client = client;
+        this.j = j;
+        // this.cpu_switch =cpu_switch;
+   
     }
+   
     public void run(){
         try{
             transData data = new transData(80);
-            
-            int f_time;
+            int f_time =-1;
             data = (transData)ois_room.readObject();
             System.out.println("recieved battle start from server");
             if(data.get_protocol()==80){
                f_time = data.get_time();
-               cpu_switch = true;
-                new Room.Display6(f_time);
+               System.out.println("recieve data protocol 80");
+               cpu_switch =true; 
+               new Oserov4(this.client,this.oos_room,this.ois_room,f_time);
                 
+                j.dispose();
             }
         }catch(Exception e){
             e.printStackTrace();
         }
+    }
+    public  boolean cpu_switch(){
+        return cpu_switch;
     }
 }
 // Oserov4

@@ -62,11 +62,12 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 	Timer_count_down time_count_down;
 	JFrame j = new JFrame();
 	Room.Display4 room;
-
+	ObjectInputStream ois =null;
+	ObjectOutputStream oos = null;
 	public Oserov4(Client client, ObjectOutputStream oos, ObjectInputStream ois, int time) {
 		this.client = client;
-		// this.oos = oos;
-		// this.ois = ois;
+		this.oos = oos;
+		this.ois = ois;
 		// client.oos = oos;
 		// client.ois = ois;
 		// this.room = room;
@@ -221,25 +222,14 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 			map.castToBoard();
 			time_count_down.start();
 			// data exchange
-
-			// waiting for server send battle start info
-			try {
-				battle_start = (transData) client.ois.readObject();
-				if (battle_start.get_protocol() == 80) {
-					System.out.println("Recieve game start information");
-				} else {
-					//
-				}
-			} catch (Exception erro) {
-				erro.printStackTrace();
-			}
+		
 
 			// 次以降の時のため
 
 			System.out.println("please wait for opponent");
 			try {
 				// 先攻、後攻の受け取り
-				r_data = (transData) client.ois.readObject();
+				r_data = (transData) ois.readObject();
 
 				if (r_data instanceof transData) {
 					// 1000が送られてきた方が先攻
@@ -272,7 +262,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 			System.out.println("Waiting for timeout info");
 			int timeout_protocol = 2000;
 			try {
-				r_data = (transData) client.ois.readObject();
+				r_data = (transData)ois.readObject();
 				if (r_data.get_protocol() == timeout_protocol) {
 					new Result(1 - my_turn, client, this);
 				}
@@ -412,17 +402,19 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 					// client.oos.flush();
 					// client.oos.shutdown();
 					System.out.println("s_data=" + s_data.get_row() + "," + s_data.get_line());
-					client.oos.writeObject(s_data);
+					//client.oos.writeObject(s_data);
+					oos.writeObject(s_data);
+
 					System.out.println("send!!");
 					client.your_turn = 0;
 					// client.BattleReceiver(map);
 					if (count == 0) {
-						rec = new Reciever(client, map, client.ois);
+						rec = new Reciever(client, map, ois); //client.ois
 						rec.start();
 						count++;
 						time_count_down.reset();
 					} else {
-						rec = new Reciever(client, map, client.ois);
+						rec = new Reciever(client, map, ois);//client.ois
 						rec.start();
 						time_count_down.reset();
 					}

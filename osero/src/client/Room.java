@@ -294,7 +294,7 @@ public class Room {
 					new Display5(client);
 					setVisible(false);
 					if (room_player[1] == 1) {
-						new Display5(client);
+						//new Display5(client);
 					}
 
 				} else if (e.getSource() == b12) {
@@ -303,7 +303,7 @@ public class Room {
 					new Display5(client);
 					setVisible(false);
 					if (room_player[0] == 1) {
-						new Display5(client);
+						//new Display5(client);
 					}
 				} else if (e.getSource() == b21) {
 					room_player[2] = 1;
@@ -311,7 +311,7 @@ public class Room {
 					new Display5(client);
 					setVisible(false);
 					if (room_player[3] == 1) {
-						new Display5(client);
+						//new Display5(client);
 					}
 				} else if (e.getSource() == b22) {
 					room_player[3] = 1;
@@ -319,7 +319,7 @@ public class Room {
 					new Display5(client);
 					setVisible(false);
 					if (room_player[2] == 1) {
-						new Display5(client);
+						//new Display5(client);
 					}
 				} else if (e.getSource() == b31) {
 					room_player[4] = 1;
@@ -327,7 +327,7 @@ public class Room {
 					new Display5(client);
 					setVisible(false);
 					if (room_player[5] == 1) {
-						new Display5(client);
+						//new Display5(client);
 					}
 				} else if (e.getSource() == b32) {
 					room_player[5] = 1;
@@ -335,7 +335,7 @@ public class Room {
 					new Display5(client);
 					setVisible(false);
 					if (room_player[4] == 1) {
-						new Display5(client);
+						//new Display5(client);
 					}
 				} else if (e.getSource() == b41) {
 					room_player[6] = 1;
@@ -343,7 +343,7 @@ public class Room {
 					new Display5(client);
 					setVisible(false);
 					if (room_player[7] == 1) {
-						new Display5(client);
+						//new Display5(client);
 					}
 				} else if (e.getSource() == b42) {
 					room_player[7] = 1;
@@ -351,10 +351,10 @@ public class Room {
 					new Display5(client);
 					setVisible(false);
 					if (room_player[6] == 1) {
-						new Display5(client);
+						//new Display5(client);
 					}
 				} else if (e.getSource() == CPU_match) {
-					new Oserov4_cpu(ois_room, oos_room, 30);
+					new Oserov4_cpu(client,ois_room, oos_room, 30);
 				}
 				transData room_choice = new transData(13);
 				room_choice.set_room_num(room_num);
@@ -420,14 +420,14 @@ public class Room {
 		res += "</html>";
 		return res;
 	}
-
+/*
 	public static class Display6 extends JFrame implements ActionListener {
 		String time_str = "";
 		JLabel label = new JLabel("<html>ユーザが選ぶ時間が違うため<br/>" + "システムが決める時間は" + time_str + "です。<br/>合意しますか？</html>");
 		Client client = null;
 		int time;
 
-		Display6(int time) {
+		Display6(ObjectInputStream ois,ObjectOutputStream oos,int time) {
 
 			this.time = time;
 			time_str = String.valueOf(time);
@@ -467,9 +467,9 @@ public class Room {
 
 		public void actionPerformed(ActionEvent e) {
 			if (e.getActionCommand().equals("合意する")) {
-
-				start_Osero start_osero = new start_Osero(client, ois, oos, this.time);
-				start_osero.start();
+				new Oserov4(client,client.oos,client.ois,this.time);
+				//start_Osero start_osero = new start_Osero(client, ois, oos, this.time);
+				//start_osero.start();
 				try {
 					client.send_battle_start(client.oos);
 				} catch (Exception erro) {
@@ -485,13 +485,14 @@ public class Room {
 		}
 
 	}
-
+*/
 	public static class Display5 extends JFrame implements ActionListener {
 
 		JLabel label = new JLabel("<html>自分の持ち時間の希望を<br/>対戦相手に送信します。<br/>以下から選んでください。</html>");
 		Client client = null;
 
 		Display5(Client client) {
+			this.client = client;
 			setLayout(new FlowLayout());
 			JPanel p = new JPanel();
 			p.setLayout(new BorderLayout());
@@ -564,7 +565,7 @@ public class Room {
 				time_data.set_wait_time(time);
 				oos_room.writeObject(time_data);
 				System.out.println("start osero_cpu");
-				new Oserov4_cpu(ois_room, oos_room, time);
+				new Oserov4_cpu(client,ois_room, oos_room,time);
 			} catch (Exception erro1) {
 				erro1.printStackTrace();
 			}
@@ -578,7 +579,7 @@ public class Room {
 	}
 
 }
-
+/*
 class start_Osero extends Thread {
 	Client client;
 	ObjectInputStream ois;
@@ -593,6 +594,6 @@ class start_Osero extends Thread {
 	}
 
 	public void run() {
-		Oserov4 osero = new Oserov4(client, oos, ois, time);
+		Oserov4 osero = new Oserov4(this.client, oos, ois, time);
 	}
-}
+}*/
