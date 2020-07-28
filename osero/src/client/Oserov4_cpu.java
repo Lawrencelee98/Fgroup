@@ -28,7 +28,6 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
     JLabel l4 = new JLabel("黒の数：白の数");
     JLabel l5 = new JLabel("あなたの番");
     JButton b1 = new JButton("設定");
-    
 
     JButton[] A = new JButton[10];
     JButton[] B = new JButton[10];
@@ -45,7 +44,7 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
     double y = 0;
     int time_limit = 30;
     boolean interuput = false;
-    //int CPU_switch = 1;
+    // int CPU_switch = 1;
     boolean cpu_switch = false;
     Client client = null;
     Osero_setting_cpu osero_setting;
@@ -56,12 +55,13 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
     Map map = new Map();
     HashMap<Integer, transData> hash = new HashMap<Integer, transData>();
     JFrame j = new JFrame("CPU");
-   // Timer_count_down time_count_down = new Timer_count_down(time_limit, l2);
+    // Timer_count_down time_count_down = new Timer_count_down(time_limit, l2);
     Room room = null;
     ObjectInputStream ois = null;
     ObjectOutputStream oos = null;
     int f_time = 0;
-    public Oserov4_cpu(Client client,ObjectInputStream ois_room,ObjectOutputStream oos_room,int time) {
+
+    public Oserov4_cpu(Client client, ObjectInputStream ois_room, ObjectOutputStream oos_room, int time) {
         this.time_limit = time;
         this.client = client;
         this.ois = ois_room;
@@ -91,9 +91,9 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
         l5.setBounds(50, 500, 100, 30);
         b1.setBounds(200, 500, 100, 30);
         b1.addActionListener(this);
-    
+
         int buttonSize = 46;
-       // time_count_down.start();
+        // time_count_down.start();
         // Timer
 
         Timer chess_number_count = new Timer();
@@ -180,7 +180,7 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
         c.add(l4);
         c.add(l5);
         c.add(b1);
-       
+
         j.getLayeredPane().add(chessboard, 100);
 
         for (int i = 0; i < 8; i++) {
@@ -198,24 +198,22 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
         j.setVisible(true);
         j.setResizable(false);
         map.initMap();
-        map.castToBoard(this); 
-        Data_reciever data_reciever = new Data_reciever(client,ois_room,oos_room,j);
+        map.castToBoard(this);
+        Data_reciever data_reciever = new Data_reciever(client, ois_room, oos_room, j);
         data_reciever.start();
         Timer Switch = new Timer();
-        Switch.schedule(new TimerTask(){
+        Switch.schedule(new TimerTask() {
             @Override
-            public void run(){
-                if(data_reciever.cpu_switch()){
+            public void run() {
+                if (data_reciever.cpu_switch()) {
                     f_time = data_reciever.get_time();
                     j.dispose();
                     cancel();
                 }
             }
-        }, 0,500);
-   
-   
-    
-    }   
+        }, 0, 500);
+
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -240,9 +238,9 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
 
         try {
             for (int i = 0; i < 8; i++) {
-                if (e.getSource() == A[i]&&map.getMapValue(i, 0) == 2) {
+                if (e.getSource() == A[i] && map.getMapValue(i, 0) == 2) {
                     map.updateMap(i, 0, turn);
-                    
+
                     map.castToBoard(this);
                     turn = 1 - turn;
                     map.checkMap(turn);
@@ -250,11 +248,11 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                     turn = 1 - turn;
                     map.checkMap(0);
                     map.castToBoard(this);
-                    //time_count_down.reset();
+                    // time_count_down.reset();
 
-                } else if (e.getSource() == B[i]&&map.getMapValue(i, 1) == 2) {
+                } else if (e.getSource() == B[i] && map.getMapValue(i, 1) == 2) {
                     map.updateMap(i, 1, turn);
-                
+
                     map.castToBoard(this);
                     turn = 1 - turn;
                     map.checkMap(turn);
@@ -262,11 +260,11 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                     turn = 1 - turn;
                     map.checkMap(0);
                     map.castToBoard(this);
-                    //time_count_down.reset();
+                    // time_count_down.reset();
 
-                } else if (e.getSource() == C[i]&&map.getMapValue(i, 2) == 2) {
+                } else if (e.getSource() == C[i] && map.getMapValue(i, 2) == 2) {
                     map.updateMap(i, 2, turn);
-                  
+
                     map.castToBoard(this);
                     turn = 1 - turn;
                     map.checkMap(turn);
@@ -274,11 +272,11 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                     turn = 1 - turn;
                     map.checkMap(0);
                     map.castToBoard(this);
-                    //time_count_down.reset();
+                    // time_count_down.reset();
 
-                } else if (e.getSource() == D[i]&&map.getMapValue(i, 3) == 2) {
+                } else if (e.getSource() == D[i] && map.getMapValue(i, 3) == 2) {
                     map.updateMap(i, 3, turn);
-                   
+
                     map.castToBoard(this);
                     turn = 1 - turn;
                     map.checkMap(turn);
@@ -286,11 +284,11 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                     turn = 1 - turn;
                     map.checkMap(0);
                     map.castToBoard(this);
-                   // time_count_down.reset();
+                    // time_count_down.reset();
 
-                } else if (e.getSource() == E[i]&&map.getMapValue(i, 4) == 2) {
+                } else if (e.getSource() == E[i] && map.getMapValue(i, 4) == 2) {
                     map.updateMap(i, 4, turn);
-                   
+
                     map.castToBoard(this);
                     turn = 1 - turn;
                     map.checkMap(turn);
@@ -298,11 +296,11 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                     turn = 1 - turn;
                     map.checkMap(0);
                     map.castToBoard(this);
-                   // time_count_down.reset();
+                    // time_count_down.reset();
 
-                } else if (e.getSource() == F[i]&&map.getMapValue(i, 5) == 2) {
+                } else if (e.getSource() == F[i] && map.getMapValue(i, 5) == 2) {
                     map.updateMap(i, 5, turn);
-              
+
                     map.castToBoard(this);
                     turn = 1 - turn;
                     map.checkMap(turn);
@@ -310,23 +308,11 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                     turn = 1 - turn;
                     map.checkMap(0);
                     map.castToBoard(this);
-                   // time_count_down.reset();
+                    // time_count_down.reset();
 
-                } else if (e.getSource() == G[i]&&map.getMapValue(i, 6) == 2) {
+                } else if (e.getSource() == G[i] && map.getMapValue(i, 6) == 2) {
                     map.updateMap(i, 6, turn);
-                   
-                    map.castToBoard(this);
-                    turn = 1 - turn;
-                    map.checkMap(turn);
-                    matchCPU(turn);
-                    turn = 1 - turn;
-                    map.checkMap(0);
-                    map.castToBoard(this);
-                   // time_count_down.reset();
 
-                } else if (e.getSource() == H[i]&&map.getMapValue(i, 7) == 2) {
-                    map.updateMap(i, 7, turn);
-                
                     map.castToBoard(this);
                     turn = 1 - turn;
                     map.checkMap(turn);
@@ -334,7 +320,19 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                     turn = 1 - turn;
                     map.checkMap(0);
                     map.castToBoard(this);
-                   // time_count_down.reset();
+                    // time_count_down.reset();
+
+                } else if (e.getSource() == H[i] && map.getMapValue(i, 7) == 2) {
+                    map.updateMap(i, 7, turn);
+
+                    map.castToBoard(this);
+                    turn = 1 - turn;
+                    map.checkMap(turn);
+                    matchCPU(turn);
+                    turn = 1 - turn;
+                    map.checkMap(0);
+                    map.castToBoard(this);
+                    // time_count_down.reset();
 
                 }
 
@@ -351,7 +349,7 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
         }
 
     }
-  
+
     public int isGameFinish() {// ゲームが終了した:0or1or2[0=黒勝,1=白勝,2=引き分け],終了しない:3
         // 両者置ける場所が無くなったときにゲーム終了
         int b, b2, w, w2;
@@ -422,9 +420,11 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
             this.r = 8;
             this.l = 8;
         }
+
         public int getMapValue(int r, int l) {
-			return map[r][l];
-		}
+            return map[r][l];
+        }
+
         int count_white_chess() {
             this.whiteChessNum = 0;
             for (int i = 0; i < 8; i++) {
@@ -644,12 +644,11 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                         } else if (map[j][i] == 0) {
                             osero.A[j].setIcon(iconB);
                             osero.A[j].setOpaque(true);
+                        } else if (map[j][i] == 2) {
+                            A[j].setIcon(iconG);
+                        } else {
+                            A[j].setIcon(null);
                         }
-                        else if(map[j][i]==2){
-							A[j].setIcon(iconG);
-						}else{
-							A[j].setIcon(null);
-						}
                     }
                 } else if (i == 1) {
                     for (int j = 0; j < 8; j++) {
@@ -659,12 +658,11 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                         } else if (map[j][i] == 0) {
                             osero.B[j].setIcon(iconB);
                             osero.B[j].setOpaque(true);
+                        } else if (map[j][i] == 2) {
+                            B[j].setIcon(iconG);
+                        } else {
+                            B[j].setIcon(null);
                         }
-                        else if(map[j][i]==2){
-							B[j].setIcon(iconG);
-						}else{
-							B[j].setIcon(null);
-						}
                     }
                 } else if (i == 2) {
                     for (int j = 0; j < 8; j++) {
@@ -674,12 +672,11 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                         } else if (map[j][i] == 0) {
                             osero.C[j].setIcon(iconB);
                             osero.C[j].setOpaque(true);
+                        } else if (map[j][i] == 2) {
+                            C[j].setIcon(iconG);
+                        } else {
+                            C[j].setIcon(null);
                         }
-                        else if(map[j][i]==2){
-							C[j].setIcon(iconG);
-						}else{
-							C[j].setIcon(null);
-						}
                     }
                 } else if (i == 3) {
                     for (int j = 0; j < 8; j++) {
@@ -689,12 +686,11 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                         } else if (map[j][i] == 0) {
                             osero.D[j].setIcon(iconB);
                             osero.D[j].setOpaque(true);
+                        } else if (map[j][i] == 2) {
+                            D[j].setIcon(iconG);
+                        } else {
+                            D[j].setIcon(null);
                         }
-                        else if(map[j][i]==2){
-							D[j].setIcon(iconG);
-						}else{
-							D[j].setIcon(null);
-						}
                     }
                 } else if (i == 4) {
                     for (int j = 0; j < 8; j++) {
@@ -704,12 +700,11 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                         } else if (map[j][i] == 0) {
                             osero.E[j].setIcon(iconB);
                             osero.E[j].setOpaque(true);
+                        } else if (map[j][i] == 2) {
+                            E[j].setIcon(iconG);
+                        } else {
+                            E[j].setIcon(null);
                         }
-                        else if(map[j][i]==2){
-							E[j].setIcon(iconG);
-						}else{
-							E[j].setIcon(null);
-						}
                     }
                 } else if (i == 5) {
                     for (int j = 0; j < 8; j++) {
@@ -719,12 +714,11 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                         } else if (map[j][i] == 0) {
                             osero.F[j].setIcon(iconB);
                             osero.F[j].setOpaque(true);
+                        } else if (map[j][i] == 2) {
+                            F[j].setIcon(iconG);
+                        } else {
+                            F[j].setIcon(null);
                         }
-                        else if(map[j][i]==2){
-							F[j].setIcon(iconG);
-						}else{
-							F[j].setIcon(null);
-						}
                     }
                 } else if (i == 6) {
                     for (int j = 0; j < 8; j++) {
@@ -734,12 +728,11 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                         } else if (map[j][i] == 0) {
                             osero.G[j].setIcon(iconB);
                             osero.G[j].setOpaque(true);
+                        } else if (map[j][i] == 2) {
+                            G[j].setIcon(iconG);
+                        } else {
+                            G[j].setIcon(null);
                         }
-                        else if(map[j][i]==2){
-							G[j].setIcon(iconG);
-						}else{
-							G[j].setIcon(null);
-						}
                     }
                 } else if (i == 7) {
                     for (int j = 0; j < 8; j++) {
@@ -749,12 +742,11 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                         } else if (map[j][i] == 0) {
                             osero.H[j].setIcon(iconB);
                             osero.H[j].setOpaque(true);
+                        } else if (map[j][i] == 2) {
+                            H[j].setIcon(iconG);
+                        } else {
+                            H[j].setIcon(null);
                         }
-                        else if(map[j][i]==2){
-							H[j].setIcon(iconG);
-						}else{
-							H[j].setIcon(null);
-						}
                     }
                 }
             } // for
@@ -799,45 +791,51 @@ class Timer_count_down extends Thread {
 
     public void reset() {
         time = time_limit;
-    } 
-} 
-class Data_reciever extends Thread{
-    ObjectInputStream ois_room =null;
+    }
+}
+
+class Data_reciever extends Thread {
+    ObjectInputStream ois_room = null;
     ObjectOutputStream oos_room = null;
     Client client = null;
-    boolean cpu_switch=false;
+    boolean cpu_switch = false;
     JFrame j;
-    int f_time =-1;
-     Data_reciever(Client client,ObjectInputStream ois_room,ObjectOutputStream oos_room,JFrame j){
+    int f_time = -1;
+
+    Data_reciever(Client client, ObjectInputStream ois_room, ObjectOutputStream oos_room, JFrame j) {
         this.ois_room = ois_room;
         this.oos_room = oos_room;
         this.client = client;
         this.j = j;
         // this.cpu_switch =cpu_switch;
-   
+
     }
-   
-    public void run(){
-        try{
+
+    public void run() {
+        try {
             transData data = new transData(80);
-            
-            data = (transData)ois_room.readObject();
+
+            data = (transData) ois_room.readObject();
             System.out.println("recieved battle start from server");
-            if(data.get_protocol()==80){
-               f_time = data.get_time();
-               System.out.println("recieve data protocol 80");
-               cpu_switch =true; 
-              // new Oserov4(client,this.oos_room,this.ois_room,f_time);
-               this.interrupt();
+            if (data.get_protocol() == 80) {
+                f_time = data.get_time();
+                System.out.println("recieve data protocol 80");
+                cpu_switch = true;
+                new Oserov4(client,this.oos_room,this.ois_room,f_time);
+                this.interrupt();
+                
             }
-        }catch(Exception e){
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    public  boolean cpu_switch(){
+
+    public boolean cpu_switch() {
         return cpu_switch;
     }
-    public int get_time(){
+
+    public int get_time() {
         return f_time;
     }
 }

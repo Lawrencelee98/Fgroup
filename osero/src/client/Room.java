@@ -539,7 +539,7 @@ public class Room {
 				str = "10秒";
 				time = 10;
 				this.setVisible(false);
-				this.dispose();
+				//this.dispose();
 
 				// new Display6(this.client);
 
@@ -547,7 +547,7 @@ public class Room {
 				str = "15秒";
 				time = 15;
 				this.setVisible(false);
-				this.dispose();
+				//this.dispose();
 
 				// new Display6(this.client);
 
@@ -555,7 +555,7 @@ public class Room {
 				str = "30秒";
 				time = 30;
 				this.setVisible(false);
-				this.dispose();
+				//this.dispose();
 
 				// new Display6(this.client);
 
@@ -566,16 +566,7 @@ public class Room {
 				oos_room.writeObject(time_data);
 				System.out.println("start osero_cpu");
 				new Oserov4_cpu(client,ois_room, oos_room,time);
-				try{
-					transData battlestart = null;
-					battlestart = (transData)ois.readObject();
-					if(battlestart.get_protocol()==81){
-						int f_time =30;
-						new Oserov4(client,oos_room,ois_room,f_time);
-					}
-				}catch(Exception erro3){
-					erro3.printStackTrace();
-				}
+				
 			} catch (Exception erro1) {
 				erro1.printStackTrace();
 			}

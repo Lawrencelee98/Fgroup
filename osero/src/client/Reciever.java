@@ -24,10 +24,11 @@ public class Reciever extends Thread{
 	public void run (){
 		
 		try {
+			
 			System.out.println("receiver start ");
 			r_data = (transData)ois.readObject();
 			System.out.println("receive data");
-		} catch (ClassNotFoundException | IOException e) {
+		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
