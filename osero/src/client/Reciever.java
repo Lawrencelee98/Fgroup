@@ -14,7 +14,7 @@ public class Reciever extends Thread{
 	Client client =  null;
 	Ban map = null;
 	ObjectInputStream ois = null;
-	
+	transData r_data = null;
 	public Reciever(Client client, Ban map, ObjectInputStream ois) {
 		this.client = client;
 		this.map = map;
@@ -22,9 +22,9 @@ public class Reciever extends Thread{
 	}
 	@Override
 	public void run (){
-		transData r_data = null;
+		
 		try {
-			System.out.println("receive start");
+			System.out.println("receiver start ");
 			r_data = (transData)ois.readObject();
 			System.out.println("receive data");
 		} catch (ClassNotFoundException | IOException e) {

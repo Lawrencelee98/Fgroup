@@ -566,6 +566,16 @@ public class Room {
 				oos_room.writeObject(time_data);
 				System.out.println("start osero_cpu");
 				new Oserov4_cpu(client,ois_room, oos_room,time);
+				try{
+					transData battlestart = null;
+					battlestart = (transData)ois.readObject();
+					if(battlestart.get_protocol()==81){
+						int f_time =30;
+						new Oserov4(client,oos_room,ois_room,f_time);
+					}
+				}catch(Exception erro3){
+					erro3.printStackTrace();
+				}
 			} catch (Exception erro1) {
 				erro1.printStackTrace();
 			}

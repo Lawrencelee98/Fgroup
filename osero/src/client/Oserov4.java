@@ -365,7 +365,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 						result = map.isGameFinish();
 						try {
 							transData end = new transData(36);
-							ObjectOutputStream oos = new ObjectOutputStream(client.s.getOutputStream());
+							//ObjectOutputStream oos = new ObjectOutputStream(client.s.getOutputStream());
 							if(my_turn == 0){//先に入った側(黒)のみが結果を送信する
 								switch(result){
 									case 0: end.set_endinfo_win(); break;
@@ -391,18 +391,18 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 					// client.oos.shutdown();
 					System.out.println("s_data=" + s_data.get_row() + "," + s_data.get_line());
 					//client.oos.writeObject(s_data);
-					oos.writeObject(s_data);
+					client.oos.writeObject(s_data);
 
 					System.out.println("send!!");
 					client.your_turn = 0;
 					// client.BattleReceiver(map);
 					if (count == 0) {
-						rec = new Reciever(client, map, ois); //client.ois
+						rec = new Reciever(client, map, client.ois); //client.ois
 						rec.start();
 						count++;
 						time_count_down.reset();
 					} else {
-						rec = new Reciever(client, map, ois);//client.ois
+						rec = new Reciever(client, map, client.ois);//client.ois
 						rec.start();
 						time_count_down.reset();
 					}
