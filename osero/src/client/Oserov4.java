@@ -366,27 +366,13 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 						try {
 							transData end = new transData(36);
 							ObjectOutputStream oos = new ObjectOutputStream(client.s.getOutputStream());
-							if (result == my_turn) {
-								new Result(result, client, this);
-								end.set_endinfo_draw();
-								try {
-									oos.writeObject(end);
-									oos.reset();
-								} catch (Exception erro) {
-									erro.printStackTrace();
+							if(my_turn == 0){//先に入った側(黒)のみが結果を送信する
+								switch(result){
+									case 0: end.set_endinfo_win(); break;
+									case 1: end.set_endinfo_lose(); break;
+									case 2: end.set_endinfo_draw(); break;
+									default: System.out.println("set_endinfo error"); break;
 								}
-							} else if (result == 1 - my_turn) {
-								new Result(result, client, this);
-								end.set_endinfo_draw();
-								try {
-									oos.writeObject(end);
-									oos.reset();
-								} catch (Exception erro) {
-									erro.printStackTrace();
-								}
-							} else {
-								new Result(result, client, this);
-								end.set_endinfo_draw();
 								try {
 									oos.writeObject(end);
 									oos.reset();
@@ -394,6 +380,8 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 									erro.printStackTrace();
 								}
 							}
+
+							new Result(result, client, this);
 						} catch (Exception erro) {
 							erro.printStackTrace();
 						}
