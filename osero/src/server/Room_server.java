@@ -104,6 +104,7 @@ public class Room_server extends Thread {
             // 対局スタート通知
             transData battle_start = new transData(80);
             battle_start.set_time(time);
+            battle_start.set_room_info(Server.room_info, Server.get_record());
             os_1.writeObject(battle_start);
             os_2.writeObject(battle_start);
 
