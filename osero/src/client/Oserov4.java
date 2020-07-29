@@ -432,7 +432,7 @@ public class Oserov4 extends JFrame {
 									
 								}else{}
 
-								//new Result(result, client, this);
+								new Result(result, client, this);
 							} catch (Exception erro) {
 								erro.printStackTrace();
 							}

@@ -8,10 +8,13 @@ import java.net.Socket;
 import javax.swing.*;
 import transData.*;
 public class Result extends JFrame {
+	JFrame j = new JFrame();
+	JPanel p = (JPanel)j.getContentPane();
     JLabel l = new JLabel("");
     Client client = null;
     Oserov4.Display display;
     public Result(int result, Client client, Oserov4.Display display) {
+		System.out.println("Result : "+result);
         this.client = client;
         this.display = display;
         switch (result) {
@@ -22,8 +25,17 @@ public class Result extends JFrame {
             case 2:
                 l.setText("引き分け");
         }
-        try {
-            display.dispose();
+        p.setLayout(null);
+        l.setBounds(70, 50, 50, 50);
+        p.add(l);
+        j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        j.setSize(200, 200);
+        j.setVisible(true);
+		j.setResizable(false);
+		
+        //try {
+			display.dispose();
+			/*
             client.s.close();
 			client.setLoginPort(client.FirstConnect(client.ServerAddress, client.first_port));
 			Socket s = new Socket(client.ServerAddress,client.getLoginPort());
@@ -33,16 +45,10 @@ public class Result extends JFrame {
 			InputStream is = s.getInputStream();
 			ObjectInputStream ois = new ObjectInputStream(is);
 			client.choose_room(oos, ois);
-		} catch (IOException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-        l.setBounds(70, 50, 50, 50);
-        add(l);
-        this.setLayout(null);
-        this.setSize(200, 200);
-        this.setVisible(true);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setResizable(false);
+			*/
+		//} catch (IOException e) {
+		//	// TODO 自動生成された catch ブロック
+		//	e.printStackTrace();
+		//}
     }
 }
