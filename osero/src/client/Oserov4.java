@@ -84,7 +84,7 @@ public class Oserov4 extends JFrame {
 			// j.setSize(800,600);
 			j.setBounds(0, 0, 800, 600);
 			j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			time_count_down = new Timer_count_down(time_limit, this);
+			time_count_down = new Timer_count_down(time_limit,client.your_turn,client);
 			JLayeredPane lp = new JLayeredPane();
 
 			ImageIcon img = new ImageIcon(getClass().getResource("frame.jpg"));
@@ -362,7 +362,7 @@ public class Oserov4 extends JFrame {
 					}
 						
 					result = map.isGameFinish();
-						if(result ==3){
+						if(result !=3){
 							try {
 								transData end = new transData(36);
 								// ObjectOutputStream oos = new ObjectOutputStream(client.s.getOutputStream());
@@ -843,11 +843,13 @@ public class Oserov4 extends JFrame {
 	class Timer_count_down extends Thread {
 		int time_limit;
 		int time;
-		Display display;
-
-		Timer_count_down(int time_limit, Display display) {
+		int your_turn;
+		Client client;
+		int result;
+		Timer_count_down(int time_limit,int your_turn,Client client) {
 			this.time_limit = time_limit;
-			this.display = display;
+			this.your_turn = your_turn;
+			this.client = client;
 		}
 
 		public void run() {
@@ -859,10 +861,11 @@ public class Oserov4 extends JFrame {
 					time = time - 1;
 					l2.setText("Left time: " + String.valueOf(time));
 					// time out の処理
-					if (time_limit == 0) {
-						System.out.println("Time out");
-
-						new Result(1 - client.your_turn, client, display);
+					
+					if (time<=0&&(client.your_turn==1)) {
+						System.out.println("Time out , your turn: "+ your_turn);
+						result = 1-your_turn;
+						new Result(result, client);
 						try {
 							transData end = new transData(36);
 							ObjectOutputStream oos = new ObjectOutputStream(client.s.getOutputStream());
@@ -880,6 +883,7 @@ public class Oserov4 extends JFrame {
 						this.cancel();
 					}
 				}
+				
 			}, 0, 1000);
 		}
 
