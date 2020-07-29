@@ -362,11 +362,13 @@ public class Oserov4 extends JFrame {
 					}
 						
 					result = map.isGameFinish();
-						if(result !=3){
+
+						if(result != 3){
+
 							try {
 								transData end = new transData(36);
 								// ObjectOutputStream oos = new ObjectOutputStream(client.s.getOutputStream());
-								if (client.your_turn == 0) {// 先に入った側(黒)のみが結果を送信する
+								if (client.turn == 0) {// 先に入った側(黒)のみが結果を送信する
 									switch (result) {
 										case 0:
 											end.set_endinfo_win();

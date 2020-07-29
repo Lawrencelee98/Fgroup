@@ -39,6 +39,7 @@ public class Reciever extends Thread{
 						client.your_turn = 1;
 						System.out.println("row: "+r_data.get_row()+" line: "+r_data.get_line());
 						map.updateMap(r_data.get_row(), r_data.get_line(),1-client.turn);
+						map.checkMap(client.turn);
 						map.castToBoard();
 						map.timeupdater();
 				}else{
