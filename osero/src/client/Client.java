@@ -33,6 +33,7 @@ public class Client {
 
 	transData r_data = null;
 	Oserov4 osero = null;
+	String username;
 
 	public Client() {
 	}

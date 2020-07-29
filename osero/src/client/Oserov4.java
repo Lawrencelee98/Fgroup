@@ -11,7 +11,8 @@ import java.io.*;
 import java.util.Arrays;
 import java.util.*;
 
-public class Oserov4 /* extends JFrame implements ActionListener */ {
+public class Oserov4 extends JFrame {
+	// implements ActionListener {
 	/**
 	 *
 	 */
@@ -49,31 +50,56 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 	Client client = null;
 	int count = 0;
 	int result = 5;
-	// protocol番号3でオセロの駒の位置情報をs_dataでサーバに送る。
+
 	transData s_data = new transData(3);
-	transData r_data = null;
-	transData battle_start = null;
+
 	Ban map = new Ban();
 	HashMap<Integer, transData> hash = new HashMap<Integer, transData>();
+	java.util.List<String> players_info;
 
 	Reciever rec = null;
 	int time_limit = 30;
-	int my_turn = -1;
 	Timer_count_down time_count_down;
 	JFrame j = new JFrame();
-	Room.Display4 room;
-
-	public Oserov4(Client client, ObjectOutputStream oos, ObjectInputStream ois, int time) {
+	public Oserov4(Client client, ObjectOutputStream oos, ObjectInputStream ois, int time, java.util.List<String> players_info) {
 		this.client = client;
-		// this.oos = oos;
-		// this.ois = ois;
-		// client.oos = oos;
-		// client.ois = ois;
+		 client.oos = oos;
+		 client.ois = ois;
 		// this.room = room;
 		this.time_limit = time;
+		this.players_info = players_info;
+		System.out.println("players_info : " + players_info.toString());
+		String res = new String();
+		for(int i=0; i<8; i++){
+			String[] arr = players_info.get(i).split(",", 0);
+			if(arr[0].substring(16).trim().equals(client.username)){
+				res = get_record_label(players_info.get(i)) + "  vs  ";
+				if(i%2 == 0){
+					res += get_record_label(players_info.get(i+1));
+				}else{
+					res += get_record_label(players_info.get(i-1));
+				}
+				break;
+			}
+		}
+		l1.setText(res);
+
 		new Display();
 		// System.out.println("Battlereceiver");
 		// client.BattleReceiver(map);
+	}
+
+	private String get_record_label(String str) {// strには"name:usr_0, win:0, lose:0, draw:0, rate:0"を与える
+		String res = new String();
+		String[] arr = str.split(",", 0);
+		res = "";
+		res += arr[0].substring(16).trim() + " [";// name
+		res += arr[1].substring(5).trim() + "勝 ";// win
+		res += arr[2].substring(6).trim() + "負 ";// lose
+		res += arr[3].substring(6).trim() + "分 ";// draw
+		res += "レート" + arr[4].substring(6).trim();// rate
+		res += "]";
+		return res;
 	}
 
 	public class Display extends JFrame implements ActionListener {
@@ -100,7 +126,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 			chess = new JLabel();
 			chess.setIcon(img);
 
-			l1.setBounds(300, 10, 300, 20);
+			l1.setBounds(200, 10, 500, 20);
 			chessboard.setBounds(10, 40, 420, 420);
 			chess.setBounds(28, 57, 43, 43);
 			l2.setBounds(600, 50, 200, 30);
@@ -111,7 +137,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 			b1.addActionListener(this);
 
 			int buttonSize = 46, i = 0;
-
+			
 			Timer chess_number_count = new Timer();
 			chess_number_count.schedule(new TimerTask() {
 
@@ -200,7 +226,6 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 			c.add(l4);
 			c.add(l5);
 			c.add(b1);
-
 			j.getLayeredPane().add(chessboard, 100);
 
 			for (i = 0; i < 8; i++) {
@@ -221,65 +246,58 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 			map.castToBoard();
 			time_count_down.start();
 			// data exchange
-
-			// waiting for server send battle start info
-			try {
-				battle_start = (transData) client.ois.readObject();
-				if (battle_start.get_protocol() == 80) {
-					System.out.println("Recieve game start information");
-				} else {
-					//
-				}
-			} catch (Exception erro) {
-				erro.printStackTrace();
-			}
-
+			transData r_data = null;
 			// 次以降の時のため
 
 			System.out.println("please wait for opponent");
 			try {
-				// 先攻、後攻の受け取り
-				r_data = (transData) client.ois.readObject();
-
-				if (r_data instanceof transData) {
-					// 1000が送られてきた方が先攻
-					if (r_data.get_protocol() == 1000) {
+				r_data = (transData)client.ois.readObject();
+				int protocol;
+				protocol =r_data.get_protocol();
+				if(r_data instanceof transData) {
+					//1000が送られてきた方が先攻
+					if(protocol==1000) {
 						System.out.println("You hava black!");
-						client.turn = 0; // 先攻なので黒
+						client.turn = 0; //先攻なので黒
 						client.your_turn = 1;
-						my_turn = 0;
-					} else {
+					}else if(protocol==1200){
 						System.out.println("You hava white!");
 						client.turn = 1;
 						client.your_turn = 0;
-						my_turn = 1;
-						// client.BattleReceiver(map);
+						//client.BattleReceiver(map);
 						rec = new Reciever(client, map, client.ois);
 						count++;
 						System.out.println("re12");
 						rec.start();
 						System.out.println("toppa");
 					}
-					// client.ois.reset();
+						
+					
+					//client.ois.reset();
+					
+						
 				}
 			} catch (ClassNotFoundException e1) {
+				// TODO 自動生成された catch ブロック
 				e1.printStackTrace();
 			} catch (IOException e) {
+				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
-			} finally {
-
+			}finally  {
+			
 			}
+			/*
 			System.out.println("Waiting for timeout info");
 			int timeout_protocol = 2000;
 			try {
-				r_data = (transData) client.ois.readObject();
+				r_data = (transData) ois.readObject();
 				if (r_data.get_protocol() == timeout_protocol) {
 					new Result(1 - my_turn, client, this);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
+				*/
 		}
 
 		public void actionPerformed(ActionEvent e) {
@@ -372,45 +390,63 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 							time_count_down.reset();
 
 						}
-						result = map.isGameFinish();
-						try {
-							transData end = new transData(36);
-							ObjectOutputStream oos = new ObjectOutputStream(client.s.getOutputStream());
-							if(my_turn == 0){//先に入った側(黒)のみが結果を送信する
-								switch(result){
-									case 0: end.set_endinfo_win(); break;
-									case 1: end.set_endinfo_lose(); break;
-									case 2: end.set_endinfo_draw(); break;
-									default: System.out.println("set_endinfo error"); break;
-								}
-								try {
-									oos.writeObject(end);
-									oos.reset();
-								} catch (Exception erro) {
-									erro.printStackTrace();
-								}
-							}
-
-							new Result(result, client, this);
-						} catch (Exception erro) {
-							erro.printStackTrace();
-						}
-
 					}
+					
 					// client.oos.flush();
 					// client.oos.shutdown();
 					System.out.println("s_data=" + s_data.get_row() + "," + s_data.get_line());
+					// client.oos.writeObject(s_data);
 					client.oos.writeObject(s_data);
+
 					System.out.println("send!!");
+
+					result = map.isGameFinish();
+					System.out.println("result : " + result);
+						if(result != 3){
+							System.out.println("game end");
+							try {
+								transData end = new transData(36);
+								// ObjectOutputStream oos = new ObjectOutputStream(client.s.getOutputStream());
+								if (client.turn == 0) {// 先に入った側(黒)のみが結果を送信する
+									switch (result) {
+										case 0:
+											end.set_endinfo_win();
+											break;
+										case 1:
+											end.set_endinfo_lose();
+											break;
+										case 2:
+											end.set_endinfo_draw();
+											break;
+										default:
+											System.out.println("set_endinfo error");
+											break;
+									}
+									try {
+										client.oos.writeObject(end);
+										System.out.println("send endinfo : " + result);
+										client.oos.reset();
+									} catch (Exception erro) {
+										erro.printStackTrace();
+									}
+									
+								}else{}
+
+								//new Result(result, client, this);
+							} catch (Exception erro) {
+								erro.printStackTrace();
+							}
+						}else{}
+
 					client.your_turn = 0;
 					// client.BattleReceiver(map);
 					if (count == 0) {
-						rec = new Reciever(client, map, client.ois);
+						rec = new Reciever(client, map, client.ois); // client.ois
 						rec.start();
 						count++;
 						time_count_down.reset();
 					} else {
-						rec = new Reciever(client, map, client.ois);
+						rec = new Reciever(client, map, client.ois);// client.ois
 						rec.start();
 						time_count_down.reset();
 					}
@@ -730,7 +766,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 							A[j].setOpaque(true);
 						} else if (map[j][i] == 2) {
 							A[j].setIcon(iconG);
-						}else{
+						} else {
 							A[j].setIcon(null);
 						}
 					}
@@ -744,7 +780,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 							B[j].setOpaque(true);
 						} else if (map[j][i] == 2) {
 							B[j].setIcon(iconG);
-						}else{
+						} else {
 							B[j].setIcon(null);
 						}
 					}
@@ -758,7 +794,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 							C[j].setOpaque(true);
 						} else if (map[j][i] == 2) {
 							C[j].setIcon(iconG);
-						}else{
+						} else {
 							C[j].setIcon(null);
 						}
 					}
@@ -772,7 +808,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 							D[j].setOpaque(true);
 						} else if (map[j][i] == 2) {
 							D[j].setIcon(iconG);
-						}else{
+						} else {
 							D[j].setIcon(null);
 						}
 					}
@@ -786,7 +822,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 							E[j].setOpaque(true);
 						} else if (map[j][i] == 2) {
 							E[j].setIcon(iconG);
-						}else{
+						} else {
 							E[j].setIcon(null);
 						}
 					}
@@ -800,7 +836,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 							F[j].setOpaque(true);
 						} else if (map[j][i] == 2) {
 							F[j].setIcon(iconG);
-						}else{
+						} else {
 							F[j].setIcon(null);
 						}
 					}
@@ -814,7 +850,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 							G[j].setOpaque(true);
 						} else if (map[j][i] == 2) {
 							G[j].setIcon(iconG);
-						}else{
+						} else {
 							G[j].setIcon(null);
 						}
 					}
@@ -828,7 +864,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 							H[j].setOpaque(true);
 						} else if (map[j][i] == 2) {
 							H[j].setIcon(iconG);
-						}else{
+						} else {
 							H[j].setIcon(null);
 						}
 					}
@@ -860,7 +896,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 					if (time_limit == 0) {
 						System.out.println("Time out");
 
-						new Result(1 - my_turn, client, display);
+						new Result(1 - client.your_turn, client, display);
 						try {
 							transData end = new transData(36);
 							ObjectOutputStream oos = new ObjectOutputStream(client.s.getOutputStream());
