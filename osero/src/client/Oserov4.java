@@ -1,15 +1,25 @@
 package client;
 
-import javax.swing.*;
-import transData.*;
-import java.net.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.io.*;
-import java.util.Arrays;
-import java.util.*;
+
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
+import javax.swing.JRadioButton;
+
+import transData.transData;
 
 public class Oserov4 /* extends JFrame implements ActionListener */ {
 	/**
@@ -25,6 +35,9 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 	JLabel l4 = new JLabel("黒の数：白の数");
 	JLabel l5 = new JLabel("あなたの番");
 	JButton b1 = new JButton("設定");
+	JLabel l6 = new JLabel("置ける場所表現 : ");
+	JRadioButton r1 = new JRadioButton("0n", true);
+    	JRadioButton r2 = new JRadioButton("Off", false);
 
 	JButton[] A = new JButton[10];
 	JButton[] B = new JButton[10];
@@ -40,6 +53,7 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 	double x = 0;
 	double y = 0;
 	boolean interuput = false;
+	boolean G_switch = true;
 	Osero_setting osero_setting;
 	ImageIcon iconB = new ImageIcon(getClass().getResource("00Black.jpg"));
 	ImageIcon iconW = new ImageIcon(getClass().getResource("00White.jpg"));
@@ -49,10 +63,10 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 	Client client = null;
 	int count = 0;
 	int result = 5;
-
+	// protocol番号3でオセロの駒の位置情報をs_dataでサーバに送る。
 	transData s_data = new transData(3);
 	transData r_data = null;
-
+	transData battle_start = null;
 	Ban map = new Ban();
 	HashMap<Integer, transData> hash = new HashMap<Integer, transData>();
 
@@ -63,14 +77,14 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 	JFrame j = new JFrame();
 	Room.Display4 room;
 
-	public Oserov4(Client client, ObjectOutputStream oos, ObjectInputStream ois,String time) {
+	public Oserov4(Client client, ObjectOutputStream oos, ObjectInputStream ois, int time) {
 		this.client = client;
 		// this.oos = oos;
 		// this.ois = ois;
-		client.oos = oos;
-		client.ois = ois;
-		this.room = room;
-		this.time_limit = Integer.parseInt(time);
+		// client.oos = oos;
+		// client.ois = ois;
+		// this.room = room;
+		this.time_limit = time;
 		new Display();
 		// System.out.println("Battlereceiver");
 		// client.BattleReceiver(map);
@@ -109,6 +123,16 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 			l5.setBounds(50, 500, 100, 30);
 			b1.setBounds(200, 500, 100, 30);
 			b1.addActionListener(this);
+
+			l6.setBounds(350, 500, 100, 30);
+        		ButtonGroup group = new ButtonGroup();
+       			group.add(r1);
+        		group.add(r2);
+        		r1.setBounds(450, 500, 50, 30);
+        		r2.setBounds(500, 500, 50, 30);
+
+		        r1.addActionListener(this);
+		        r2.addActionListener(this);
 
 			int buttonSize = 46, i = 0;
 
@@ -200,6 +224,9 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 			c.add(l4);
 			c.add(l5);
 			c.add(b1);
+			c.add(l6);
+		        c.add(r1);
+        		c.add(r2);
 
 			j.getLayeredPane().add(chessboard, 100);
 
@@ -222,32 +249,19 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 			time_count_down.start();
 			// data exchange
 
-			System.out.println("b if receive");
-			if (client.CPUflag == false) {
-				try {
-					// receive battle start notice
-					System.out.println("before 80 receive: CPUflag = " + client.CPUflag);
-					// while(r_data.get_protocol() != 80) {
-					r_data = (transData) client.ois.readObject();
-					// }
-					System.out.println("after 80 receive");
-				} catch (ClassNotFoundException e11) {
-					e11.printStackTrace();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				} finally {
-
-				}
-				if (r_data.get_protocol() == 80) {
-					System.out.println("Battle start!");
+			// waiting for server send battle start info
+			try {
+				battle_start = (transData) client.ois.readObject();
+				if (battle_start.get_protocol() == 80) {
+					System.out.println("Recieve game start information");
 				} else {
-					System.out.println("cant receive start");
+					//
 				}
-			} else {
-				System.out.println("not receive 80 in Oserov4");
+			} catch (Exception erro) {
+				erro.printStackTrace();
 			}
+
 			// 次以降の時のため
-			client.CPUflag = false;
 
 			System.out.println("please wait for opponent");
 			try {
@@ -307,6 +321,16 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 				System.out.println("open new window");
 				new Osero_setting(chessboard);
 
+			}
+			boolean status1 = r1.isSelected();
+       			boolean status2 = r2.isSelected();
+			if (e.getSource() == r1 || e.getSource() == r2) {
+        			if(status1 == true) {
+            				G_switch = true;
+            			}else if(status2 == true) {
+            				G_switch = false;
+            			}
+        			map.castToBoard();
 			}
 			try {
 				if (client.your_turn == 1) {
@@ -457,13 +481,13 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 		 * (transData)ois.readObject(); } catch (ClassNotFoundException e11) { // TODO
 		 * 自動生成された catch ブロック e11.printStackTrace(); } catch (IOException e1) { // TODO
 		 * 自動生成された catch ブロック e11.printStackTrace(); }finally {
-		 * 
+		 *
 		 * } if (r_data.get_protocol()==80){ System.out.println("Battle start!"); }else{
 		 * System.out.println("cant receive start"); }
-		 * 
+		 *
 		 * while(true) { System.out.println("please wait for opponent"); try { r_data =
 		 * (transData)ois.readObject();
-		 * 
+		 *
 		 * if(r_data instanceof transData) { if(r_data.get_protocol()==1000) { turn = 0;
 		 * //先攻なので黒 } if (r_data.get_protocol()==3 || r_data.get_protocol()==1000){
 		 * if(r_data.get_protocol()==3){
@@ -753,8 +777,10 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 						} else if (map[j][i] == 0) {
 							A[j].setIcon(iconB);
 							A[j].setOpaque(true);
-						} else if (map[j][i] == 2) {
+						} else if (map[j][i] == 2 && G_switch == true) {
 							A[j].setIcon(iconG);
+						}else{
+							A[j].setIcon(null);
 						}
 					}
 				} else if (i == 1) {
@@ -765,8 +791,10 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 						} else if (map[j][i] == 0) {
 							B[j].setIcon(iconB);
 							B[j].setOpaque(true);
-						} else if (map[j][i] == 2) {
+						} else if (map[j][i] == 2 && G_switch == true) {
 							B[j].setIcon(iconG);
+						}else{
+							B[j].setIcon(null);
 						}
 					}
 				} else if (i == 2) {
@@ -777,8 +805,10 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 						} else if (map[j][i] == 0) {
 							C[j].setIcon(iconB);
 							C[j].setOpaque(true);
-						} else if (map[j][i] == 2) {
+						} else if (map[j][i] == 2 && G_switch == true) {
 							C[j].setIcon(iconG);
+						}else{
+							C[j].setIcon(null);
 						}
 					}
 				} else if (i == 3) {
@@ -789,8 +819,10 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 						} else if (map[j][i] == 0) {
 							D[j].setIcon(iconB);
 							D[j].setOpaque(true);
-						} else if (map[j][i] == 2) {
+						} else if (map[j][i] == 2 && G_switch == true) {
 							D[j].setIcon(iconG);
+						}else{
+							D[j].setIcon(null);
 						}
 					}
 				} else if (i == 4) {
@@ -801,8 +833,10 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 						} else if (map[j][i] == 0) {
 							E[j].setIcon(iconB);
 							E[j].setOpaque(true);
-						} else if (map[j][i] == 2) {
+						} else if (map[j][i] == 2 && G_switch == true) {
 							E[j].setIcon(iconG);
+						}else{
+							E[j].setIcon(null);
 						}
 					}
 				} else if (i == 5) {
@@ -813,8 +847,10 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 						} else if (map[j][i] == 0) {
 							F[j].setIcon(iconB);
 							F[j].setOpaque(true);
-						} else if (map[j][i] == 2) {
+						} else if (map[j][i] == 2 && G_switch == true) {
 							F[j].setIcon(iconG);
+						}else{
+							F[j].setIcon(null);
 						}
 					}
 				} else if (i == 6) {
@@ -825,8 +861,10 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 						} else if (map[j][i] == 0) {
 							G[j].setIcon(iconB);
 							G[j].setOpaque(true);
-						} else if (map[j][i] == 2) {
+						} else if (map[j][i] == 2 && G_switch == true) {
 							G[j].setIcon(iconG);
+						}else{
+							G[j].setIcon(null);
 						}
 					}
 				} else if (i == 7) {
@@ -837,8 +875,10 @@ public class Oserov4 /* extends JFrame implements ActionListener */ {
 						} else if (map[j][i] == 0) {
 							H[j].setIcon(iconB);
 							H[j].setOpaque(true);
-						} else if (map[j][i] == 2) {
+						} else if (map[j][i] == 2 && G_switch == true) {
 							H[j].setIcon(iconG);
+						}else{
+							H[j].setIcon(null);
 						}
 					}
 				}
