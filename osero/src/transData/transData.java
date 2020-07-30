@@ -51,6 +51,10 @@ public class transData implements Serializable{
     // protocol = 1000
     // --------------your turn notice
 
+    // logout-------------------
+    // protocol = 550
+    // -------------------logout
+
     // dummy----------------------
     // protocol = 35
     // ----------------------dummy

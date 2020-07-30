@@ -112,8 +112,8 @@ public class Room_server extends Thread {
 
             int first_turn = 1;// 1 or 2
             boolean battle_end = true;
-            Timer_manage_server timer_1=new Timer_manage_server(time, os_1);
-            Timer_manage_server timer_2=new Timer_manage_server(time, os_2);
+            Timer_manage_server timer_1=new Timer_manage_server(time, os_1, os_2);
+            Timer_manage_server timer_2=new Timer_manage_server(time, os_2, os_1);
             timer_1.count=10000;
             timer_2.count=10000;
             timer_1.start();
