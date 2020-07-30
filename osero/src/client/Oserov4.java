@@ -55,20 +55,52 @@ public class Oserov4 extends JFrame {
 
 	Ban map = new Ban();
 	HashMap<Integer, transData> hash = new HashMap<Integer, transData>();
+	java.util.List<String> players_info;
 
 	Reciever rec = null;
 	int time_limit = 30;
 	Timer_count_down time_count_down;
 	JFrame j = new JFrame();
-	public Oserov4(Client client, ObjectOutputStream oos, ObjectInputStream ois, int time) {
+
+	public Oserov4(Client client, ObjectOutputStream oos, ObjectInputStream ois, int time, java.util.List<String> players_info) {
 		this.client = client;
 		 client.oos = oos;
 		 client.ois = ois;
 		// this.room = room;
 		this.time_limit = time;
+		this.players_info = players_info;
+		System.out.println("players_info : " + players_info.toString());
+		String res = new String();
+		for(int i=0; i<8; i++){
+			String[] arr = players_info.get(i).split(",", 0);
+			if(arr[0].substring(16).trim().equals(client.username)){
+				res = get_record_label(players_info.get(i)) + "  vs  ";
+				if(i%2 == 0){
+					res += get_record_label(players_info.get(i+1));
+				}else{
+					res += get_record_label(players_info.get(i-1));
+				}
+				break;
+			}
+		}
+		l1.setText(res);
+
 		new Display();
 		// System.out.println("Battlereceiver");
 		// client.BattleReceiver(map);
+	}
+
+	private String get_record_label(String str) {// strには"name:usr_0, win:0, lose:0, draw:0, rate:0"を与える
+		String res = new String();
+		String[] arr = str.split(",", 0);
+		res = "";
+		res += arr[0].substring(16).trim() + " [";// name
+		res += arr[1].substring(5).trim() + "勝 ";// win
+		res += arr[2].substring(6).trim() + "負 ";// lose
+		res += arr[3].substring(6).trim() + "分 ";// draw
+		res += "レート" + arr[4].substring(6).trim();// rate
+		res += "]";
+		return res;
 	}
 
 	public class Display extends JFrame implements ActionListener {
@@ -95,7 +127,7 @@ public class Oserov4 extends JFrame {
 			chess = new JLabel();
 			chess.setIcon(img);
 
-			l1.setBounds(300, 10, 300, 20);
+			l1.setBounds(200, 10, 500, 20);
 			chessboard.setBounds(10, 40, 420, 420);
 			chess.setBounds(28, 57, 43, 43);
 			l2.setBounds(600, 50, 200, 30);
@@ -106,7 +138,7 @@ public class Oserov4 extends JFrame {
 			b1.addActionListener(this);
 
 			int buttonSize = 46, i = 0;
-
+			
 			Timer chess_number_count = new Timer();
 			chess_number_count.schedule(new TimerTask() {
 
@@ -239,13 +271,8 @@ public class Oserov4 extends JFrame {
 						System.out.println("re12");
 						rec.start();
 						System.out.println("toppa");
-					}
-					
-						
-					
-					//client.ois.reset();
-					
-						
+					}					
+					//client.ois.reset();							
 				}
 			} catch (ClassNotFoundException e1) {
 				// TODO 自動生成された catch ブロック
@@ -399,6 +426,7 @@ public class Oserov4 extends JFrame {
 						}else{}
 						
 
+
 					
 					// client.oos.flush();
 					// client.oos.shutdown();
@@ -407,6 +435,45 @@ public class Oserov4 extends JFrame {
 					client.oos.writeObject(s_data);
 
 					System.out.println("send!!");
+
+					result = map.isGameFinish();
+					System.out.println("result : " + result);
+						if(result != 3){
+							System.out.println("game end");
+							try {
+								transData end = new transData(36);
+								// ObjectOutputStream oos = new ObjectOutputStream(client.s.getOutputStream());
+								if (client.turn == 0) {// 先に入った側(黒)のみが結果を送信する
+									switch (result) {
+										case 0:
+											end.set_endinfo_win();
+											break;
+										case 1:
+											end.set_endinfo_lose();
+											break;
+										case 2:
+											end.set_endinfo_draw();
+											break;
+										default:
+											System.out.println("set_endinfo error");
+											break;
+									}
+									try {
+										client.oos.writeObject(end);
+										System.out.println("send endinfo : " + result);
+										client.oos.reset();
+									} catch (Exception erro) {
+										erro.printStackTrace();
+									}
+									
+								}else{}
+
+								new Result(result, client);
+							} catch (Exception erro) {
+								erro.printStackTrace();
+							}
+						}else{}
+
 					client.your_turn = 0;
 					// client.BattleReceiver(map);
 					if (count == 0) {
@@ -863,12 +930,12 @@ public class Oserov4 extends JFrame {
 				public void run() {
 					time = time - 1;
 					l2.setText("Left time: " + String.valueOf(time));
-					// time out の処理
-					
+					// time out の処理				
 					if (time<=0&&(client.your_turn==1)) {
 						System.out.println("Time out , your turn: "+ your_turn);
 						result = 1-your_turn;
 						new Result(result, client);
+
 						try {
 							transData end = new transData(36);
 							ObjectOutputStream oos = new ObjectOutputStream(client.s.getOutputStream());

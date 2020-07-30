@@ -22,7 +22,7 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
     private static final long serialVersionUID = 1L;
 
     Container c;
-    JLabel l1 = new JLabel("対戦相手" + " vs " + "相手の成績");
+    JLabel l1 = new JLabel("CPU戦");
     JLabel l2 = new JLabel("残り時間");
 
     JLabel l4 = new JLabel("黒の数：白の数");
@@ -818,10 +818,12 @@ class Data_reciever extends Thread {
             data = (transData) ois_room.readObject();
             System.out.println("recieved battle start from server");
             if (data.get_protocol() == 80) {
-                f_time = data.get_time();
+
+				f_time = data.get_time();
+				java.util.List<String> players_info = data.get_players_info();
                 System.out.println("recieve data protocol 80");
                 cpu_switch = true;
-                new Oserov4(client,this.oos_room,this.ois_room,f_time);
+                new Oserov4(client,this.oos_room,this.ois_room,f_time,players_info);
                 this.interrupt();
                 
             }

@@ -8,6 +8,8 @@ import java.net.Socket;
 import javax.swing.*;
 import transData.*;
 public class Result extends JFrame {
+	JFrame j = new JFrame();
+	JPanel p = (JPanel)j.getContentPane();
     JLabel l = new JLabel("");
     Client client = null;
     int result;
@@ -47,6 +49,7 @@ public class Result extends JFrame {
              e.printStackTrace();
          }
     
+
     }
     
 }
