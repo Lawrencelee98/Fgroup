@@ -215,6 +215,8 @@ public class Room_server extends Thread {
                 }
             }
 
+
+
             //対戦記録更新
             transData end_info = (transData) ois_1.readObject();
             transData temp_end_info = new transData(36);
@@ -232,9 +234,34 @@ public class Room_server extends Thread {
             }
             Server.update_record(temp_end_info);
 
+
+            // update room info
+            if(room_num==1){
+                Server.name_r1_1 = null;
+                Server.name_r1_2 = null;
+            }else if(room_num==2){
+                Server.name_r2_1 = null;
+                Server.name_r2_2 = null;
+            }else if(room_num==3){
+                Server.name_r3_1 = null;
+                Server.name_r3_2 = null;
+            }else if(room_num==4){
+                Server.name_r4_1 = null;
+                Server.name_r4_2 = null;
+            }
+            Server.room_info.put(room_num,0);
+            transData room_info = new transData(12);
+            room_info.set_room_info(Server.room_info, Server.get_record());
+            os_1.writeObject(room_info);
+            os_2.writeObject(room_info);
+
+
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+
+            run();
         }
     }
 }
