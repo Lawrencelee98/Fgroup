@@ -929,8 +929,14 @@ public class Oserov4 extends JFrame {
 			timer.schedule(new TimerTask() {
 				@Override
 				public void run() {
-					time = time - 1;
+					if(time>=1){
+						time = time - 1;
+					}
+					
 					l2.setText("Left time: " + String.valueOf(time));
+					if(time<=0){
+						time =0;
+					}
 					// time out の処理				
 				/*	if (time<=0&&(client.your_turn==1)) {
 						System.out.println("Time out , your turn: "+ your_turn);

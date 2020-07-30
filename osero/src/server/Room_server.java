@@ -137,7 +137,7 @@ public class Room_server extends Thread {
                     System.out.println("timer 1 start");
 
                     transData data_1 = (transData) ois_1.readObject();
-                    timer_1.count=10000;
+                    timer_1.count=time+3;
                     //timer_1.interrupt();
                    //timer_1.stop();
                     System.out.println("timer 1 interrpted");
@@ -167,7 +167,7 @@ public class Room_server extends Thread {
                     //timer_2.start();
                     System.out.println("timer 2 start");
                     transData data_2 = (transData) ois_2.readObject();
-                    timer_2.count=10000;
+                    timer_2.count=time+3;
                     //timer_2.interrupt();
                     //timer_2.stop();
                     if (data_2 instanceof transData) {
@@ -192,7 +192,7 @@ public class Room_server extends Thread {
                     System.out.println("timer 2 start");
 
                     transData data_2 = (transData) ois_2.readObject();
-                    timer_2.count=10000;
+                    timer_2.count=time+3;
                     //timer_2.interrupt();
                    // timer_2.stop();
                     System.out.println("timer 2 interrupted");
@@ -218,7 +218,7 @@ public class Room_server extends Thread {
                     System.out.println("timer 1 start");
 
                     transData data_1 = (transData) ois_1.readObject();
-                    timer_1.count=10000;
+                    timer_1.count=time+3;
                     //timer_1.suspend();
 
                     //timer_1.interrupt();
