@@ -280,6 +280,25 @@ public class Socket_thread extends Thread{
 
 
                 }
+            }else if(data_room_num.get_protocol()==550){
+                // todo logout
+                if (num==1){
+                    Server.name_p1 = null;
+                }else if (num==2){
+                    Server.name_p2 = null;
+                }else if (num==3){
+                    Server.name_p3 = null;
+                }else if (num==4){
+                    Server.name_p4 = null;
+                }else if (num==5){
+                    Server.name_p5 = null;
+                }else if (num==6){
+                    Server.name_p6 = null;
+                }else if (num==7){
+                    Server.name_p7 = null;
+                }else if (num==8){
+                    Server.name_p8 = null;
+                }
             }else{
 
             }
