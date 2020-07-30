@@ -34,6 +34,8 @@ public class Client {
 	transData r_data = null;
 	Oserov4 osero = null;
 	String username;
+	
+	Login_display Login;
 
 	public Client() {
 	}
@@ -224,7 +226,7 @@ public class Client {
 		// TODO Auto-generated method stub
 		Client client = new Client();
 		client.setLoginPort(client.FirstConnect(client.ServerAddress, client.first_port));
-		new Login_display("Login", client);
+		client.Login = new Login_display("Login", client);
 
 	}
 }
