@@ -240,6 +240,7 @@ public class Oserov4 extends JFrame {
 						rec.start();
 						System.out.println("toppa");
 					}
+					
 						
 					
 					//client.ois.reset();
