@@ -105,12 +105,19 @@ public class Room_server extends Thread {
             transData battle_start = new transData(80);
             battle_start.set_time(time);
             battle_start.set_room_info(Server.room_info, Server.get_record());
+           // battle_start.set_user_name(name_p1, name_p2);
             os_1.writeObject(battle_start);
             os_2.writeObject(battle_start);
 
 
             int first_turn = 1;// 1 or 2
             boolean battle_end = true;
+            Timer_manage_server timer_1=new Timer_manage_server(time, os_1);
+            Timer_manage_server timer_2=new Timer_manage_server(time, os_2);
+            timer_1.count=10000;
+            timer_2.count=10000;
+            timer_1.start();
+            timer_2.start();
             if (first_turn == 1) {
                 // 1 が先手の場合
 
@@ -121,21 +128,24 @@ public class Room_server extends Thread {
                 os_2.writeObject(koukou);
                 os_2.flush();
                 System.out.println("Room [ " + String.valueOf(room_num) + " ] " + "send --turn-- to player2");
-
+                
                 while (battle_end) {
 
-                    Timer_manage_server timer_1 = new Timer_manage_server(time, os_1);
-                    timer_1.start();
+                    //timer_1 = new Timer_manage_server(time, os_1);
+                    timer_1.count=time;
+                    //timer_1.start();
+                    System.out.println("timer 1 start");
 
                     transData data_1 = (transData) ois_1.readObject();
-
-                    timer_1.stop();
-
+                    timer_1.count=10000;
+                    //timer_1.interrupt();
+                   //timer_1.stop();
+                    System.out.println("timer 1 interrpted");
                     System.out.println("Room [ " + String.valueOf(room_num) + " ] " + "read Object");
                     System.out.println(data_1.get_protocol());
                     if (data_1 instanceof transData) {
                         if (data_1.get_protocol() == 3 || data_1.get_protocol() == 3000) {
-
+                        
                             os_2.writeObject(data_1);
                             System.out.println("Room [ " + String.valueOf(room_num) + " ] " + "send Object to 2");
                         } else if (data_1.get_protocol() == 50) {
@@ -152,16 +162,17 @@ public class Room_server extends Thread {
                     // os_2.writeObject(start);
                     // System.out.println("send --start-- to player2");
 
-                    Timer_manage_server timer_2 = new Timer_manage_server(time, os_2);
-                    timer_2.start();
-
+                    // timer_2 = new Timer_manage_server(time, os_2);
+                    timer_2.count=time;
+                    //timer_2.start();
+                    System.out.println("timer 2 start");
                     transData data_2 = (transData) ois_2.readObject();
-
-                    timer_2.stop();
-
+                    timer_2.count=10000;
+                    //timer_2.interrupt();
+                    //timer_2.stop();
                     if (data_2 instanceof transData) {
                         if (data_2.get_protocol() == 3 || data_1.get_protocol() == 3000) {
-
+                           
                             os_1.writeObject(data_2);
                             System.out.println("Room [ " + String.valueOf(room_num) + " ] "+"send Object to 1");
                         } else if (data_2.get_protocol() == 50) {
@@ -175,16 +186,19 @@ public class Room_server extends Thread {
 
                 while (battle_end) {
 
-                    Timer_manage_server timer_2 = new Timer_manage_server(time, os_2);
-                    timer_2.start();
+                     //timer_2 = new Timer_manage_server(time, os_2);
+                    //timer_2.start();
+                    timer_2.count=time;
+                    System.out.println("timer 2 start");
 
                     transData data_2 = (transData) ois_2.readObject();
-
-                    timer_2.stop();
-
+                    timer_2.count=10000;
+                    //timer_2.interrupt();
+                   // timer_2.stop();
+                    System.out.println("timer 2 interrupted");
                     if (data_2 instanceof transData) {
                         if (data_2.get_protocol() == 3) {
-
+                            
                             os_1.writeObject(data_2);
                         } else if (data_2.get_protocol() == 50) {
                             battle_end = data_2.get_battle_end();
@@ -193,19 +207,27 @@ public class Room_server extends Thread {
                     }
 
 
-                    if (battle_end)
-                        break;
+                    if (!battle_end){break;}
+                        
 
-                    Timer_manage_server timer_1 = new Timer_manage_server(time, os_1);
-                    timer_1.start();
+                  // timer_1 = new Timer_manage_server(time, os_1);
+                  timer_1.count=time; 
+                  // timer_1.start();
+                    //timer_1.resume();
+
+                    System.out.println("timer 1 start");
 
                     transData data_1 = (transData) ois_1.readObject();
+                    timer_1.count=10000;
+                    //timer_1.suspend();
 
-                    timer_1.stop();
+                    //timer_1.interrupt();
+                    //timer_1.stop();
+                    System.out.println("timer 1 interrpted");
 
                     if (data_1 instanceof transData) {
                         if (data_1.get_protocol() == 3) {
-
+                            
                             os_1.writeObject(data_1);
                         } else if (data_1.get_protocol() == 50) {
                             battle_end = data_1.get_battle_end();

@@ -291,4 +291,15 @@ public class transData implements Serializable{
         this.result_time = time;
     }
     // --------------------------時間選択に使う
+
+    //---------------------------ユーザの名前情報
+    private String[] user_name = new String[2];
+    public void set_user_name(String user1,String user2){
+        this.user_name[1] = user1;
+        this.user_name[2] = user2;
+    }
+    public String[] get_user_name(){
+        return this.user_name;
+    }
+
 }

@@ -14,11 +14,13 @@ public class Reciever extends Thread{
 	Client client =  null;
 	Ban map = null;
 	ObjectInputStream ois = null;
-	
-	public Reciever(Client client, Ban map, ObjectInputStream ois) {
+	int protocol;
+	transData end = null;
+	public Reciever(Client client, Ban map, ObjectInputStream ois,transData end) {
 		this.client = client;
 		this.map = map;
 		this.ois = ois;
+		this.end = end;
 	}
 	@Override
 	public void run (){
@@ -28,12 +30,13 @@ public class Reciever extends Thread{
 			System.out.println("receiver start ");
 			r_data = (transData)ois.readObject();
 			System.out.println("receive data");
+			this.protocol=r_data.get_protocol();
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
 		if(r_data instanceof transData) {
-				if (r_data.get_protocol()==3){
+				if (this.protocol==3){
 						System.out.println("opponent:row="+r_data.get_row()+",line="+r_data.get_line());
 						//client.r_data = r_data;
 						client.your_turn = 1;
@@ -42,7 +45,14 @@ public class Reciever extends Thread{
 						map.checkMap(client.turn);
 						map.castToBoard();
 						map.timeupdater();
-				}else{
+				}else if(this.protocol==2000){
+					System.out.println("protocol 2000");
+					end.set_endinfo_lose();
+					int your_turn = client.your_turn;
+					int result = 1-your_turn;
+					new Result(result,this.client);
+				}
+				else{
 					System.out.println("no data");
 				}
 		}

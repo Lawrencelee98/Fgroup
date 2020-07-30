@@ -61,7 +61,7 @@ public class Oserov4 extends JFrame {
 	int time_limit = 30;
 	Timer_count_down time_count_down;
 	JFrame j = new JFrame();
-
+	transData end = new transData(36);
 	public Oserov4(Client client, ObjectOutputStream oos, ObjectInputStream ois, int time, java.util.List<String> players_info) {
 		this.client = client;
 		 client.oos = oos;
@@ -71,6 +71,7 @@ public class Oserov4 extends JFrame {
 		this.players_info = players_info;
 		System.out.println("players_info : " + players_info.toString());
 		String res = new String();
+	
 		for(int i=0; i<8; i++){
 			String[] arr = players_info.get(i).split(",", 0);
 			if(arr[0].substring(16).trim().equals(client.username)){
@@ -266,12 +267,12 @@ public class Oserov4 extends JFrame {
 						client.turn = 1;
 						client.your_turn = 0;
 						//client.BattleReceiver(map);
-						rec = new Reciever(client, map, client.ois);
+						rec = new Reciever(client, map, client.ois,end);
 						count++;
 						System.out.println("re12");
 						rec.start();
 						System.out.println("toppa");
-					}					
+					}else{}			
 					//client.ois.reset();							
 				}
 			} catch (ClassNotFoundException e1) {
@@ -441,7 +442,7 @@ public class Oserov4 extends JFrame {
 						if(result != 3){
 							System.out.println("game end");
 							try {
-								transData end = new transData(36);
+								
 								// ObjectOutputStream oos = new ObjectOutputStream(client.s.getOutputStream());
 								if (client.turn == 0) {// 先に入った側(黒)のみが結果を送信する
 									switch (result) {
@@ -477,12 +478,12 @@ public class Oserov4 extends JFrame {
 					client.your_turn = 0;
 					// client.BattleReceiver(map);
 					if (count == 0) {
-						rec = new Reciever(client, map, client.ois); // client.ois
+						rec = new Reciever(client, map, client.ois,end); // client.ois
 						rec.start();
 						count++;
 						time_count_down.reset();
 					} else {
-						rec = new Reciever(client, map, client.ois);// client.ois
+						rec = new Reciever(client, map, client.ois,end);// client.ois
 						rec.start();
 						time_count_down.reset();
 					}
@@ -931,7 +932,7 @@ public class Oserov4 extends JFrame {
 					time = time - 1;
 					l2.setText("Left time: " + String.valueOf(time));
 					// time out の処理				
-					if (time<=0&&(client.your_turn==1)) {
+				/*	if (time<=0&&(client.your_turn==1)) {
 						System.out.println("Time out , your turn: "+ your_turn);
 						result = 1-your_turn;
 						new Result(result, client);
@@ -951,7 +952,7 @@ public class Oserov4 extends JFrame {
 						}
 
 						this.cancel();
-					}
+					}*/
 				}
 				
 			}, 0, 1000);

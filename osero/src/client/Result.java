@@ -35,7 +35,7 @@ public class Result extends JFrame {
         this.setResizable(false);
     
         try {
-            client.s.close();
+           // client.s.close();
              client.setLoginPort(client.FirstConnect(client.ServerAddress, client.first_port));
              Socket s = new Socket(client.ServerAddress,client.getLoginPort());
              client.s = s;
