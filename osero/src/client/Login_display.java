@@ -107,6 +107,7 @@ public class Login_display extends JFrame implements ActionListener {
 			boolean flag = client.send_login_info(username, passwordstr, ois, oos);
 			if (flag) {
 				// login success
+				client.username = username;
 				client.choose_room(oos, ois);
 				this.dispose();
 				/*
