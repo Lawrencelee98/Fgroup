@@ -42,6 +42,7 @@ public class Oserov4 extends JFrame {
 	double y = 0;
 	boolean interuput = false;
 	Osero_setting osero_setting;
+
 	ImageIcon iconB = new ImageIcon(getClass().getResource("00Black.jpg"));
 	ImageIcon iconW = new ImageIcon(getClass().getResource("00White.jpg"));
 	ImageIcon iconG = new ImageIcon(getClass().getResource("green.jpg"));
@@ -50,8 +51,10 @@ public class Oserov4 extends JFrame {
 	Client client = null;
 	int count = 0;
 	int result = 5;
+	boolean pass = true;
 
 	transData s_data = new transData(3);
+
 
 	Ban map = new Ban();
 	HashMap<Integer, transData> hash = new HashMap<Integer, transData>();
@@ -267,7 +270,7 @@ public class Oserov4 extends JFrame {
 						client.turn = 1;
 						client.your_turn = 0;
 						//client.BattleReceiver(map);
-						rec = new Reciever(client, map, client.ois,end,this);
+						rec = new Reciever(client, map, client.ois,end,this,pass);
 						count++;
 						System.out.println("re12");
 						rec.start();
@@ -415,6 +418,11 @@ public class Oserov4 extends JFrame {
 									try {
 										client.oos.writeObject(end);
 										client.oos.reset();
+										transData room_info=null;
+										room_info = (transData)client.ois.readObject();
+										if(room_info.get_protocol()==12){
+											// Get room information
+										}
 									} catch (Exception erro) {
 										erro.printStackTrace();
 									}
@@ -431,12 +439,14 @@ public class Oserov4 extends JFrame {
 					
 					// client.oos.flush();
 					// client.oos.shutdown();
+					
+				
 					System.out.println("s_data=" + s_data.get_row() + "," + s_data.get_line());
 					// client.oos.writeObject(s_data);
 					client.oos.writeObject(s_data);
-
+			
 					System.out.println("send!!");
-
+			
 					result = map.isGameFinish();
 					System.out.println("result : " + result);
 						if(result != 3){
@@ -468,8 +478,8 @@ public class Oserov4 extends JFrame {
 									}
 									
 								}else{}
-								this.dispose();
-								new Result(result, client,2,j);
+								//this.dispose();
+								//new Result(result, client,2,j);
 							} catch (Exception erro) {
 								erro.printStackTrace();
 							}
@@ -478,14 +488,14 @@ public class Oserov4 extends JFrame {
 					client.your_turn = 0;
 					// client.BattleReceiver(map);
 					if (count == 0) {
-						rec = new Reciever(client, map, client.ois,end,this); // client.ois
+						rec = new Reciever(client, map, client.ois,end,this,pass); // client.ois
 						rec.start();
 						count++;
-						time_count_down.reset();
+						
 					} else {
-						rec = new Reciever(client, map, client.ois,end,this);// client.ois
+						rec = new Reciever(client, map, client.ois,end,this,pass);// client.ois
 						rec.start();
-						time_count_down.reset();
+						
 					}
 
 				}

@@ -19,12 +19,14 @@ public class Reciever extends Thread{
 	transData end = null;
 	transData battle_end = new transData(50);
 	transData room_info =null;
-	public Reciever(Client client, Ban map, ObjectInputStream ois,transData end,JFrame j) {
+	boolean pass = true;
+	public Reciever(Client client, Ban map, ObjectInputStream ois,transData end,JFrame j,boolean pass) {
 		this.client = client;
 		this.map = map;
 		this.ois = ois;
 		this.end = end;
 		this.j = j;
+		this.pass = pass;
 	}
 	@Override
 	public void run (){
@@ -44,10 +46,25 @@ public class Reciever extends Thread{
 						//client.r_data = r_data;
 						client.your_turn = 1;
 						System.out.println("row: "+r_data.get_row()+" line: "+r_data.get_line());
+						
 						map.updateMap(r_data.get_row(), r_data.get_line(),1-client.turn);
 						map.checkMap(client.turn);
 						map.castToBoard();
 						map.timeupdater();
+						for(int i=0;i<8;i++){
+							for(int j=0;j<8;j++){
+								if(map.getMapValue(i, j)==2){
+									pass=false;
+									break;
+								}
+							}
+						}
+						if(pass){
+								System.out.println("pass");
+								transData pass = new transData(3000);
+								client.oos.writeObject(pass);
+								client.your_turn=0;
+						}
 				}else if(this.protocol==2000){
 				
 						System.out.println("protocol 2000 : you lose");
