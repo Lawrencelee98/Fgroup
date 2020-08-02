@@ -942,7 +942,7 @@ public class Oserov4 extends JFrame {
 						
 						if(client.your_turn==0){
 							System.out.println("client time out");
-							new Result(client.turn,client,1,j);
+							//new Result(client.turn,client,1,j);
 						}
 						
 						cancel();

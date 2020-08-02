@@ -53,7 +53,7 @@ public class Reciever extends Thread{
 						client.oos.writeObject(end);
 						int your_turn = client.your_turn;
 						int result = 1-your_turn;
-						new Result(result,this.client,3,j);
+						//new Result(result,this.client,3,j);
 						//this.j.dispose();
 						
 

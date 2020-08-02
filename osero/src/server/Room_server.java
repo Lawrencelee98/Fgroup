@@ -2,6 +2,8 @@ package server;
 
 import java.io.*;
 import java.net.*;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.*;
 
 import transData.*;
@@ -14,6 +16,7 @@ public class Room_server extends Thread {
 
     private int time = 10, time_p1, time_p2;
 
+    
     public Room_server(int port_1, int port_2, int room_num) {
 
         this.port_1 = port_1;
@@ -112,9 +115,12 @@ public class Room_server extends Thread {
 
             int first_turn = 1;// 1 or 2
             boolean battle_end = true;
-            Timer_manage_server timer_1;
-            Timer_manage_server timer_2;
-   
+            //Timer_manage_server timer_1;
+            //Timer_manage_server timer_2;
+            Instant instant1;
+            Instant instant2;
+            long span;
+            transData time_out = new transData(2000);
             if (first_turn == 1) {
                 // 1 が先手の場合
 
@@ -128,13 +134,21 @@ public class Room_server extends Thread {
                 
                 while (battle_end) {
 
-                    timer_1 = new Timer_manage_server(time,os_2);
-                    timer_1.start();
-                    System.out.println("timer 1 start");
+                   // timer_1 = new Timer_manage_server(time,os_2);
+                    //timer_1.start();
+                    //System.out.println("timer 1 start");
+                    instant1 = Instant.now();
+                    instant2 = instant1.plus(Duration.ofSeconds(time));
                     transData data_1 = (transData) ois_1.readObject();
-                    timer_1.interrupt();
+                    instant1 = Instant.now();
+                    span =Duration.between(instant1,instant2).getSeconds();
+                    if(span>time){
+                        System.out.println("send time out 2000");
+                        
+                        os_1.writeObject(time_out);
+                    }
                    //timer_1.stop();
-                    System.out.println("timer 1 interrpted");
+                    //System.out.println("timer 1 interrpted");
                     System.out.println("Room [ " + String.valueOf(room_num) + " ] " + "read Object");
                     System.out.println(data_1.get_protocol());
                     if (data_1 instanceof transData) {
@@ -154,11 +168,15 @@ public class Room_server extends Thread {
                     }
 
                     //timer_2 = new Timer_manage_server(time, os_2,os_1);
-                    timer_2 = new Timer_manage_server(time,os_1);
-                    timer_2.start();
-                    System.out.println("timer 2 start");
+                    instant1 = Instant.now();
+                    instant2 = instant1.plus(Duration.ofSeconds(time));
                     transData data_2 = (transData) ois_2.readObject();
-                    timer_2.interrupt();
+                    instant1 = Instant.now();
+                    span =Duration.between(instant1,instant2).getSeconds();
+                    if(span>time){
+                        System.out.println("send time out 2000");
+                        os_2.writeObject(time_out);
+                    }
                     if (data_2 instanceof transData) {
                         if (data_2.get_protocol() == 3 || data_1.get_protocol() == 3000) {
                            
@@ -175,13 +193,16 @@ public class Room_server extends Thread {
 
                 while (battle_end) {
 
-                    timer_2 = new Timer_manage_server(time, os_1);
-                    timer_2.start();
-                    System.out.println("timer 2 start");
+                    instant1 = Instant.now();
+                    instant2 = instant1.plus(Duration.ofSeconds(time));
                     transData data_2 = (transData) ois_2.readObject();
-                    timer_2.interrupt();
-                   // timer_2.stop();
-                    System.out.println("timer 2 interrupted");
+                    instant1 = Instant.now();
+                    span =Duration.between(instant1,instant2).getSeconds();
+                    System.out.println("span:"+ span);
+                    if(span>time){
+                        System.out.println("send time out 2000");
+                        os_2.writeObject(time_out);
+                    }
                     if (data_2 instanceof transData) {
                         if (data_2.get_protocol() == 3) {
                             
@@ -194,12 +215,15 @@ public class Room_server extends Thread {
 
 
                     if (!battle_end){break;}
-                    timer_1 = new Timer_manage_server(time,os_2);
-                    timer_1.start();                  
-                    System.out.println("timer 1 start");
+                    instant1 = Instant.now();
+                    instant2 = instant1.plus(Duration.ofSeconds(time));
                     transData data_1 = (transData) ois_1.readObject();
-                    timer_1.interrupt();
-                    System.out.println("timer 1 interrpted");
+                    instant1 = Instant.now();
+                    span =Duration.between(instant1,instant2).getSeconds();
+                    if(span>time){
+                        System.out.println("send time out 2000");
+                        os_1.writeObject(time_out);
+                    }
                     if (data_1 instanceof transData) {
                         if (data_1.get_protocol() == 3) {
                             os_1.writeObject(data_1);
