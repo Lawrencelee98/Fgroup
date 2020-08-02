@@ -66,11 +66,12 @@ public class Reciever extends Thread{
 						System.out.println("protocol 2000 : you lose");
 						end.set_endinfo_lose();
 						battle_end.set_battle_end(false);
-						if (client.turn == 0)client.oos.writeObject(end);
-						System.out.println("send end protocol 36");
 						client.oos.writeObject(battle_end);
 						System.out.println("send battle end protocol 50");
-						
+						if (client.turn == 0){
+							client.oos.writeObject(end);
+							System.out.println("send end protocol 36");
+						}
 						room_info = (transData)ois.readObject();
 						int result = client.turn^1;
 						System.out.println(result);
@@ -88,10 +89,12 @@ public class Reciever extends Thread{
 						System.out.println("prtocol 2100 : you win");
 						end.set_endinfo_win();
 						battle_end.set_battle_end(false);
-						if (client.turn == 0)client.oos.writeObject(end);
-						System.out.println("send end protocol 36");
 						client.oos.writeObject(battle_end);
 						System.out.println("send battle end protocol 50");
+						if (client.turn == 0){
+							client.oos.writeObject(end);
+							System.out.println("send end protocol 36");
+						}
 						
 						room_info = (transData)ois.readObject();
 						int result = client.turn;
