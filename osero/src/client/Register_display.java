@@ -32,7 +32,7 @@ public class Register_display extends JFrame implements ActionListener {
 		label[0].setBounds(15, 10, 200, 60);
 		label[1].setBounds(15, 100, 75, 20);
 		label[2].setBounds(15, 130, 75, 20);
-		label[3].setBounds(15, 160, 75, 20);
+		//label[3].setBounds(15, 160, 75, 20);
 		txt[0].setBounds(95, 100, 120, 20);
 		txt[1].setBounds(95, 130, 120, 20);
 		txt[2].setBounds(95, 160, 120, 20);
