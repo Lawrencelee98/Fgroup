@@ -325,6 +325,8 @@ public class Room_server extends Thread {
             Server.room_info.put(room_num,0);
             transData room_info = new transData(12);
             room_info.set_room_info(Server.room_info, Server.get_record());
+            os_1.reset();
+            os_2.reset();
             os_1.writeObject(room_info);
             os_2.writeObject(room_info);
             System.out.println("send room_info");
