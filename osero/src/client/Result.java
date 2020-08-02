@@ -64,7 +64,6 @@ public class Result extends JFrame implements ActionListener{
                  es.printStackTrace();
              }
     		*/
-    		room_info.put(1, 0);
     		new Room(client, room_info, players_info, client.oos, client.ois);
     		/*try {
     			System.out.println("roomData");
