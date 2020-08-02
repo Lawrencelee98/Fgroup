@@ -1,11 +1,7 @@
 package client;
-import javax.swing.*;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.net.Socket;
+
+import javax.swing.JFrame;
 
 import client.Oserov4.Ban;
 import transData.transData;
@@ -32,7 +28,7 @@ public class Reciever extends Thread{
 	public void run (){
 		transData r_data = null;
 		try {
-			
+
 			System.out.println("receiver start ");
 			r_data = (transData)ois.readObject();
 			System.out.println("receive data");
@@ -46,7 +42,7 @@ public class Reciever extends Thread{
 						//client.r_data = r_data;
 						client.your_turn = 1;
 						System.out.println("row: "+r_data.get_row()+" line: "+r_data.get_line());
-						
+
 						map.updateMap(r_data.get_row(), r_data.get_line(),1-client.turn);
 						map.checkMap(client.turn);
 						map.castToBoard();
@@ -66,36 +62,54 @@ public class Reciever extends Thread{
 								client.your_turn=0;
 						}
 				}else if(this.protocol==2000){
-				
+
 						System.out.println("protocol 2000 : you lose");
 						end.set_endinfo_lose();
 						battle_end.set_battle_end(false);
+						if (client.turn == 0)client.oos.writeObject(end);
+						System.out.println("send end protocol 36");
 						client.oos.writeObject(battle_end);
 						System.out.println("send battle end protocol 50");
-						client.oos.writeObject(end);
-						System.out.println("send end protocol 36");
+						
 						room_info = (transData)ois.readObject();
+						int result = client.turn^1;
+						System.out.println(result);
 						if(room_info.get_protocol()==12){
 							System.out.println(room_info.get_room_info());
+							System.out.println(room_info.get_players_info());
+							this.client.ois=ois;
+							new Result(result, this.client, room_info.get_room_info(), room_info.get_players_info());
+							this.j.dispose();
 						}
-						int your_turn = client.your_turn;
-						int result = 1-your_turn;
-						//new Result(result,this.client,3,j);
-						//this.j.dispose();
-						
+
+
 
 					}else if(this.protocol==2100){
 						System.out.println("prtocol 2100 : you win");
+						end.set_endinfo_win();
+						battle_end.set_battle_end(false);
+						if (client.turn == 0)client.oos.writeObject(end);
+						System.out.println("send end protocol 36");
+						client.oos.writeObject(battle_end);
+						System.out.println("send battle end protocol 50");
+						
 						room_info = (transData)ois.readObject();
+						int result = client.turn;
+						System.out.println(result);
 						if(room_info.get_protocol()==12){
 							System.out.println(room_info.get_room_info());
+							System.out.println(room_info.get_players_info());
+							this.client.ois=ois;
+							new Result(result, this.client, room_info.get_room_info(), room_info.get_players_info());
+							this.j.dispose();
 						}
+
 					}else if(this.protocol==12){
 						System.out.println("get room info ");
 						System.out.println(
 							r_data.get_room_info()
 						);
-						
+
 					}
 					else{
 						System.out.println("no data");
