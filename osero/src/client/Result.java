@@ -64,6 +64,7 @@ public class Result extends JFrame implements ActionListener{
                  // TODO 自動生成された catch ブロック
                  es.printStackTrace();
              }
+
             */
            try{
             client.ois.close();
@@ -82,7 +83,8 @@ public class Result extends JFrame implements ActionListener{
                ee.printStackTrace();
            }
     		room_info.put(1, 0);
-    		new Room(client, room_info, players_info, client.oos, client.ois);
+
+    	//	new Room(client, room_info, players_info, client.oos, client.ois);
     		/*try {
     			System.out.println("roomData");
     			transData t=(transData)client.ois.readObject();
