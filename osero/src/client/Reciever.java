@@ -17,15 +17,18 @@ public class Reciever extends Thread{
 	transData battle_end = new transData(50);
 	transData room_info =null;
 	boolean pass = true;
-	Socket s;
-	public Reciever(Client client, Ban map, ObjectInputStream ois,transData end,JFrame j,boolean pass) {
+
+	int rate;
+	public Reciever(Client client, Ban map, ObjectInputStream ois,transData end,JFrame j,boolean pass,int rate) {
 		this.client = client;
 		this.map = map;
 		this.ois = ois;
 		this.end = end;
 		this.j = j;
 		this.pass = pass;
-		this.s = s;
+
+		this.rate=rate;
+
 	}
 	@Override
 	public void run (){
@@ -69,11 +72,12 @@ public class Reciever extends Thread{
 						System.out.println("protocol 2000 : you lose");
 						end.set_endinfo_lose();
 						battle_end.set_battle_end(false);
-						if (client.turn == 0)client.oos.writeObject(end);
-						System.out.println("send end protocol 36");
 						client.oos.writeObject(battle_end);
 						System.out.println("send battle end protocol 50");
-						
+						if (client.turn == 0){
+							client.oos.writeObject(end);
+							System.out.println("send end protocol 36");
+						}
 						room_info = (transData)ois.readObject();
 						int result = client.turn^1;
 						System.out.println(result);
@@ -81,8 +85,9 @@ public class Reciever extends Thread{
 							System.out.println("room_info: "+room_info.get_room_info());
 							System.out.println("get_player_info: "+room_info.get_players_info());
 							this.client.ois=ois;
-							new Result(result, this.client, room_info.get_room_info(), room_info.get_players_info());
-							this.j.dispose();
+							String Rate=String.valueOf (rate)+"→"+String.valueOf (rate-5);
+							new Result(result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate);
+							j.dispose();
 						}
 
 
@@ -91,11 +96,12 @@ public class Reciever extends Thread{
 						System.out.println("prtocol 2100 : you win");
 						end.set_endinfo_win();
 						battle_end.set_battle_end(false);
-						if (client.turn == 0)client.oos.writeObject(end);
-						System.out.println("send end protocol 36");
 						client.oos.writeObject(battle_end);
 						System.out.println("send battle end protocol 50");
-						
+						if (client.turn == 0){
+							client.oos.writeObject(end);
+							System.out.println("send end protocol 36");
+						}
 						room_info = (transData)ois.readObject();
 						int result = client.turn;
 						System.out.println(result);
@@ -103,8 +109,9 @@ public class Reciever extends Thread{
 							System.out.println(room_info.get_room_info());
 							System.out.println(room_info.get_players_info());
 							this.client.ois=ois;
-							new Result(result, this.client, room_info.get_room_info(), room_info.get_players_info());
-							this.j.dispose();
+							String Rate=String.valueOf (rate)+"→"+String.valueOf (rate+10);
+							new Result(result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate);
+							j.dispose();
 						}
 
 					}else if(this.protocol==12){
@@ -128,4 +135,3 @@ public class Reciever extends Thread{
 				}
 		//run();
 	}
-

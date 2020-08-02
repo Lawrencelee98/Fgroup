@@ -1,31 +1,42 @@
 package client;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.net.Socket;
 import java.util.List;
 import java.util.Map;
-import java.net.*;
-import java.io.*;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 public class Result extends JFrame implements ActionListener{
 	JLabel l = new JLabel("");
+	JLabel l2 = new JLabel("");
     JButton b= new JButton("New Game");
     Client client = null;
     int result;
     Map<Integer, Integer> room_info;
     List<String> players_info;
 
-    public Result(int result, Client client,Map<Integer, Integer> room_info, List<String> players_info)  {
+    String Rate;
+    
+    public Result(int result, Client client,Map<Integer, Integer> room_info, List<String> players_info, String Rate)  {
+
         this.client = client;
         this.result = result;
         this.room_info=room_info;
         this.players_info=players_info;
 
-        
+        this.Rate=Rate;
+        l2.setText(Rate);
         System.out.println("Result : "+ result);
-        l.setBounds(70, 20, 50, 50);
+        l.setBounds(70, 10, 50, 30);
         add(l);
+        l2.setBounds(70, 40, 50, 30);
+        add(l2);
         if(result==0){
             l.setText("黒の勝ち");
         }else if(result ==1){
@@ -81,7 +92,6 @@ public class Result extends JFrame implements ActionListener{
            }catch(Exception ee){
                ee.printStackTrace();
            }
-    		//room_info.put(1, 0);
 
     	//	new Room(client, room_info, players_info, client.oos, client.ois);
     		/*try {

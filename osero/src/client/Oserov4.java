@@ -52,6 +52,7 @@ public class Oserov4 extends JFrame {
 	Client client = null;
 	int count = 0;
 	int result = 5;
+	int rate;
 	boolean pass = true;
 
 	Ban map = new Ban();
@@ -88,6 +89,7 @@ public class Oserov4 extends JFrame {
 			String[] arr = players_info.get(i).split(",", 0);
 			if(arr[0].substring(16).trim().equals(client.username)){
 				res = get_record_label(players_info.get(i)) + "  vs  ";
+				rate=Integer.parseInt(arr[4].substring(6).trim());
 				if(i%2 == 0){
 					res += get_record_label(players_info.get(i+1));
 				}else{
@@ -281,7 +283,7 @@ public class Oserov4 extends JFrame {
 						client.turn = 1;
 						client.your_turn = 0;
 						//client.BattleReceiver(map);
-						rec = new Reciever(client, map, client.ois,end,this,pass);
+						rec = new Reciever(client, map, client.ois,end,this,pass, rate);
 						count++;
 						System.out.println("re12");
 						rec.start();
@@ -506,12 +508,12 @@ public class Oserov4 extends JFrame {
 					
 					// client.BattleReceiver(map);
 					if (count == 0) {
-						rec = new Reciever(client, map, client.ois,end,this,pass); // client.ois
+						rec = new Reciever(client, map, client.ois,end,this,pass, rate); // client.ois
 						rec.start();
 						count++;
 						
 					} else {
-						rec = new Reciever(client, map, client.ois,end,this,pass);// client.ois
+						rec = new Reciever(client, map, client.ois,end,this,pass, rate);// client.ois
 						rec.start();
 						
 					}
