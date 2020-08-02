@@ -302,7 +302,7 @@ public class Oserov4 extends JFrame {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-
+			boolean pressable = false;
 			try {
 				client.oos.reset();
 			} catch (IOException e1) {
@@ -323,7 +323,7 @@ public class Oserov4 extends JFrame {
 							map.castToBoard();
 							s_data.set_line(0);
 							s_data.set_row(i);
-
+							pressable =true;
 							map.checkMap(client.turn);
 							time_count_down.reset();
 
@@ -332,7 +332,7 @@ public class Oserov4 extends JFrame {
 							map.castToBoard();
 							s_data.set_line(1);
 							s_data.set_row(i);
-
+							pressable =true;
 							map.checkMap(client.turn);
 							time_count_down.reset();
 
@@ -341,7 +341,7 @@ public class Oserov4 extends JFrame {
 							map.castToBoard();
 							s_data.set_line(2);
 							s_data.set_row(i);
-
+							pressable =true;
 							map.checkMap(client.turn);
 							time_count_down.reset();
 
@@ -350,7 +350,7 @@ public class Oserov4 extends JFrame {
 							map.castToBoard();
 							s_data.set_line(3);
 							s_data.set_row(i);
-
+							pressable =true;
 							map.checkMap(client.turn);
 							time_count_down.reset();
 
@@ -359,7 +359,7 @@ public class Oserov4 extends JFrame {
 							map.castToBoard();
 							s_data.set_line(4);
 							s_data.set_row(i);
-
+							pressable =true;
 							map.checkMap(client.turn);
 							time_count_down.reset();
 
@@ -368,7 +368,7 @@ public class Oserov4 extends JFrame {
 							map.castToBoard();
 							s_data.set_line(5);
 							s_data.set_row(i);
-
+							pressable =true;
 							map.checkMap(client.turn);
 							time_count_down.reset();
 
@@ -377,7 +377,7 @@ public class Oserov4 extends JFrame {
 							map.castToBoard();
 							s_data.set_line(6);
 							s_data.set_row(i);
-
+							pressable =true;
 							map.checkMap(client.turn);
 							time_count_down.reset();
 
@@ -386,7 +386,7 @@ public class Oserov4 extends JFrame {
 							map.castToBoard();
 							s_data.set_line(7);
 							s_data.set_row(i);
-
+							pressable =true;
 							map.checkMap(client.turn);
 							time_count_down.reset();
 
@@ -440,13 +440,16 @@ public class Oserov4 extends JFrame {
 					// client.oos.flush();
 					// client.oos.shutdown();
 					
+					if(pressable){
+						System.out.println("s_data=" + s_data.get_row() + "," + s_data.get_line());
+						// client.oos.writeObject(s_data);
+						client.oos.writeObject(s_data);
 				
-					System.out.println("s_data=" + s_data.get_row() + "," + s_data.get_line());
-					// client.oos.writeObject(s_data);
-					client.oos.writeObject(s_data);
-			
-					System.out.println("send!!");
-			
+						System.out.println("send!!");
+					}else{
+						System.out.println("invalid putting place");
+					}
+				
 					result = map.isGameFinish();
 					System.out.println("result : " + result);
 						if(result != 3){
@@ -484,8 +487,10 @@ public class Oserov4 extends JFrame {
 								erro.printStackTrace();
 							}
 						}else{}
-
-					client.your_turn = 0;
+					if(pressable){
+						client.your_turn = 0;
+					
+					
 					// client.BattleReceiver(map);
 					if (count == 0) {
 						rec = new Reciever(client, map, client.ois,end,this,pass); // client.ois
@@ -497,7 +502,7 @@ public class Oserov4 extends JFrame {
 						rec.start();
 						
 					}
-
+				}
 				}
 
 			} catch (ArithmeticException pe) {
