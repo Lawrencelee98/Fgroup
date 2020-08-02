@@ -41,6 +41,7 @@ public class Oserov4 extends JFrame {
 	double x = 0;
 	double y = 0;
 	boolean interuput = false;
+	static boolean G_switch = true;
 	Osero_setting osero_setting;
 
 	ImageIcon iconB = new ImageIcon(getClass().getResource("00Black.jpg"));
@@ -816,7 +817,7 @@ public class Oserov4 extends JFrame {
 						} else if (map[j][i] == 0) {
 							A[j].setIcon(iconB);
 							A[j].setOpaque(true);
-						} else if (map[j][i] == 2) {
+						} else if (map[j][i] == 2 && G_switch == true) {
 							A[j].setIcon(iconG);
 						} else {
 							A[j].setIcon(null);
@@ -830,7 +831,7 @@ public class Oserov4 extends JFrame {
 						} else if (map[j][i] == 0) {
 							B[j].setIcon(iconB);
 							B[j].setOpaque(true);
-						} else if (map[j][i] == 2) {
+						} else if (map[j][i] == 2 && G_switch == true) {
 							B[j].setIcon(iconG);
 						} else {
 							B[j].setIcon(null);
@@ -844,7 +845,7 @@ public class Oserov4 extends JFrame {
 						} else if (map[j][i] == 0) {
 							C[j].setIcon(iconB);
 							C[j].setOpaque(true);
-						} else if (map[j][i] == 2) {
+						} else if (map[j][i] == 2 && G_switch == true) {
 							C[j].setIcon(iconG);
 						} else {
 							C[j].setIcon(null);
@@ -858,7 +859,7 @@ public class Oserov4 extends JFrame {
 						} else if (map[j][i] == 0) {
 							D[j].setIcon(iconB);
 							D[j].setOpaque(true);
-						} else if (map[j][i] == 2) {
+						} else if (map[j][i] == 2 && G_switch == true) {
 							D[j].setIcon(iconG);
 						} else {
 							D[j].setIcon(null);
@@ -872,7 +873,7 @@ public class Oserov4 extends JFrame {
 						} else if (map[j][i] == 0) {
 							E[j].setIcon(iconB);
 							E[j].setOpaque(true);
-						} else if (map[j][i] == 2) {
+						} else if (map[j][i] == 2 && G_switch == true) {
 							E[j].setIcon(iconG);
 						} else {
 							E[j].setIcon(null);
@@ -886,7 +887,7 @@ public class Oserov4 extends JFrame {
 						} else if (map[j][i] == 0) {
 							F[j].setIcon(iconB);
 							F[j].setOpaque(true);
-						} else if (map[j][i] == 2) {
+						} else if (map[j][i] == 2 && G_switch == true) {
 							F[j].setIcon(iconG);
 						} else {
 							F[j].setIcon(null);
@@ -900,7 +901,7 @@ public class Oserov4 extends JFrame {
 						} else if (map[j][i] == 0) {
 							G[j].setIcon(iconB);
 							G[j].setOpaque(true);
-						} else if (map[j][i] == 2) {
+						} else if (map[j][i] == 2 && G_switch == true) {
 							G[j].setIcon(iconG);
 						} else {
 							G[j].setIcon(null);
@@ -914,7 +915,7 @@ public class Oserov4 extends JFrame {
 						} else if (map[j][i] == 0) {
 							H[j].setIcon(iconB);
 							H[j].setOpaque(true);
-						} else if (map[j][i] == 2) {
+						} else if (map[j][i] == 2 && G_switch == true) {
 							H[j].setIcon(iconG);
 						} else {
 							H[j].setIcon(null);
