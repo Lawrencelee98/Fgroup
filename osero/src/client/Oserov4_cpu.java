@@ -69,6 +69,7 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
         this.client = client;
         this.ois = ois_room;
         this.oos = oos_room;
+ 
         c = j.getContentPane();
 
         // j.setSize(800,600);
@@ -804,7 +805,7 @@ class Data_reciever extends Thread {
     boolean cpu_switch = false;
     JFrame j;
     int f_time = -1;
-
+    Socket s;
     Data_reciever(Client client, ObjectInputStream ois_room, ObjectOutputStream oos_room, JFrame j) {
         this.ois_room = ois_room;
         this.oos_room = oos_room;
@@ -826,7 +827,9 @@ class Data_reciever extends Thread {
 				java.util.List<String> players_info = data.get_players_info();
                 System.out.println("recieve data protocol 80");
                 cpu_switch = true;
+                
                 new Oserov4(client,this.oos_room,this.ois_room,f_time,players_info);
+               
                 this.interrupt();
                 
             }

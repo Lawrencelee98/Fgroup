@@ -54,9 +54,6 @@ public class Oserov4 extends JFrame {
 	int result = 5;
 	boolean pass = true;
 
-	transData s_data = new transData(3);
-
-
 	Ban map = new Ban();
 	HashMap<Integer, transData> hash = new HashMap<Integer, transData>();
 	java.util.List<String> players_info;
@@ -67,8 +64,12 @@ public class Oserov4 extends JFrame {
 	JFrame j = new JFrame();
 	String res = new String();
 	transData end = new transData(36);
+	transData battle_end = new transData(50);
+	transData s_data = new transData(3);
+
 	public Oserov4(Client client, ObjectOutputStream oos, ObjectInputStream ois, int time, java.util.List<String> players_info) {
 		this.client = client;
+		this.s =s;
 		try{
 			client.oos.close();
 			client.ois.close();
@@ -402,7 +403,7 @@ public class Oserov4 extends JFrame {
 
 						}
 					}
-						
+					if(pressable){		
 					result = map.isGameFinish();
 
 						if(result != 3){
@@ -426,6 +427,8 @@ public class Oserov4 extends JFrame {
 											break;
 									}
 									try {
+										client.oos.writeObject(battle_end);
+										client.oos.reset();
 										client.oos.writeObject(end);
 										client.oos.reset();
 										transData room_info=null;
@@ -450,15 +453,13 @@ public class Oserov4 extends JFrame {
 					// client.oos.flush();
 					// client.oos.shutdown();
 					
-					if(pressable){
+					
 						System.out.println("s_data=" + s_data.get_row() + "," + s_data.get_line());
 						// client.oos.writeObject(s_data);
 						client.oos.writeObject(s_data);
 				
 						System.out.println("send!!");
-					}else{
-						System.out.println("invalid putting place");
-					}
+					
 				
 					result = map.isGameFinish();
 					System.out.println("result : " + result);
@@ -483,6 +484,8 @@ public class Oserov4 extends JFrame {
 											break;
 									}
 									try {
+										client.oos.writeObject(battle_end);
+										client.oos.reset();
 										client.oos.writeObject(end);
 										System.out.println("send endinfo : " + result);
 										client.oos.reset();
@@ -497,7 +500,7 @@ public class Oserov4 extends JFrame {
 								erro.printStackTrace();
 							}
 						}else{}
-					if(pressable){
+				
 						client.your_turn = 0;
 					
 					
@@ -512,9 +515,9 @@ public class Oserov4 extends JFrame {
 						rec.start();
 						
 					}
+				
 				}
-				}
-
+			}
 			} catch (ArithmeticException pe) {
 				System.out.println("you can't place here");
 			} catch (Exception erro) {

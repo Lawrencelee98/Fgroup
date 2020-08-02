@@ -331,8 +331,7 @@ public class Room_server extends Thread {
             os_2.writeObject(room_info);
             System.out.println("send room_info");
             System.out.println(room_info.get_room_info());
-            os_1.close();
-            os_2.close();
+          
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 
 import client.Oserov4.Ban;
 import transData.transData;
+import java.net.*;
 
 public class Reciever extends Thread{
 	Client client =  null;
@@ -16,6 +17,7 @@ public class Reciever extends Thread{
 	transData battle_end = new transData(50);
 	transData room_info =null;
 	boolean pass = true;
+	Socket s;
 	public Reciever(Client client, Ban map, ObjectInputStream ois,transData end,JFrame j,boolean pass) {
 		this.client = client;
 		this.map = map;
@@ -23,6 +25,7 @@ public class Reciever extends Thread{
 		this.end = end;
 		this.j = j;
 		this.pass = pass;
+		this.s = s;
 	}
 	@Override
 	public void run (){
@@ -114,6 +117,7 @@ public class Reciever extends Thread{
 						map.checkMap(client.turn);
 						map.castToBoard();
 						map.timeupdater();
+						client.your_turn=1;
 					}
 					else{
 						System.out.println("no data");

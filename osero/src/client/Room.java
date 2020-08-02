@@ -32,7 +32,6 @@ public class Room {
 	static ObjectInputStream ois_room = null;
 	private static int room_port = 0;
 	private static int room_num = -1;
-
 	public Room(Client client, Map<Integer, Integer> room_info, List<String> players_info, ObjectOutputStream oos,
 			ObjectInputStream ois) {
 		this.client = client;
@@ -284,6 +283,7 @@ public class Room {
 		}
 
 		public void actionPerformed(ActionEvent e) {
+			
 			if (e.getActionCommand().equals("ログアウト")) {
 				setVisible(false);
 
@@ -356,6 +356,7 @@ public class Room {
 				} else if (e.getSource() == CPU_match) {
 					new Oserov4_cpu(client,ois_room, oos_room, 30);
 				}
+				
 				transData room_choice = new transData(13);
 				room_choice.set_room_num(room_num);
 				System.out.println("room choice=" + room_choice.get_room_num());
@@ -368,7 +369,9 @@ public class Room {
 					System.out.println("Room:Action, room_port=" + client.room_port);
 
 					try {
+						System.out.println("setting socket s_room");
 						Socket s_room = new Socket(client.ServerAddress, client.room_port);
+						
 						OutputStream os_room = s_room.getOutputStream();
 						oos_room = new ObjectOutputStream(os_room);
 
@@ -376,17 +379,19 @@ public class Room {
 						ois_room = new ObjectInputStream(is_room);
 						// System.out.println("start oserov4");
 						// new Oserov4(client, oos_room, ois_room);
+						System.out.println("set socket s_room ");
 					} catch (Exception e1) {
 						// e.printStackTrace();
 
 					} finally {
-
+						System.out.println("finally socket s_room setting");
 					}
 				} catch (IOException | ClassNotFoundException e1) {
 					// TODO 自動生成された catch ブロック
 					e1.printStackTrace();
 				} finally {
-
+					System.out.println("___dispose display4");
+					this.dispose();
 				}
 
 				/*
@@ -492,6 +497,9 @@ public class Room {
 		Client client = null;
 
 		Display5(Client client) {
+		
+			System.out.println("Display5 aroused by Display4");
+
 			this.client = client;
 			setLayout(new FlowLayout());
 			JPanel p = new JPanel();
@@ -564,11 +572,16 @@ public class Room {
 				transData time_data = new transData(0);
 				time_data.set_wait_time(time);
 				oos_room.writeObject(time_data);
+				
 				System.out.println("start osero_cpu");
-				new Oserov4_cpu(client,ois_room, oos_room,time);
+				
+				new Oserov4_cpu(client,ois_room, oos_room,time,s);
 				
 			} catch (Exception erro1) {
 				erro1.printStackTrace();
+			}finally{
+				System.out.println("___dispose display5 ");
+				this.dispose();
 			}
 		}
 

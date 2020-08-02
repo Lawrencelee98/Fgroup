@@ -15,12 +15,13 @@ public class Result extends JFrame implements ActionListener{
     int result;
     Map<Integer, Integer> room_info;
     List<String> players_info;
-    
+
     public Result(int result, Client client,Map<Integer, Integer> room_info, List<String> players_info)  {
         this.client = client;
         this.result = result;
         this.room_info=room_info;
         this.players_info=players_info;
+
         
         System.out.println("Result : "+ result);
         l.setBounds(70, 20, 50, 50);
@@ -42,9 +43,7 @@ public class Result extends JFrame implements ActionListener{
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
-
-
-
+        
     }
     public void actionPerformed(ActionEvent e){
     	if (e.getSource() == b) {
@@ -82,7 +81,7 @@ public class Result extends JFrame implements ActionListener{
            }catch(Exception ee){
                ee.printStackTrace();
            }
-    		room_info.put(1, 0);
+    		//room_info.put(1, 0);
 
     	//	new Room(client, room_info, players_info, client.oos, client.ois);
     		/*try {
