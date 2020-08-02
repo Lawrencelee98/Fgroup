@@ -16,6 +16,10 @@ public class Osero_setting_cpu extends JFrame implements ActionListener {
     JButton b3 = new JButton("緑色");
     JButton b4 = new JButton("金色");
     JButton b5 = new JButton("赤色");
+    
+    JLabel l6 = new JLabel("置ける場所表現 : ");
+	JRadioButton r1 = new JRadioButton("0n", true);
+    JRadioButton r2 = new JRadioButton("Off", false);
 
     JLabel l2 = new JLabel("盤面の色");
     JFrame j = new JFrame();
@@ -29,6 +33,19 @@ public class Osero_setting_cpu extends JFrame implements ActionListener {
         j.setSize(500, 400);
         c.setLayout(null);
         this.oserov4_cpu = Oserov4_cpu;
+        
+        l6.setBounds(150, 150, 100, 30);
+        ButtonGroup group = new ButtonGroup();
+		group.add(r1);
+		group.add(r2);
+		r1.setBounds(250, 150, 50, 30);
+		r2.setBounds(300, 150, 50, 30);
+
+        r1.addActionListener(this);
+        r2.addActionListener(this);
+        
+        
+        
         b1.setBounds(10, 10, 80, 30);
         b1.addActionListener(this);
 
@@ -48,11 +65,27 @@ public class Osero_setting_cpu extends JFrame implements ActionListener {
         c.add(b3);
         c.add(b4);
         c.add(b5);
+        
+        c.add(l6);
+        c.add(r1);
+        c.add(r2);
 
         j.setVisible(true);
     }
 
     public void actionPerformed(ActionEvent ae) {
+    	
+    	boolean status1 = r1.isSelected();
+		boolean status2 = r2.isSelected();
+	    if (ae.getSource() == r1 || ae.getSource() == r2) {
+			if(status1 == true) {
+				oserov4_cpu.G_switch = true;
+    		}else if(status2 == true) {
+    			oserov4_cpu.G_switch = false;
+    		}
+			oserov4_cpu.map.castToBoard(oserov4_cpu);
+	    }
+    	
         if (ae.getSource() == b1) {
             System.out.println("close setting window");
             // j.setVisible(false);
