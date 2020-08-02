@@ -117,7 +117,7 @@ public class Oserov4 extends JFrame {
 			// j.setSize(800,600);
 			j.setBounds(0, 0, 800, 600);
 			j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			time_count_down = new Timer_count_down(time_limit,client.your_turn,client);
+			time_count_down = new Timer_count_down(time_limit,client.your_turn,client,j);
 			JLayeredPane lp = new JLayeredPane();
 
 			ImageIcon img = new ImageIcon(getClass().getResource("frame.jpg"));
@@ -267,7 +267,7 @@ public class Oserov4 extends JFrame {
 						client.turn = 1;
 						client.your_turn = 0;
 						//client.BattleReceiver(map);
-						rec = new Reciever(client, map, client.ois,end);
+						rec = new Reciever(client, map, client.ois,end,this);
 						count++;
 						System.out.println("re12");
 						rec.start();
@@ -468,8 +468,8 @@ public class Oserov4 extends JFrame {
 									}
 									
 								}else{}
-
-								new Result(result, client);
+								this.dispose();
+								new Result(result, client,2,j);
 							} catch (Exception erro) {
 								erro.printStackTrace();
 							}
@@ -478,12 +478,12 @@ public class Oserov4 extends JFrame {
 					client.your_turn = 0;
 					// client.BattleReceiver(map);
 					if (count == 0) {
-						rec = new Reciever(client, map, client.ois,end); // client.ois
+						rec = new Reciever(client, map, client.ois,end,this); // client.ois
 						rec.start();
 						count++;
 						time_count_down.reset();
 					} else {
-						rec = new Reciever(client, map, client.ois,end);// client.ois
+						rec = new Reciever(client, map, client.ois,end,this);// client.ois
 						rec.start();
 						time_count_down.reset();
 					}
@@ -917,10 +917,12 @@ public class Oserov4 extends JFrame {
 		int your_turn;
 		Client client;
 		int result;
-		Timer_count_down(int time_limit,int your_turn,Client client) {
+		JFrame j;
+		Timer_count_down(int time_limit,int your_turn,Client client,JFrame j) {
 			this.time_limit = time_limit;
 			this.your_turn = your_turn;
 			this.client = client;
+			this.j =j;
 		}
 
 		public void run() {
@@ -928,6 +930,7 @@ public class Oserov4 extends JFrame {
 			Timer timer = new Timer();
 			timer.schedule(new TimerTask() {
 				@Override
+				
 				public void run() {
 					if(time>=1){
 						time = time - 1;
@@ -936,6 +939,13 @@ public class Oserov4 extends JFrame {
 					l2.setText("Left time: " + String.valueOf(time));
 					if(time<=0){
 						time =0;
+						
+						if(client.your_turn==0){
+							System.out.println("client time out");
+							new Result(client.turn,client,1,j);
+						}
+						
+						cancel();
 					}
 					// time out の処理				
 				/*	if (time<=0&&(client.your_turn==1)) {

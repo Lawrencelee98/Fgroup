@@ -112,12 +112,9 @@ public class Room_server extends Thread {
 
             int first_turn = 1;// 1 or 2
             boolean battle_end = true;
-            Timer_manage_server timer_1=new Timer_manage_server(time, os_1, os_2);
-            Timer_manage_server timer_2=new Timer_manage_server(time, os_2, os_1);
-            timer_1.count=10000;
-            timer_2.count=10000;
-            timer_1.start();
-            timer_2.start();
+            Timer_manage_server timer_1;
+            Timer_manage_server timer_2;
+   
             if (first_turn == 1) {
                 // 1 が先手の場合
 
@@ -131,14 +128,11 @@ public class Room_server extends Thread {
                 
                 while (battle_end) {
 
-                    //timer_1 = new Timer_manage_server(time, os_1);
-                    timer_1.count=time;
-                    //timer_1.start();
+                    timer_1 = new Timer_manage_server(time,os_2);
+                    timer_1.start();
                     System.out.println("timer 1 start");
-
                     transData data_1 = (transData) ois_1.readObject();
-                    timer_1.count=time+3;
-                    //timer_1.interrupt();
+                    timer_1.interrupt();
                    //timer_1.stop();
                     System.out.println("timer 1 interrpted");
                     System.out.println("Room [ " + String.valueOf(room_num) + " ] " + "read Object");
@@ -159,17 +153,12 @@ public class Room_server extends Thread {
                         break;
                     }
 
-                    // os_2.writeObject(start);
-                    // System.out.println("send --start-- to player2");
-
-                    // timer_2 = new Timer_manage_server(time, os_2);
-                    timer_2.count=time;
-                    //timer_2.start();
+                    //timer_2 = new Timer_manage_server(time, os_2,os_1);
+                    timer_2 = new Timer_manage_server(time,os_1);
+                    timer_2.start();
                     System.out.println("timer 2 start");
                     transData data_2 = (transData) ois_2.readObject();
-                    timer_2.count=time+3;
-                    //timer_2.interrupt();
-                    //timer_2.stop();
+                    timer_2.interrupt();
                     if (data_2 instanceof transData) {
                         if (data_2.get_protocol() == 3 || data_1.get_protocol() == 3000) {
                            
@@ -186,14 +175,11 @@ public class Room_server extends Thread {
 
                 while (battle_end) {
 
-                     //timer_2 = new Timer_manage_server(time, os_2);
-                    //timer_2.start();
-                    timer_2.count=time;
+                    timer_2 = new Timer_manage_server(time, os_1);
+                    timer_2.start();
                     System.out.println("timer 2 start");
-
                     transData data_2 = (transData) ois_2.readObject();
-                    timer_2.count=time+3;
-                    //timer_2.interrupt();
+                    timer_2.interrupt();
                    // timer_2.stop();
                     System.out.println("timer 2 interrupted");
                     if (data_2 instanceof transData) {
@@ -208,26 +194,14 @@ public class Room_server extends Thread {
 
 
                     if (!battle_end){break;}
-                        
-
-                  // timer_1 = new Timer_manage_server(time, os_1);
-                  timer_1.count=time; 
-                  // timer_1.start();
-                    //timer_1.resume();
-
+                    timer_1 = new Timer_manage_server(time,os_2);
+                    timer_1.start();                  
                     System.out.println("timer 1 start");
-
                     transData data_1 = (transData) ois_1.readObject();
-                    timer_1.count=time+3;
-                    //timer_1.suspend();
-
-                    //timer_1.interrupt();
-                    //timer_1.stop();
+                    timer_1.interrupt();
                     System.out.println("timer 1 interrpted");
-
                     if (data_1 instanceof transData) {
                         if (data_1.get_protocol() == 3) {
-                            
                             os_1.writeObject(data_1);
                         } else if (data_1.get_protocol() == 50) {
                             battle_end = data_1.get_battle_end();
@@ -237,8 +211,7 @@ public class Room_server extends Thread {
                 }
             }
 
-
-
+            System.out.println("out of while loop");
             //対戦記録更新
             transData end_info = (transData) ois_1.readObject();
             transData temp_end_info = new transData(36);

@@ -8,15 +8,16 @@ import java.net.Socket;
 import javax.swing.*;
 import transData.*;
 public class Result extends JFrame {
-	JFrame j = new JFrame();
-	JPanel p = (JPanel)j.getContentPane();
     JLabel l = new JLabel("");
     Client client = null;
     int result;
-    public Result(int result, Client client) {
+    int display;
+    JFrame j;
+    public Result(int result, Client client,int display,JFrame j) {
         this.client = client;
         this.result = result;
-        System.out.println("Result : "+ result);
+        this.j = j;
+        System.out.println("Result : "+ result+ "display:"+display);
         l.setBounds(70, 50, 50, 50);
         add(l);
         if(result==0){
@@ -35,16 +36,19 @@ public class Result extends JFrame {
         this.setResizable(false);
     
         try {
-           // client.s.close();
+            j.dispose();
+            // client.s.close();
              client.setLoginPort(client.FirstConnect(client.ServerAddress, client.first_port));
              Socket s = new Socket(client.ServerAddress,client.getLoginPort());
              client.s = s;
+             new Login_display("login",client);
              OutputStream os = s.getOutputStream();
              ObjectOutputStream oos = new ObjectOutputStream(os);
              InputStream is = s.getInputStream();
              ObjectInputStream ois = new ObjectInputStream(is);
              client.choose_room(oos, ois);
-         } catch (IOException e) {
+           
+         } catch (Exception e) {
              // TODO 自動生成された catch ブロック
              e.printStackTrace();
          }

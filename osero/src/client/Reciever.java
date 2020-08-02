@@ -1,5 +1,5 @@
 package client;
-
+import javax.swing.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -15,12 +15,14 @@ public class Reciever extends Thread{
 	Ban map = null;
 	ObjectInputStream ois = null;
 	int protocol;
+	JFrame j;
 	transData end = null;
-	public Reciever(Client client, Ban map, ObjectInputStream ois,transData end) {
+	public Reciever(Client client, Ban map, ObjectInputStream ois,transData end,JFrame j) {
 		this.client = client;
 		this.map = map;
 		this.ois = ois;
 		this.end = end;
+		this.j = j;
 	}
 	@Override
 	public void run (){
@@ -35,7 +37,6 @@ public class Reciever extends Thread{
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
-		if(r_data instanceof transData) {
 				if (this.protocol==3){
 						System.out.println("opponent:row="+r_data.get_row()+",line="+r_data.get_line());
 						//client.r_data = r_data;
@@ -46,16 +47,24 @@ public class Reciever extends Thread{
 						map.castToBoard();
 						map.timeupdater();
 				}else if(this.protocol==2000){
-					System.out.println("protocol 2000");
-					end.set_endinfo_lose();
-					int your_turn = client.your_turn;
-					int result = 1-your_turn;
-					new Result(result,this.client);
+					try{
+						System.out.println("protocol 2000");
+						end.set_endinfo_lose();
+						client.oos.writeObject(end);
+						int your_turn = client.your_turn;
+						int result = 1-your_turn;
+						new Result(result,this.client,3,j);
+						//this.j.dispose();
+						
+
+					}catch(Exception e){
+						System.out.println("io exception");
+					}
 				}
 				else{
 					System.out.println("no data");
 				}
-		}
+		
 		//run();
 	}
 }
