@@ -323,13 +323,16 @@ public class Room_server extends Thread {
                 Server.name_r4_2 = null;
             }
             Server.room_info.put(room_num,0);
-            transData room_info = new transData(12);
+            transData room_info = new transData(14);
             room_info.set_room_info(Server.room_info, Server.get_record());
+            os_1.reset();
+            os_2.reset();
             os_1.writeObject(room_info);
             os_2.writeObject(room_info);
             System.out.println("send room_info");
             System.out.println(room_info.get_room_info());
-
+            os_1.close();
+            os_2.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

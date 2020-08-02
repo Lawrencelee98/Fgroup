@@ -34,7 +34,7 @@ public class Client {
 	transData r_data = null;
 	Oserov4 osero = null;
 	String username;
-	
+	String password;
 	Login_display Login;
 
 	public Client() {
@@ -86,6 +86,7 @@ public class Client {
 		boolean flag = false;
 		// TODO send login info (name, pass) to server
 		transData user = new transData(10);
+
 		user.set_login_name_pass(usr, pass);
 		try {
 			oos.writeObject(user);
@@ -94,6 +95,8 @@ public class Client {
 			if (ans.equals("login succeed")) {
 				// todo
 				System.out.println("receive login success");
+				this.login_name = usr;
+				this.login_pass = pass;
 				flag = true;
 			} else if (ans.equals("login failed : false password")) {
 				// todo reset pass
@@ -221,6 +224,14 @@ public class Client {
 		}
 
 	}
+	public String get_user_name(){
+		return this.username;
+	}
+
+	public String get_user_pass(){
+		return this.login_pass;
+	}
+
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

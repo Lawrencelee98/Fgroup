@@ -3,7 +3,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Map;
-
+import java.net.*;
+import java.io.*;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -63,7 +64,23 @@ public class Result extends JFrame implements ActionListener{
                  // TODO 自動生成された catch ブロック
                  es.printStackTrace();
              }
-    		*/
+            */
+           try{
+            client.ois.close();
+            client.oos.close();
+            client.setLoginPort(client.FirstConnect(client.ServerAddress, client.first_port));
+            Socket s = new Socket(client.ServerAddress, client.getLoginPort());
+            OutputStream os = s.getOutputStream();
+			ObjectOutputStream oos = new ObjectOutputStream(os);
+			InputStream is = s.getInputStream();
+			ObjectInputStream ois = new ObjectInputStream(is);
+			client.ois = ois;
+			client.oos = oos;
+            client.send_login_info(client.get_user_name(), client.get_user_pass(), client.ois, client.oos);
+            client.choose_room(client.oos, client.ois);
+           }catch(Exception ee){
+               ee.printStackTrace();
+           }
     		room_info.put(1, 0);
     		new Room(client, room_info, players_info, client.oos, client.ois);
     		/*try {

@@ -64,16 +64,23 @@ public class Oserov4 extends JFrame {
 	int time_limit = 30;
 	Timer_count_down time_count_down;
 	JFrame j = new JFrame();
+	String res = new String();
 	transData end = new transData(36);
 	public Oserov4(Client client, ObjectOutputStream oos, ObjectInputStream ois, int time, java.util.List<String> players_info) {
 		this.client = client;
-		 client.oos = oos;
+		try{
+			client.oos.close();
+			client.ois.close();
+		}catch(Exception eea){
+			System.out.println("关闭client原来的socket出现error");
+		} 
+		client.oos = oos;
 		 client.ois = ois;
 		// this.room = room;
 		this.time_limit = time;
 		this.players_info = players_info;
 		System.out.println("players_info : " + players_info.toString());
-		String res = new String();
+		
 	
 		for(int i=0; i<8; i++){
 			String[] arr = players_info.get(i).split(",", 0);
@@ -87,8 +94,9 @@ public class Oserov4 extends JFrame {
 				break;
 			}
 		}
+		
 		l1.setText(res);
-
+		System.out.println("res:" + res);
 		new Display();
 		// System.out.println("Battlereceiver");
 		// client.BattleReceiver(map);
@@ -130,7 +138,7 @@ public class Oserov4 extends JFrame {
 			img = new ImageIcon(getClass().getResource("00Black.jpg"));
 			chess = new JLabel();
 			chess.setIcon(img);
-
+			
 			l1.setBounds(200, 10, 500, 20);
 			chessboard.setBounds(10, 40, 420, 420);
 			chess.setBounds(28, 57, 43, 43);
@@ -143,6 +151,7 @@ public class Oserov4 extends JFrame {
 
 			int buttonSize = 46, i = 0;
 			
+
 			Timer chess_number_count = new Timer();
 			chess_number_count.schedule(new TimerTask() {
 

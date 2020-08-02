@@ -74,9 +74,9 @@ public class Reciever extends Thread{
 						room_info = (transData)ois.readObject();
 						int result = client.turn^1;
 						System.out.println(result);
-						if(room_info.get_protocol()==12){
-							System.out.println(room_info.get_room_info());
-							System.out.println(room_info.get_players_info());
+						if(room_info.get_protocol()==14){
+							System.out.println("room_info: "+room_info.get_room_info());
+							System.out.println("get_player_info: "+room_info.get_players_info());
 							this.client.ois=ois;
 							new Result(result, this.client, room_info.get_room_info(), room_info.get_players_info());
 							this.j.dispose();
@@ -96,7 +96,7 @@ public class Reciever extends Thread{
 						room_info = (transData)ois.readObject();
 						int result = client.turn;
 						System.out.println(result);
-						if(room_info.get_protocol()==12){
+						if(room_info.get_protocol()==14){
 							System.out.println(room_info.get_room_info());
 							System.out.println(room_info.get_players_info());
 							this.client.ois=ois;
@@ -110,6 +110,10 @@ public class Reciever extends Thread{
 							r_data.get_room_info()
 						);
 
+					}else if(this.protocol ==3000){
+						map.checkMap(client.turn);
+						map.castToBoard();
+						map.timeupdater();
 					}
 					else{
 						System.out.println("no data");

@@ -108,6 +108,7 @@ public class Login_display extends JFrame implements ActionListener {
 			if (flag) {
 				// login success
 				client.username = username;
+				client.password = passwordstr;
 				client.choose_room(oos, ois);
 				this.dispose();
 				/*
