@@ -17,6 +17,8 @@ public class Reciever extends Thread{
 	int protocol;
 	JFrame j;
 	transData end = null;
+	transData battle_end = new transData(50);
+	transData room_info =null;
 	public Reciever(Client client, Ban map, ObjectInputStream ois,transData end,JFrame j) {
 		this.client = client;
 		this.map = map;
@@ -36,7 +38,7 @@ public class Reciever extends Thread{
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
-		}
+		}try{
 				if (this.protocol==3){
 						System.out.println("opponent:row="+r_data.get_row()+",line="+r_data.get_line());
 						//client.r_data = r_data;
@@ -47,24 +49,44 @@ public class Reciever extends Thread{
 						map.castToBoard();
 						map.timeupdater();
 				}else if(this.protocol==2000){
-					try{
-						System.out.println("protocol 2000");
+				
+						System.out.println("protocol 2000 : you lose");
 						end.set_endinfo_lose();
+						battle_end.set_battle_end(false);
+						client.oos.writeObject(battle_end);
+						System.out.println("send battle end protocol 50");
 						client.oos.writeObject(end);
+						System.out.println("send end protocol 36");
+						room_info = (transData)ois.readObject();
+						if(room_info.get_protocol()==12){
+							System.out.println(room_info.get_room_info());
+						}
 						int your_turn = client.your_turn;
 						int result = 1-your_turn;
 						//new Result(result,this.client,3,j);
 						//this.j.dispose();
 						
 
-					}catch(Exception e){
+					}else if(this.protocol==2100){
+						System.out.println("prtocol 2100 : you win");
+						room_info = (transData)ois.readObject();
+						if(room_info.get_protocol()==12){
+							System.out.println(room_info.get_room_info());
+						}
+					}else if(this.protocol==12){
+						System.out.println("get room info ");
+						System.out.println(
+							r_data.get_room_info()
+						);
+						
+					}
+					else{
+						System.out.println("no data");
+					}
+				}catch(Exception e){
 						System.out.println("io exception");
 					}
 				}
-				else{
-					System.out.println("no data");
-				}
-		
 		//run();
 	}
-}
+
