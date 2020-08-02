@@ -22,10 +22,10 @@ public class Register_display extends JFrame implements ActionListener {
 		this.client = client;
 		JPanel p = (JPanel) getContentPane();
 		p.setLayout(null);
-		label[0] = new JLabel("プレイヤ名と誕生日の回答を入力してください");
+		label[0] = new JLabel("プレイヤ名と母の旧姓を入力してください");
 		label[1] = new JLabel("プレイヤ名");
-		label[3] = new JLabel("パスワード");
-		label[2] = new JLabel("誕生日の回答");
+		//label[3] = new JLabel("パスワード");
+		label[2] = new JLabel("母の旧姓");
 		txt[0] = new JTextArea();
 		txt[1] = new JTextArea();
 		txt[2] = new JTextArea();
@@ -41,7 +41,7 @@ public class Register_display extends JFrame implements ActionListener {
 		p.add(label[0]);
 		p.add(label[1]);
 		p.add(label[2]);
-		p.add(label[3]);
+		//p.add(label[3]);
 		p.add(txt[0]);
 		p.add(txt[1]);
 		p.add(txt[2]);
