@@ -46,6 +46,9 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
     boolean interuput = false;
     // int CPU_switch = 1;
     boolean cpu_switch = false;
+    
+    boolean G_switch = true;
+    
     Client client = null;
     Osero_setting_cpu osero_setting;
     ImageIcon iconB = new ImageIcon(getClass().getResource("00Black.jpg"));
@@ -644,7 +647,7 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                         } else if (map[j][i] == 0) {
                             osero.A[j].setIcon(iconB);
                             osero.A[j].setOpaque(true);
-                        } else if (map[j][i] == 2) {
+                        } else if (map[j][i] == 2 && G_switch == true) {
                             A[j].setIcon(iconG);
                         } else {
                             A[j].setIcon(null);
@@ -658,7 +661,7 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                         } else if (map[j][i] == 0) {
                             osero.B[j].setIcon(iconB);
                             osero.B[j].setOpaque(true);
-                        } else if (map[j][i] == 2) {
+                        } else if (map[j][i] == 2 && G_switch == true) {
                             B[j].setIcon(iconG);
                         } else {
                             B[j].setIcon(null);
@@ -672,7 +675,7 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                         } else if (map[j][i] == 0) {
                             osero.C[j].setIcon(iconB);
                             osero.C[j].setOpaque(true);
-                        } else if (map[j][i] == 2) {
+                        } else if (map[j][i] == 2 && G_switch == true) {
                             C[j].setIcon(iconG);
                         } else {
                             C[j].setIcon(null);
@@ -686,7 +689,7 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                         } else if (map[j][i] == 0) {
                             osero.D[j].setIcon(iconB);
                             osero.D[j].setOpaque(true);
-                        } else if (map[j][i] == 2) {
+                        } else if (map[j][i] == 2 && G_switch == true) {
                             D[j].setIcon(iconG);
                         } else {
                             D[j].setIcon(null);
@@ -700,7 +703,7 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                         } else if (map[j][i] == 0) {
                             osero.E[j].setIcon(iconB);
                             osero.E[j].setOpaque(true);
-                        } else if (map[j][i] == 2) {
+                        } else if (map[j][i] == 2 && G_switch == true) {
                             E[j].setIcon(iconG);
                         } else {
                             E[j].setIcon(null);
@@ -714,7 +717,7 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                         } else if (map[j][i] == 0) {
                             osero.F[j].setIcon(iconB);
                             osero.F[j].setOpaque(true);
-                        } else if (map[j][i] == 2) {
+                        } else if (map[j][i] == 2 && G_switch == true) {
                             F[j].setIcon(iconG);
                         } else {
                             F[j].setIcon(null);
@@ -728,7 +731,7 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                         } else if (map[j][i] == 0) {
                             osero.G[j].setIcon(iconB);
                             osero.G[j].setOpaque(true);
-                        } else if (map[j][i] == 2) {
+                        } else if (map[j][i] == 2 && G_switch == true) {
                             G[j].setIcon(iconG);
                         } else {
                             G[j].setIcon(null);
@@ -742,7 +745,7 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                         } else if (map[j][i] == 0) {
                             osero.H[j].setIcon(iconB);
                             osero.H[j].setOpaque(true);
-                        } else if (map[j][i] == 2) {
+                        } else if (map[j][i] == 2 && G_switch == true) {
                             H[j].setIcon(iconG);
                         } else {
                             H[j].setIcon(null);
