@@ -77,14 +77,15 @@ public class Result extends JFrame implements ActionListener{
 
             */
            try{
-            client.ois.close();
-            client.oos.close();
+            client.s.close();
+            client.s_room.close();
             client.setLoginPort(client.FirstConnect(client.ServerAddress, client.first_port));
             Socket s = new Socket(client.ServerAddress, client.getLoginPort());
             OutputStream os = s.getOutputStream();
 			ObjectOutputStream oos = new ObjectOutputStream(os);
 			InputStream is = s.getInputStream();
-			ObjectInputStream ois = new ObjectInputStream(is);
+            ObjectInputStream ois = new ObjectInputStream(is);
+            
 			client.ois = ois;
 			client.oos = oos;
             client.send_login_info(client.get_user_name(), client.get_user_pass(), client.ois, client.oos);

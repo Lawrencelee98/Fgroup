@@ -69,6 +69,7 @@ public class Login_display extends JFrame implements ActionListener {
 			ois = new ObjectInputStream(is);
 			client.ois = ois;
 			client.oos = oos;
+			client.s =s;
 		} catch (Exception se) {
 			System.out.println("Error(Login_display):Socket error");
 			se.printStackTrace();

@@ -22,14 +22,16 @@ import java.util.*;
 public class Room {
 
 	private PrintWriter out;
+	Socket s_room =null;
 	static String str;
 	static Map<Integer, Integer> room_info;
 	static List<String> players_info;
 	static ObjectOutputStream oos = null;
 	static ObjectInputStream ois = null;
 	Client client = null;
-	static ObjectOutputStream oos_room = null;
+    static ObjectOutputStream oos_room = null;
 	static ObjectInputStream ois_room = null;
+	static ObjectInputStream ois_room1 = null;
 	private static int room_port = 0;
 	private static int room_num = -1;
 	public Room(Client client, Map<Integer, Integer> room_info, List<String> players_info, ObjectOutputStream oos,
@@ -369,45 +371,39 @@ public class Room {
 					System.out.println("Room:Action, room_port=" + client.room_port);
 
 					try {
+						client.s.close();
 						System.out.println("setting socket s_room");
-						Socket s_room = new Socket(client.ServerAddress, client.room_port);
-						
+						s_room = new Socket(client.ServerAddress, client.room_port);
+						System.out.println("connect with room server");
+						client.s_room = s_room;
+						//InputStream is_room = s_room.getInputStream();
+						//System.out.println("get Input stream ");
+						//ois_room = new ObjectInputStream(is_room);
+						//System.out.println("get input stream");
 						OutputStream os_room = s_room.getOutputStream();
+						System.out.println("get output stream ");
 						oos_room = new ObjectOutputStream(os_room);
-
-						InputStream is_room = s_room.getInputStream();
-						ois_room = new ObjectInputStream(is_room);
+						System.out.println("take the oos to oos_room");
+						
 						// System.out.println("start oserov4");
 						// new Oserov4(client, oos_room, ois_room);
 						System.out.println("set socket s_room ");
 					} catch (Exception e1) {
-						// e.printStackTrace();
+						e1.printStackTrace();
 
 					} finally {
+						
 						System.out.println("finally socket s_room setting");
 					}
-				} catch (IOException | ClassNotFoundException e1) {
-					// TODO 自動生成された catch ブロック
-					e1.printStackTrace();
+				} catch (Exception e2) {
+					e2.printStackTrace();
 				} finally {
+					ois_room = new ObjectInputStream(s_room.getInputStream());
+					System.out.println("get ois_room in finally");
 					System.out.println("___dispose display4");
 					this.dispose();
 				}
 
-				/*
-				 * ObjectOutputStream oos_room = null; ObjectInputStream ois_room = null; try{
-				 * Socket s_room = new Socket(,room_port); //s.close(); // close unnecessary
-				 * socket
-				 * 
-				 * OutputStream os_room = s_room.getOutputStream(); oos_room = new
-				 * ObjectOutputStream(os_room);
-				 * 
-				 * InputStream is_room = s_room.getInputStream(); ois_room = new
-				 * ObjectInputStream(is_room);
-				 * 
-				 * }catch (Exception er){ //er.printStackTrace(); }finally { new
-				 * Oserov4(oos_room, ois_room); }
-				 */
 			}
 		}
 
@@ -425,72 +421,6 @@ public class Room {
 		res += "</html>";
 		return res;
 	}
-/*
-	public static class Display6 extends JFrame implements ActionListener {
-		String time_str = "";
-		JLabel label = new JLabel("<html>ユーザが選ぶ時間が違うため<br/>" + "システムが決める時間は" + time_str + "です。<br/>合意しますか？</html>");
-		Client client = null;
-		int time;
-
-		Display6(ObjectInputStream ois,ObjectOutputStream oos,int time) {
-
-			this.time = time;
-			time_str = String.valueOf(time);
-			label.setText("<html>ユーザが選ぶ時間が違うため<br/>" + "システムが決める時間は" + time_str + "です。<br/>合意しますか？</html>");
-			setLayout(new FlowLayout());
-			JPanel p = new JPanel();
-			p.setLayout(new BorderLayout());
-			JPanel x = new JPanel();
-			x.setPreferredSize(new Dimension(350, 15));
-			p.add(x, "North");
-			JPanel pn = new JPanel();
-			pn.setPreferredSize(new Dimension(350, 70));
-			pn.setBackground(Color.GREEN);
-			JPanel pnc = new JPanel();
-			pnc.setPreferredSize(new Dimension(340, 60));
-			pnc.add(label);
-			pn.add(pnc);
-			p.add(pn, "Center");
-
-			JPanel pc = new JPanel();
-			pc.setLayout(new FlowLayout());
-			JButton b1 = new JButton("合意する");
-			b1.setPreferredSize(new Dimension(120, 30));
-			b1.addActionListener(this);
-			pc.add(b1);
-			JButton b2 = new JButton("合意しない");
-			b2.setPreferredSize(new Dimension(120, 30));
-			b2.addActionListener(this);
-			pc.add(b2);
-			p.add(pc, "South");
-			add(p, "Center");
-			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			setSize(400, 200);
-			setTitle("持ち時間合意画面");
-			setVisible(true);
-		}
-
-		public void actionPerformed(ActionEvent e) {
-			if (e.getActionCommand().equals("合意する")) {
-				new Oserov4(client,client.oos,client.ois,this.time);
-				//start_Osero start_osero = new start_Osero(client, ois, oos, this.time);
-				//start_osero.start();
-				try {
-					client.send_battle_start(client.oos);
-				} catch (Exception erro) {
-					erro.printStackTrace();
-				}
-
-				this.dispose();
-			} else if (e.getActionCommand().equals("合意しない")) {
-				setVisible(false);
-				new Display5(client);
-				this.dispose();
-			}
-		}
-
-	}
-*/
 	public static class Display5 extends JFrame implements ActionListener {
 
 		JLabel label = new JLabel("<html>自分の持ち時間の希望を<br/>対戦相手に送信します。<br/>以下から選んでください。</html>");
@@ -575,7 +505,7 @@ public class Room {
 				
 				System.out.println("start osero_cpu");
 				
-				new Oserov4_cpu(client,ois_room, oos_room,time,s);
+				new Oserov4_cpu(client,ois_room, oos_room,time);
 				
 			} catch (Exception erro1) {
 				erro1.printStackTrace();

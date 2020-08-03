@@ -70,7 +70,6 @@ public class Oserov4 extends JFrame {
 
 	public Oserov4(Client client, ObjectOutputStream oos, ObjectInputStream ois, int time, java.util.List<String> players_info) {
 		this.client = client;
-		this.s =s;
 		try{
 			client.oos.close();
 			client.ois.close();
