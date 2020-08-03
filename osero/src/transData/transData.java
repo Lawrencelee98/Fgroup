@@ -20,7 +20,9 @@ public class transData implements Serializable{
     85 : port_send
     1000 : your turn notice
     1200 : koukou
-    2000 : time over
+    2000 : time out lose
+    2100 : time out win
+    2200 : result_information
     3000 : pass
 
     client ---> server ---> client
@@ -218,6 +220,7 @@ public class transData implements Serializable{
     // protocol = 36
     private String winner, loser;
     boolean draw_flag = false; // if the battle end with draw ---> true
+    int end_result = -1;
     public String get_winner(){
         return winner;
     }
@@ -255,8 +258,25 @@ public class transData implements Serializable{
     public boolean get_endinfo_lose(){
         return lose;
     }
+    public void set_end_result(int result){
+        this.end_result = result;
+    }
+    public int  get_end_result(){
+        return end_result;
+    }
+    
     // ------------------------battle_end_info
-
+   //pass information
+    int pass_count =0;
+    public void add_pass_count(){
+         this.pass_count = this.pass_count+1;
+    }
+    public void reset_pass_count(){
+        this.pass_count=0;
+    }
+    public int get_pass_count(){
+        return this.pass_count;
+    }
     // change_pass---------------------------
     // client ---> server
     // protocol = 37

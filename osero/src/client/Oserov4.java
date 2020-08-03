@@ -282,7 +282,7 @@ public class Oserov4 extends JFrame {
 						client.turn = 1;
 						client.your_turn = 0;
 						//client.BattleReceiver(map);
-						rec = new Reciever(client, map, client.ois,end,j,pass, rate);
+						rec = new Reciever(client, map, client.ois,end,j,pass, rate,3);
 						count++;
 						System.out.println("re12");
 						rec.start();
@@ -507,12 +507,15 @@ public class Oserov4 extends JFrame {
 					
 					// client.BattleReceiver(map);
 					if (count == 0) {
-						rec = new Reciever(client, map, client.ois,end,j,pass, rate); // client.ois
+						
+						rec = new Reciever(client, map, client.ois,end,j,pass, rate,result); // client.ois
 						rec.start();
+						
 						count++;
 						
 					} else {
-						rec = new Reciever(client, map, client.ois,end,j,pass, rate);// client.ois
+						
+						rec = new Reciever(client, map, client.ois,end,j,pass, rate,result);// client.ois
 						rec.start();
 						
 					}				

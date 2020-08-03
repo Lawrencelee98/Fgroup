@@ -238,9 +238,9 @@ public class Room_server extends Thread {
                         
                     }else{
                     
-                        if (data_2.get_protocol() == 3) {
-                            
+                        if (data_2.get_protocol() == 3|| data_2.get_protocol() == 3000) {
                             os_1.writeObject(data_2);
+                            System.out.println("Room [ " + String.valueOf(room_num) + " ] " + "send Object to 1");
                         } else if (data_2.get_protocol() == 50) {
                             System.out.println("get battle end protocol 50");
                             battle_end = data_2.get_battle_end();
@@ -271,8 +271,9 @@ public class Room_server extends Thread {
                         }
                     }else{
                     
-                        if (data_1.get_protocol() == 3) {
+                        if (data_1.get_protocol() == 3|| data_1.get_protocol() == 3000) {
                             os_1.writeObject(data_1);
+                            System.out.println("Room [ " + String.valueOf(room_num) + " ] " + "send Object to 2");
                         } else if (data_1.get_protocol() == 50) {
                             System.out.println("get battle end protocol 50");
                             battle_end = data_1.get_battle_end();
@@ -289,20 +290,24 @@ public class Room_server extends Thread {
             System.out.println("out of while loop");
             //対戦記録更新
             try{
+                transData end_result = new transData(2200);
                 transData end_info = (transData) ois_1.readObject();
+
                 System.out.println("get end_info protocol 36");
                 transData temp_end_info = new transData(36);
             if (end_info.get_protocol() == 36) {
                 if (end_info.get_endinfo_draw()) {
                     temp_end_info.set_draw_result(name_p1, name_p2);
-
+                    
                 } else if (end_info.get_endinfo_win()) {
                     temp_end_info.set_no_draw_result(name_p1, name_p2);
-
+                    
                 } else if (end_info.get_endinfo_lose()) {
                     temp_end_info.set_no_draw_result(name_p1, name_p2);
-
+ 
                 }
+                os_1.writeObject(end_result);
+                os_2.writeObject(end_result);
             }
             Server.update_record(temp_end_info);
             System.out.println("Server updated record");
