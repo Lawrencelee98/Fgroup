@@ -575,7 +575,7 @@ public class Room {
 				
 				System.out.println("start osero_cpu");
 				
-				new Oserov4_cpu(client,ois_room, oos_room,time,s);
+				new Oserov4_cpu(client,ois_room, oos_room,time);
 				
 			} catch (Exception erro1) {
 				erro1.printStackTrace();
