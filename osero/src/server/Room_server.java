@@ -31,9 +31,10 @@ public class Room_server extends Thread {
     public void run() {
         System.out.println("Room [ " + String.valueOf(room_num) + " ] is running");
         try {
+            
             ServerSocket ss_1 = new ServerSocket(port_1);
             ServerSocket ss_2 = new ServerSocket(port_2);
-
+            while(true){
             Socket s_1 = ss_1.accept();
             System.out.println("Room [ " + String.valueOf(room_num) + " ] : socket [1] accept");
 
@@ -50,8 +51,8 @@ public class Room_server extends Thread {
 
             //  入出力ストリーム 1
             ObjectOutputStream os_1 = new ObjectOutputStream(s_1.getOutputStream());
-            InputStream is_1 = s_1.getInputStream();
-            ObjectInputStream ois_1 = new ObjectInputStream(is_1);
+            //InputStream is_1 = s_1.getInputStream();
+            ObjectInputStream ois_1 = new ObjectInputStream(s_1.getInputStream());
 
             transData time_choice_1 = (transData) ois_1.readObject();
             if (time_choice_1.get_protocol() == 0) {
@@ -60,6 +61,7 @@ public class Room_server extends Thread {
                 // false protocol
 
             }
+           // ois_1.reset();
 
 
             Socket s_2 = ss_2.accept();
@@ -78,8 +80,8 @@ public class Room_server extends Thread {
 
             //  入出力ストリーム 2
             ObjectOutputStream os_2 = new ObjectOutputStream(s_2.getOutputStream());
-            InputStream is_2 = s_2.getInputStream();
-            ObjectInputStream ois_2 = new ObjectInputStream(is_2);
+            //InputStream is_2 = s_2.getInputStream();
+            ObjectInputStream ois_2 = new ObjectInputStream(s_2.getInputStream());
 
             transData time_choice_2 = (transData) ois_2.readObject();
             if (time_choice_2.get_protocol() == 0) {
@@ -88,7 +90,7 @@ public class Room_server extends Thread {
                 // false protocol
 
             }
-
+            //ois_2.reset();
 
             // time random set
             Random random = new Random();
@@ -325,17 +327,21 @@ public class Room_server extends Thread {
             Server.room_info.put(room_num,0);
             transData room_info = new transData(14);
             room_info.set_room_info(Server.room_info, Server.get_record());
-            os_1.reset();
-            os_2.reset();
+            //os_1.reset();
+            //os_2.reset();
             os_1.writeObject(room_info);
             os_2.writeObject(room_info);
             System.out.println("send room_info");
             System.out.println(room_info.get_room_info());
-          
+            
+           // ois_1.reset();
+           // ois_2.reset();
+        }//while loop
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
            //run();
+           
         }
     }
 }

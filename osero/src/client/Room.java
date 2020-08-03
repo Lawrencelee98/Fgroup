@@ -22,7 +22,7 @@ import java.util.*;
 public class Room {
 
 	private PrintWriter out;
-	Socket s_room =null;
+	static Socket s_room =null;
 	static String str;
 	static Map<Integer, Integer> room_info;
 	static List<String> players_info;
@@ -370,37 +370,11 @@ public class Room {
 					client.room_port = return_port.get_port();
 					System.out.println("Room:Action, room_port=" + client.room_port);
 
-					try {
-						client.s.close();
-						System.out.println("setting socket s_room");
-						s_room = new Socket(client.ServerAddress, client.room_port);
-						System.out.println("connect with room server");
-						client.s_room = s_room;
-						//InputStream is_room = s_room.getInputStream();
-						//System.out.println("get Input stream ");
-						//ois_room = new ObjectInputStream(is_room);
-						//System.out.println("get input stream");
-						OutputStream os_room = s_room.getOutputStream();
-						System.out.println("get output stream ");
-						oos_room = new ObjectOutputStream(os_room);
-						System.out.println("take the oos to oos_room");
-						
-						// System.out.println("start oserov4");
-						// new Oserov4(client, oos_room, ois_room);
-						System.out.println("set socket s_room ");
-					} catch (Exception e1) {
-						e1.printStackTrace();
-
-					} finally {
-						
-						System.out.println("finally socket s_room setting");
-					}
+					
 				} catch (Exception e2) {
 					e2.printStackTrace();
 				} finally {
-					ois_room = new ObjectInputStream(s_room.getInputStream());
-					System.out.println("get ois_room in finally");
-					System.out.println("___dispose display4");
+				
 					this.dispose();
 				}
 
@@ -498,6 +472,40 @@ public class Room {
 				// new Display6(this.client);
 
 			}
+			try {
+				client.s.close();
+				System.out.println("setting socket s_room");
+				s_room = new Socket(client.ServerAddress, client.room_port);
+				System.out.println("connect with room server");
+				
+				//InputStream
+				InputStream is_room = s_room.getInputStream();
+				System.out.println("get Input stream ");
+				//ObjectInputStream ois_room1= new ObjectInputStream(is_room);
+				//ois_room = ois_room1;
+				ois_room= new ObjectInputStream(is_room);
+				System.out.println("get input stream");
+
+				//OutputStream 
+				OutputStream os_room = s_room.getOutputStream();
+				System.out.println("get output stream ");
+				oos_room = new ObjectOutputStream(os_room);
+				System.out.println("take the oos to oos_room");
+
+				
+				client.s_room = s_room;
+				
+				// System.out.println("start oserov4");
+				// new Oserov4(client, oos_room, ois_room);
+				System.out.println("set socket s_room ");
+			} catch (Exception e1) {
+				e1.printStackTrace();
+
+			} finally {
+				
+				System.out.println("finally socket s_room setting");
+			}
+			
 			try {
 				transData time_data = new transData(0);
 				time_data.set_wait_time(time);

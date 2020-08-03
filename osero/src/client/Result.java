@@ -85,7 +85,7 @@ public class Result extends JFrame implements ActionListener{
 			ObjectOutputStream oos = new ObjectOutputStream(os);
 			InputStream is = s.getInputStream();
             ObjectInputStream ois = new ObjectInputStream(is);
-            
+            client.s = s;
 			client.ois = ois;
 			client.oos = oos;
             client.send_login_info(client.get_user_name(), client.get_user_pass(), client.ois, client.oos);

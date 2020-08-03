@@ -12,7 +12,7 @@ public class Reciever extends Thread{
 	Ban map = null;
 	ObjectInputStream ois = null;
 	int protocol;
-	JFrame j;
+	JFrame j =null;
 	transData end = null;
 	transData battle_end = new transData(50);
 	transData room_info =null;
@@ -26,9 +26,7 @@ public class Reciever extends Thread{
 		this.end = end;
 		this.j = j;
 		this.pass = pass;
-
 		this.rate=rate;
-
 	}
 	@Override
 	public void run (){
@@ -86,8 +84,9 @@ public class Reciever extends Thread{
 							System.out.println("get_player_info: "+room_info.get_players_info());
 							this.client.ois=ois;
 							String Rate=String.valueOf (rate)+"→"+String.valueOf (rate-5);
-							new Result(result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate);
 							j.dispose();
+							new Result(result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate);
+							
 						}
 
 
@@ -110,8 +109,9 @@ public class Reciever extends Thread{
 							System.out.println(room_info.get_players_info());
 							this.client.ois=ois;
 							String Rate=String.valueOf (rate)+"→"+String.valueOf (rate+10);
-							new Result(result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate);
 							j.dispose();
+							new Result(result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate);
+							
 						}
 
 					}else if(this.protocol==12){
