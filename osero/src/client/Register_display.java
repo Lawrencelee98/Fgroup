@@ -24,7 +24,7 @@ public class Register_display extends JFrame implements ActionListener {
 		p.setLayout(null);
 		label[0] = new JLabel("プレイヤ名と母の旧姓を入力してください");
 		label[1] = new JLabel("プレイヤ名");
-		//label[3] = new JLabel("パスワード");
+		label[3] = new JLabel("パスワード");
 		label[2] = new JLabel("母の旧姓");
 		txt[0] = new JTextArea();
 		txt[1] = new JTextArea();
@@ -32,7 +32,7 @@ public class Register_display extends JFrame implements ActionListener {
 		label[0].setBounds(15, 10, 200, 60);
 		label[1].setBounds(15, 100, 75, 20);
 		label[2].setBounds(15, 130, 75, 20);
-		//label[3].setBounds(15, 160, 75, 20);
+		label[3].setBounds(15, 160, 75, 20);
 		txt[0].setBounds(95, 100, 120, 20);
 		txt[1].setBounds(95, 130, 120, 20);
 		txt[2].setBounds(95, 160, 120, 20);
@@ -41,7 +41,7 @@ public class Register_display extends JFrame implements ActionListener {
 		p.add(label[0]);
 		p.add(label[1]);
 		p.add(label[2]);
-		//p.add(label[3]);
+		p.add(label[3]);
 		p.add(txt[0]);
 		p.add(txt[1]);
 		p.add(txt[2]);

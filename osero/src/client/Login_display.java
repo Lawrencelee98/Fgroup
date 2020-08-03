@@ -53,7 +53,7 @@ public class Login_display extends JFrame implements ActionListener {
 		p.add(pwd);
 		p.add(btn[0]);
 		p.add(btn[1]);
-		p.add(btn[2]);
+		//p.add(btn[2]);
 		p.add(btn[3]);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
