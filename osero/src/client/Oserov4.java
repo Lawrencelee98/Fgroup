@@ -83,8 +83,8 @@ public class Oserov4 extends JFrame {
 		this.players_info = players_info;
 		System.out.println("players_info : " + players_info.toString());
 		
-	
-		for(int i=0; i<8; i++){
+		int i;
+		for(i=0; i<8; i++){
 			String[] arr = players_info.get(i).split(",", 0);
 			if(arr[0].substring(16).trim().equals(client.username)){
 				res = get_record_label(players_info.get(i)) + "  vs  ";
@@ -100,7 +100,15 @@ public class Oserov4 extends JFrame {
 		
 		l1.setText(res);
 		System.out.println("res:" + res);
-		new Display();
+
+		String bgfile = "";
+		switch(i/2){
+			case 0: bgfile = "yokohama.jpg"; break;
+			case 1: bgfile = "china.jpg"; break;
+			case 2: bgfile = "korea.jpg"; break;
+			case 3: bgfile = "japan.jpg"; break;
+		}
+		new Display(bgfile);
 		// System.out.println("Battlereceiver");
 		// client.BattleReceiver(map);
 	}
@@ -125,7 +133,7 @@ public class Oserov4 extends JFrame {
 		 */
 		private static final long serialVersionUID = 1L;
 
-		public Display() {
+		public Display(String bgfile) {
 			c = j.getContentPane();
 
 			// j.setSize(800,600);
@@ -133,6 +141,15 @@ public class Oserov4 extends JFrame {
 			j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			time_count_down = new Timer_count_down(time_limit,client.your_turn,client,j);
 			JLayeredPane lp = new JLayeredPane();
+			lp.setLayout(null);
+			lp.setBounds(0, 0, 800, 600);
+
+			System.out.println("bgfile : " + bgfile);
+			ImageIcon bgimg = new ImageIcon(getClass().getResource(bgfile));
+			JLabel bg = new JLabel(bgimg);
+			bg.setBounds(0, 0, 800, 600);
+			lp.add(bg);
+			lp.setLayer(bg, 0);
 
 			ImageIcon img = new ImageIcon(getClass().getResource("frame.jpg"));
 			chessboard = new JLabel();
@@ -142,15 +159,25 @@ public class Oserov4 extends JFrame {
 			chess = new JLabel();
 			chess.setIcon(img);
 			
-			l1.setBounds(200, 10, 500, 20);
+			l1.setBounds(50, 10, 700, 20);
 			chessboard.setBounds(10, 40, 420, 420);
 			chess.setBounds(28, 57, 43, 43);
-			l2.setBounds(600, 50, 200, 30);
-			l3.setBounds(600, 150, 200, 30);
-			l4.setBounds(600, 250, 200, 30);
+			l2.setBounds(500, 50, 200, 30);
+			l3.setBounds(450, 150, 200, 30);
+			l4.setBounds(450, 250, 300, 30);
 			l5.setBounds(50, 500, 100, 30);
 			b1.setBounds(200, 500, 100, 30);
 			b1.addActionListener(this);
+			
+			l1.setFont(l1.getFont().deriveFont(18.0f));
+	        l2.setFont(l2.getFont().deriveFont(26.0f));
+			l4.setFont(l4.getFont().deriveFont(26.0f));
+
+			l1.setForeground(Color.WHITE);
+			l2.setForeground(Color.WHITE);
+			l3.setForeground(Color.WHITE);
+			l4.setForeground(Color.WHITE);
+			l5.setForeground(Color.WHITE);
 
 			int buttonSize = 46, i = 0;
 			
@@ -187,7 +214,6 @@ public class Oserov4 extends JFrame {
 				B[i].setOpaque(false);
 				B[i].setContentAreaFilled(false);
 			}
-
 			for (i = 0; i < 8; i++) {
 				C[i] = new JButton();
 
@@ -237,25 +263,42 @@ public class Oserov4 extends JFrame {
 				H[i].setContentAreaFilled(false);
 			}
 
-			c.add(l1);
-			c.add(l2);
-			c.add(l3);
-			c.add(l4);
-			c.add(l5);
-			c.add(b1);
-			j.getLayeredPane().add(chessboard, 100);
+			lp.add(l1);
+			lp.add(l2);
+			lp.add(l3);
+			lp.add(l4);
+			lp.add(l5);
+			lp.add(b1);
+			lp.add(chessboard);
+			lp.setLayer(l1, 2);
+			lp.setLayer(l2, 2);
+			lp.setLayer(l3, 2);
+			lp.setLayer(l4, 2);
+			lp.setLayer(l5, 2);
+			lp.setLayer(b1, 2);
+			lp.setLayer(chessboard, 2);
 
 			for (i = 0; i < 8; i++) {
-				j.getLayeredPane().add(A[i], 0);
-				j.getLayeredPane().add(B[i], 0);
-				j.getLayeredPane().add(C[i], 0);
-				j.getLayeredPane().add(D[i], 0);
-				j.getLayeredPane().add(E[i], 0);
-				j.getLayeredPane().add(F[i], 0);
-				j.getLayeredPane().add(G[i], 0);
-				j.getLayeredPane().add(H[i], 0);
+				lp.add(A[i]);
+				lp.add(B[i]);
+				lp.add(C[i]);
+				lp.add(D[i]);
+				lp.add(E[i]);
+				lp.add(F[i]);
+				lp.add(G[i]);
+				lp.add(H[i]);
+				lp.setLayer(A[i], 10);
+				lp.setLayer(B[i], 10);
+				lp.setLayer(C[i], 10);
+				lp.setLayer(D[i], 10);
+				lp.setLayer(E[i], 10);
+				lp.setLayer(F[i], 10);
+				lp.setLayer(G[i], 10);
+				lp.setLayer(H[i], 10);
 			}
+
 			c.setLayout(null);
+			c.add(lp);
 
 			j.setVisible(true);
 			j.setResizable(false);
@@ -275,22 +318,20 @@ public class Oserov4 extends JFrame {
 					//1000が送られてきた方が先攻
 					if(protocol==1000) {
 						System.out.println("You hava black!");
-						JOptionPane.showConfirmDialog(null, "あなたは黒です", null, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 						client.turn = 0; //先攻なので黒
 						client.your_turn = 1;
 					}else if(protocol==1200){
 						System.out.println("You hava white!");
-						JOptionPane.showConfirmDialog(null, "あなたは白です", null, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 						client.turn = 1;
 						client.your_turn = 0;
 						//client.BattleReceiver(map);
-						rec = new Reciever(client, map, client.ois,end,j,pass, rate);
+						rec = new Reciever(client, map, client.ois,end,j,pass, rate,3);
 						count++;
 						System.out.println("re12");
 						rec.start();
 						System.out.println("toppa");
 					}else{}			
-					//client.ois.reset();
+					//client.ois.reset();							
 				}
 			} catch (ClassNotFoundException e1) {
 				// TODO 自動生成された catch ブロック
@@ -509,12 +550,15 @@ public class Oserov4 extends JFrame {
 					
 					// client.BattleReceiver(map);
 					if (count == 0) {
-						rec = new Reciever(client, map, client.ois,end,j,pass, rate); // client.ois
+						
+						rec = new Reciever(client, map, client.ois,end,j,pass, rate,result); // client.ois
 						rec.start();
+						
 						count++;
 						
 					} else {
-						rec = new Reciever(client, map, client.ois,end,j,pass, rate);// client.ois
+						
+						rec = new Reciever(client, map, client.ois,end,j,pass, rate,result);// client.ois
 						rec.start();
 						
 					}				
