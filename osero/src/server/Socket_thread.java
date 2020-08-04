@@ -1,44 +1,47 @@
 package server;
+
 import java.io.*;
 import java.net.*;
 import java.util.*;
+
 import transData.*;
 
-public class Socket_thread extends Thread{
+public class Socket_thread extends Thread {
     private boolean running = true;
 
-    private int port, num, room_num=-1;
+    private int port, num, room_num = -1;
 
     private String username;
 
-    public Socket_thread(int port,int num){
+    public Socket_thread(int port, int num) {
         this.port = port;
         this.num = num;
     }
 
-    public int get_num(){
+    public int get_num() {
         return num;
     }
-    public int get_port(){
+
+    public int get_port() {
         return port;
     }
-    public int get_room_num(){
+
+    public int get_room_num() {
         return room_num;
     }
-    public String get_username(){
+
+    public String get_username() {
         return username;
     }
 
 
-
-
-    public void run_inside(){
+    public void run_inside() {
         System.out.println("thread [ " + String.valueOf(num) + " ] is running");
 
         ServerSocket ss = null;
         Socket s = null;
 
-        try{
+        try {
             ss = new ServerSocket(port);
             s = ss.accept();
             System.out.println("thread [ " + String.valueOf(num) + " ] socket accept");
@@ -49,9 +52,9 @@ public class Socket_thread extends Thread{
             ObjectInputStream ois = new ObjectInputStream(is);
 
 
-            int loop_count=0;
-            while(true){
-                loop_count+=1;
+            int loop_count = 0;
+            while (true) {
+                loop_count += 1;
                 System.out.println("thread [ " + String.valueOf(num) + " ] login loop : " + String.valueOf(loop_count));
 
                 // break if login or register or change pass success
@@ -69,21 +72,21 @@ public class Socket_thread extends Thread{
 
                         // name set
                         this.username = data.get_login_name();
-                        if (num==1){
+                        if (num == 1) {
                             Server.name_p1 = this.username;
-                        }else if (num==2){
+                        } else if (num == 2) {
                             Server.name_p2 = this.username;
-                        }else if (num==3){
+                        } else if (num == 3) {
                             Server.name_p3 = this.username;
-                        }else if (num==4){
+                        } else if (num == 4) {
                             Server.name_p4 = this.username;
-                        }else if (num==5){
+                        } else if (num == 5) {
                             Server.name_p5 = this.username;
-                        }else if (num==6){
+                        } else if (num == 6) {
                             Server.name_p6 = this.username;
-                        }else if (num==7){
+                        } else if (num == 7) {
                             Server.name_p7 = this.username;
-                        }else if (num==8){
+                        } else if (num == 8) {
                             Server.name_p8 = this.username;
                         }
 
@@ -103,21 +106,21 @@ public class Socket_thread extends Thread{
 
                         // name set
                         this.username = data.get_register_name();
-                        if (num==1){
+                        if (num == 1) {
                             Server.name_p1 = this.username;
-                        }else if (num==2){
+                        } else if (num == 2) {
                             Server.name_p2 = this.username;
-                        }else if (num==3){
+                        } else if (num == 3) {
                             Server.name_p3 = this.username;
-                        }else if (num==4){
+                        } else if (num == 4) {
                             Server.name_p4 = this.username;
-                        }else if (num==5){
+                        } else if (num == 5) {
                             Server.name_p5 = this.username;
-                        }else if (num==6){
+                        } else if (num == 6) {
                             Server.name_p6 = this.username;
-                        }else if (num==7){
+                        } else if (num == 7) {
                             Server.name_p7 = this.username;
-                        }else if (num==8){
+                        } else if (num == 8) {
                             Server.name_p8 = this.username;
                         }
                         System.out.println("thread [ " + String.valueOf(num) + " ] register ok");
@@ -129,7 +132,7 @@ public class Socket_thread extends Thread{
                     }
 
 
-                }else if (protocol_1==37){
+                } else if (protocol_1 == 37) {
                     // pass change
                     System.out.println("thread [ " + String.valueOf(num) + " ] change pass start");
 
@@ -138,21 +141,21 @@ public class Socket_thread extends Thread{
 
                         // name set
                         this.username = data.get_change_name();
-                        if (num==1){
+                        if (num == 1) {
                             Server.name_p1 = this.username;
-                        }else if (num==2){
+                        } else if (num == 2) {
                             Server.name_p2 = this.username;
-                        }else if (num==3){
+                        } else if (num == 3) {
                             Server.name_p3 = this.username;
-                        }else if (num==4){
+                        } else if (num == 4) {
                             Server.name_p4 = this.username;
-                        }else if (num==5){
+                        } else if (num == 5) {
                             Server.name_p5 = this.username;
-                        }else if (num==6){
+                        } else if (num == 6) {
                             Server.name_p6 = this.username;
-                        }else if (num==7){
+                        } else if (num == 7) {
                             Server.name_p7 = this.username;
-                        }else if (num==8){
+                        } else if (num == 8) {
                             Server.name_p8 = this.username;
                         }
                         System.out.println("thread [ " + String.valueOf(num) + " ] change pass ok");
@@ -162,7 +165,6 @@ public class Socket_thread extends Thread{
 
                         System.out.println("thread [ " + String.valueOf(num) + " ] change pass fail");
                     }
-
 
 
                 } else {
@@ -182,46 +184,46 @@ public class Socket_thread extends Thread{
 
 
             //  get selected room
-            transData data_room_num =(transData)ois.readObject();
-            if (data_room_num.get_protocol()==13){
+            transData data_room_num = (transData) ois.readObject();
+            if (data_room_num.get_protocol() == 13) {
                 System.out.println("thread [ " + String.valueOf(num) + " ] selected room recieve");
                 int room_num = data_room_num.get_room_num();
 
-                if(Server.room_info.get(room_num)==0){
+                if (Server.room_info.get(room_num) == 0) {
                     // CPU battle
-                    Server.room_info.put(room_num,1);
+                    Server.room_info.put(room_num, 1);
                     this.room_num = room_num;
                     this.running = false;
 
-                    int port_send=0;
-                    if(room_num==1){
+                    int port_send = 0;
+                    if (room_num == 1) {
                         port_send = 10011;
                         Server.name_r1_1 = this.username;
-                    }else if(room_num==2){
+                    } else if (room_num == 2) {
                         port_send = 10021;
                         Server.name_r2_1 = this.username;
-                    }else if(room_num==3){
+                    } else if (room_num == 3) {
                         port_send = 10031;
                         Server.name_r3_1 = this.username;
-                    }else if(room_num==4){
+                    } else if (room_num == 4) {
                         port_send = 10041;
                         Server.name_r4_1 = this.username;
                     }
-                    if (num==1){
+                    if (num == 1) {
                         Server.name_p1 = null;
-                    }else if (num==2){
+                    } else if (num == 2) {
                         Server.name_p2 = null;
-                    }else if (num==3){
+                    } else if (num == 3) {
                         Server.name_p3 = null;
-                    }else if (num==4){
+                    } else if (num == 4) {
                         Server.name_p4 = null;
-                    }else if (num==5){
+                    } else if (num == 5) {
                         Server.name_p5 = null;
-                    }else if (num==6){
+                    } else if (num == 6) {
                         Server.name_p6 = null;
-                    }else if (num==7){
+                    } else if (num == 7) {
                         Server.name_p7 = null;
-                    }else if (num==8){
+                    } else if (num == 8) {
                         Server.name_p8 = null;
                     }
 
@@ -229,45 +231,44 @@ public class Socket_thread extends Thread{
                     port_send_obj.set_port_send(port_send);
                     os.writeObject(port_send_obj);
 
-                }else if(Server.room_info.get(room_num)==1){
+                } else if (Server.room_info.get(room_num) == 1) {
                     // battle start
-                    Server.room_info.put(room_num,2);
+                    Server.room_info.put(room_num, 2);
                     this.room_num = room_num;
                     this.running = false;
 
-                    int port_send=0;
-                    if(room_num==1){
+                    int port_send = 0;
+                    if (room_num == 1) {
                         port_send = 10012;
                         Server.name_r1_2 = this.username;
-                    }else if(room_num==2){
+                    } else if (room_num == 2) {
                         port_send = 10022;
                         Server.name_r2_2 = this.username;
-                    }else if(room_num==3){
+                    } else if (room_num == 3) {
                         port_send = 10032;
                         Server.name_r3_2 = this.username;
-                    }else if(room_num==4){
+                    } else if (room_num == 4) {
                         port_send = 10042;
                         Server.name_r4_2 = this.username;
                     }
 
-                    if (num==1){
+                    if (num == 1) {
                         Server.name_p1 = null;
-                    }else if (num==2){
+                    } else if (num == 2) {
                         Server.name_p2 = null;
-                    }else if (num==3){
+                    } else if (num == 3) {
                         Server.name_p3 = null;
-                    }else if (num==4){
+                    } else if (num == 4) {
                         Server.name_p4 = null;
-                    }else if (num==5){
+                    } else if (num == 5) {
                         Server.name_p5 = null;
-                    }else if (num==6){
+                    } else if (num == 6) {
                         Server.name_p6 = null;
-                    }else if (num==7){
+                    } else if (num == 7) {
                         Server.name_p7 = null;
-                    }else if (num==8){
+                    } else if (num == 8) {
                         Server.name_p8 = null;
                     }
-
 
 
                     System.out.println("Socket thread : ready to send room port ");
@@ -276,44 +277,44 @@ public class Socket_thread extends Thread{
                     os.writeObject(port_send_obj);
 //                    os.flush();
 
-                }else{
+                } else {
                     // false room error
 
 
                 }
-            }else if(data_room_num.get_protocol()==550){
+            } else if (data_room_num.get_protocol() == 550) {
                 // todo logout
-                if (num==1){
+                if (num == 1) {
                     Server.name_p1 = null;
-                }else if (num==2){
+                } else if (num == 2) {
                     Server.name_p2 = null;
-                }else if (num==3){
+                } else if (num == 3) {
                     Server.name_p3 = null;
-                }else if (num==4){
+                } else if (num == 4) {
                     Server.name_p4 = null;
-                }else if (num==5){
+                } else if (num == 5) {
                     Server.name_p5 = null;
-                }else if (num==6){
+                } else if (num == 6) {
                     Server.name_p6 = null;
-                }else if (num==7){
+                } else if (num == 7) {
                     Server.name_p7 = null;
-                }else if (num==8){
+                } else if (num == 8) {
                     Server.name_p8 = null;
                 }
-            }else{
+            } else {
 
             }
 
 
-        }catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
 
-        }finally {
-            try{
-                if (s!=null){
+        } finally {
+            try {
+                if (s != null) {
                     s.close();
                 }
-                if (ss!=null){
+                if (ss != null) {
                     ss.close();
                 }
                 System.out.println("thread [ " + String.valueOf(num) + " ] : socket close");
