@@ -89,7 +89,7 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
         l1.setBounds(300, 10, 300, 24);
         chessboard.setBounds(10, 40, 420, 420);
         chess.setBounds(28, 57, 43, 43);
-        l2.setBounds(500, 50, 200, 30);
+        l2.setBounds(500, 50, 200, 40);
 
         l4.setBounds(450, 250, 300, 30);
         l5.setBounds(50, 500, 100, 30);
@@ -97,7 +97,7 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
         b1.addActionListener(this);
         
         l1.setFont(l1.getFont().deriveFont(23.0f));
-        l2.setFont(l2.getFont().deriveFont(26.0f));
+        l2.setFont(l2.getFont().deriveFont(40.0f));
         l4.setFont(l4.getFont().deriveFont(26.0f));
         
         int buttonSize = 46;
