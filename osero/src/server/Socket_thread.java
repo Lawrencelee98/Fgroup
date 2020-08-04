@@ -269,6 +269,7 @@ public class Socket_thread extends Thread{
                     }
 
 
+
                     System.out.println("Socket thread : ready to send room port ");
                     transData port_send_obj = new transData(85);
                     port_send_obj.set_port_send(port_send);
