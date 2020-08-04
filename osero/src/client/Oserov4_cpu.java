@@ -23,7 +23,7 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
 
     Container c;
     JLabel l1 = new JLabel("CPU戦");
-    JLabel l2 = new JLabel("残り時間");
+    JLabel l2 = new JLabel("残り時間:∞");
 
     JLabel l4 = new JLabel("黒の数：白の数");
     JLabel l5 = new JLabel("あなたの番");
@@ -86,16 +86,20 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
         chess = new JLabel();
         chess.setIcon(img);
 
-        l1.setBounds(300, 10, 300, 20);
+        l1.setBounds(300, 10, 300, 24);
         chessboard.setBounds(10, 40, 420, 420);
         chess.setBounds(28, 57, 43, 43);
-        l2.setBounds(600, 50, 200, 30);
+        l2.setBounds(500, 50, 200, 30);
 
-        l4.setBounds(600, 250, 200, 30);
+        l4.setBounds(450, 250, 300, 30);
         l5.setBounds(50, 500, 100, 30);
         b1.setBounds(200, 500, 100, 30);
         b1.addActionListener(this);
-
+        
+        l1.setFont(l1.getFont().deriveFont(23.0f));
+        l2.setFont(l2.getFont().deriveFont(26.0f));
+        l4.setFont(l4.getFont().deriveFont(26.0f));
+        
         int buttonSize = 46;
         // time_count_down.start();
         // Timer
