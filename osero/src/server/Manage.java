@@ -39,6 +39,8 @@ public class Manage extends Thread{
 
         System.out.println("---------------- manage connect info");
 
+
+        run_inside();
     }
 
     public void run(){
