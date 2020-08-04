@@ -20,16 +20,17 @@ public class Result extends JFrame implements ActionListener{
     int result;
     Map<Integer, Integer> room_info;
     List<String> players_info;
+    JFrame j;
 
     String Rate;
     
-    public Result(int result, Client client,Map<Integer, Integer> room_info, List<String> players_info, String Rate)  {
+    public Result(int result, Client client,Map<Integer, Integer> room_info, List<String> players_info, String Rate,JFrame j)  {
 
         this.client = client;
         this.result = result;
         this.room_info=room_info;
         this.players_info=players_info;
-
+	this.j=j;
         this.Rate=Rate;
         l2.setText(Rate);
         System.out.println("Result : "+ result);
@@ -110,7 +111,7 @@ public class Result extends JFrame implements ActionListener{
     			// ee.printStackTrace();
     		}*/
 
-    		
+    	    j.dispose();
             this.dispose();
 
 
