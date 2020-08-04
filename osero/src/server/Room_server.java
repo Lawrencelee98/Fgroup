@@ -142,14 +142,14 @@ public class Room_server extends Thread {
                         transData data_1 = (transData) ois_1.readObject();
                         instant1 = Instant.now();
                         span = Duration.between(instant1, instant2).getSeconds();
-                        System.out.println("span:" + span);
+                        System.out.println("Room [ " + String.valueOf(room_num) + " ] : " + "span:" + span);
                         if (span <= 0) {
-                            System.out.println("send time out 2000");
+                            System.out.println("Room [ " + String.valueOf(room_num) + " ] : " + "send time out 2000");
                             os_1.writeObject(time_out_lose);
                             os_2.writeObject(time_out_win);
                             isend = (transData) ois_1.readObject();
                             if (isend.get_protocol() == 50) {
-                                System.out.println("get battle end protocol 50");
+                                System.out.println("Room [ " + String.valueOf(room_num) + " ] : " + "get battle end protocol 50");
                                 battle_end = isend.get_battle_end();
                                 if (battle_end) {
                                     break;
@@ -162,7 +162,7 @@ public class Room_server extends Thread {
                                 os_2.writeObject(data_1);
                                 System.out.println("Room [ " + String.valueOf(room_num) + " ] " + "send Object to 2");
                             } else if (data_1.get_protocol() == 50) {
-                                System.out.println("get battle end protocol 50");
+                                System.out.println("Room [ " + String.valueOf(room_num) + " ] : " + "get battle end protocol 50");
                                 battle_end = data_1.get_battle_end();
                                 if (battle_end) {
                                     break;
@@ -182,14 +182,14 @@ public class Room_server extends Thread {
                         transData data_2 = (transData) ois_2.readObject();
                         instant1 = Instant.now();
                         span = Duration.between(instant1, instant2).getSeconds();
-                        System.out.println("span:" + span);
+                        System.out.println("Room [ " + String.valueOf(room_num) + " ] : " + "span:" + span);
                         if (span <= 0) {
-                            System.out.println("send time out 2000");
+                            System.out.println("Room [ " + String.valueOf(room_num) + " ] : " + "send time out 2000");
                             os_2.writeObject(time_out_lose);
                             os_1.writeObject(time_out_win);
                             isend = (transData) ois_2.readObject();
                             if (isend.get_protocol() == 50) {
-                                System.out.println("get battle end protocol 50");
+                                System.out.println("Room [ " + String.valueOf(room_num) + " ] : " + "get battle end protocol 50");
                                 battle_end = isend.get_battle_end();
                                 if (battle_end) {
                                     break;
@@ -200,9 +200,9 @@ public class Room_server extends Thread {
                             if (data_2.get_protocol() == 3 || data_1.get_protocol() == 3000) {
 
                                 os_1.writeObject(data_2);
-                                System.out.println("Room [ " + String.valueOf(room_num) + " ] " + "send Object to 1");
+                                System.out.println("Room [ " + String.valueOf(room_num) + " ] : " + "Room [ " + String.valueOf(room_num) + " ] " + "send Object to 1");
                             } else if (data_2.get_protocol() == 50) {
-                                System.out.println("get battle end protocol 50");
+                                System.out.println("Room [ " + String.valueOf(room_num) + " ] : " + "get battle end protocol 50");
                                 battle_end = data_2.get_battle_end();
                                 if (battle_end) {
                                     break;
@@ -222,14 +222,14 @@ public class Room_server extends Thread {
                         transData data_2 = (transData) ois_2.readObject();
                         instant1 = Instant.now();
                         span = Duration.between(instant1, instant2).getSeconds();
-                        System.out.println("span:" + span);
+                        System.out.println("Room [ " + String.valueOf(room_num) + " ] : " + "span:" + span);
                         if (span <= 0) {
-                            System.out.println("send time out 2000");
+                            System.out.println("Room [ " + String.valueOf(room_num) + " ] : " + "send time out 2000");
                             os_2.writeObject(time_out_lose);
                             os_1.writeObject(time_out_win);
                             isend = (transData) ois_2.readObject();
                             if (isend.get_protocol() == 50) {
-                                System.out.println("get battle end protocol 50");
+                                System.out.println("Room [ " + String.valueOf(room_num) + " ] : " + "get battle end protocol 50");
                                 battle_end = isend.get_battle_end();
                                 if (battle_end) {
                                     break;
@@ -242,7 +242,7 @@ public class Room_server extends Thread {
                                 os_1.writeObject(data_2);
                                 System.out.println("Room [ " + String.valueOf(room_num) + " ] " + "send Object to 1");
                             } else if (data_2.get_protocol() == 50) {
-                                System.out.println("get battle end protocol 50");
+                                System.out.println("Room [ " + String.valueOf(room_num) + " ] : " + "get battle end protocol 50");
                                 battle_end = data_2.get_battle_end();
                                 if (battle_end) {
                                     break;
@@ -258,14 +258,14 @@ public class Room_server extends Thread {
                         transData data_1 = (transData) ois_1.readObject();
                         instant1 = Instant.now();
                         span = Duration.between(instant1, instant2).getSeconds();
-                        System.out.println("span:" + span);
+                        System.out.println("Room [ " + String.valueOf(room_num) + " ] : " + "span:" + span);
                         if (span <= 0) {
-                            System.out.println("send time out 2000");
+                            System.out.println("Room [ " + String.valueOf(room_num) + " ] : " + "send time out 2000");
                             os_1.writeObject(time_out_lose);
                             os_2.writeObject(time_out_win);
                             isend = (transData) ois_1.readObject();
                             if (isend.get_protocol() == 50) {
-                                System.out.println("get battle end protocol 50");
+                                System.out.println("Room [ " + String.valueOf(room_num) + " ] : " + "get battle end protocol 50");
                                 battle_end = isend.get_battle_end();
                                 if (battle_end) {
                                     break;
@@ -277,7 +277,7 @@ public class Room_server extends Thread {
                                 os_1.writeObject(data_1);
                                 System.out.println("Room [ " + String.valueOf(room_num) + " ] " + "send Object to 2");
                             } else if (data_1.get_protocol() == 50) {
-                                System.out.println("get battle end protocol 50");
+                                System.out.println("Room [ " + String.valueOf(room_num) + " ] : " + "get battle end protocol 50");
                                 battle_end = data_1.get_battle_end();
                                 if (battle_end) {
                                     break;
@@ -289,13 +289,13 @@ public class Room_server extends Thread {
                     }
                 }
 
-                System.out.println("out of while loop");
+                System.out.println("Room [ " + String.valueOf(room_num) + " ] : " + "out of while loop");
                 //対戦記録更新
                 try {
                     transData end_result = new transData(2200);
                     transData end_info = (transData) ois_1.readObject();
 
-                    System.out.println("get end_info protocol 36");
+                    System.out.println("Room [ " + String.valueOf(room_num) + " ] : " + "get end_info protocol 36");
                     transData temp_end_info = new transData(36);
                     if (end_info.get_protocol() == 36) {
                         if (end_info.get_endinfo_draw()) {
@@ -312,7 +312,7 @@ public class Room_server extends Thread {
                         os_2.writeObject(end_result);
                     }
                     Server.update_record(temp_end_info);
-                    System.out.println("Server updated record");
+                    System.out.println("Room [ " + String.valueOf(room_num) + " ] : " + "Server updated record");
                 } catch (Exception eee) {
                     eee.printStackTrace();
                 }
@@ -338,7 +338,7 @@ public class Room_server extends Thread {
                 //os_2.reset();
                 os_1.writeObject(room_info);
                 os_2.writeObject(room_info);
-                System.out.println("send room_info");
+                System.out.println("Room [ " + String.valueOf(room_num) + " ] : " + "send room_info");
                 System.out.println(room_info.get_room_info());
 
                 // ois_1.reset();
