@@ -9,10 +9,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.*;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
 
 import transData.transData;
 
@@ -107,7 +106,16 @@ public class Room {
 			b32 = new JButton(room_label[5]);
 			b41 = new JButton(room_label[6]);
 			b42 = new JButton(room_label[7]);
-			setLayout(new BorderLayout());
+			setLayout(null);
+			JPanel main = new JPanel();
+			main.setLayout(new BorderLayout());
+			main.setBounds(0, 0, 1000, 600);
+			JLayeredPane lp = new JLayeredPane();
+			lp.setLayout(null);
+			lp.setBounds(0, 0, 1000, 600);
+			ImageIcon img = new ImageIcon(getClass().getResource("fuji.jpg"));
+			JLabel bg = new JLabel(img);
+			bg.setBounds(0, 0, 1000, 600);
 			JPanel w = new JPanel();
 			JButton b = new JButton("ログアウト");
 			CPU_match = new JButton("CPU対戦");
@@ -115,25 +123,32 @@ public class Room {
 			b.addActionListener(this);
 			w.add(b);
 			w.add(CPU_match);
-			add(w, "West");
+			//main.add(w, "West");
 			JPanel m = new JPanel();
 			m.setLayout(new BorderLayout());
 			JPanel x = new JPanel();
+			x.setOpaque(false);
 			x.setPreferredSize(new Dimension(350, 15));
 			m.add(x, "North");
 			JPanel p = new JPanel();
+			p.setOpaque(false);
 			p.setLayout(new GridLayout(2, 2));
 			JPanel p1 = new JPanel();
+			p1.setOpaque(false);
 			JPanel p11 = new JPanel();
+			p11.setOpaque(false);
 			p11.setBackground(Color.BLUE);
 			JPanel p111 = new JPanel();
+			p111.setOpaque(false);
 			p111.setPreferredSize(new Dimension(300, 250));
 			p111.setLayout(new BorderLayout());
 			JPanel p1111 = new JPanel();
+			p1111.setOpaque(false);
 			p1111.setPreferredSize(new Dimension(300, 70));
 			p1111.add(label1);
 			p111.add(p1111, "North");
 			JPanel p1112 = new JPanel();
+			p1112.setOpaque(false);
 			p1112.setPreferredSize(new Dimension(300, 90));
 			b11.addActionListener(this);
 			if (room_player[0] == 0) {
@@ -146,6 +161,7 @@ public class Room {
 			}
 			p111.add(p1112, "Center");
 			JPanel p1113 = new JPanel();
+			p1113.setOpaque(false);
 			p1113.setPreferredSize(new Dimension(300, 90));
 			b12.addActionListener(this);
 			if (room_player[1] == 0) {
@@ -162,16 +178,21 @@ public class Room {
 			p1.add(p11);
 			p.add(p1);
 			JPanel p2 = new JPanel();
+			p2.setOpaque(false);
 			JPanel p22 = new JPanel();
+			p22.setOpaque(false);
 			p22.setBackground(Color.BLUE);
 			JPanel p222 = new JPanel();
+			p222.setOpaque(false);
 			p222.setPreferredSize(new Dimension(300, 250));
 			p222.setLayout(new BorderLayout());
 			JPanel p2221 = new JPanel();
+			p2221.setOpaque(false);
 			p2221.setPreferredSize(new Dimension(300, 70));
 			p2221.add(label2);
 			p222.add(p2221, "North");
 			JPanel p2222 = new JPanel();
+			p2222.setOpaque(false);
 			p2222.setPreferredSize(new Dimension(300, 90));
 			b21.addActionListener(this);
 			if (room_player[2] == 0) {
@@ -184,6 +205,7 @@ public class Room {
 			}
 			p222.add(p2222, "Center");
 			JPanel p2223 = new JPanel();
+			p2223.setOpaque(false);
 			p2223.setPreferredSize(new Dimension(300, 90));
 			b22.addActionListener(this);
 			if (room_player[3] == 0) {
@@ -200,16 +222,21 @@ public class Room {
 			p2.add(p22);
 			p.add(p2);
 			JPanel p3 = new JPanel();
+			p3.setOpaque(false);
 			JPanel p33 = new JPanel();
+			p33.setOpaque(false);
 			p33.setBackground(Color.BLUE);
 			JPanel p333 = new JPanel();
+			p333.setOpaque(false);
 			p333.setPreferredSize(new Dimension(300, 250));
 			p333.setLayout(new BorderLayout());
 			JPanel p3331 = new JPanel();
+			p3331.setOpaque(false);
 			p3331.setPreferredSize(new Dimension(300, 70));
 			p3331.add(label3);
 			p333.add(p3331, "North");
 			JPanel p3332 = new JPanel();
+			p3332.setOpaque(false);
 			p3332.setPreferredSize(new Dimension(300, 90));
 			b31.addActionListener(this);
 			if (room_player[4] == 0) {
@@ -222,6 +249,7 @@ public class Room {
 			}
 			p333.add(p3332, "Center");
 			JPanel p3333 = new JPanel();
+			p3333.setOpaque(false);
 			p3333.setPreferredSize(new Dimension(300, 90));
 			b32.addActionListener(this);
 			if (room_player[5] == 0) {
@@ -238,16 +266,21 @@ public class Room {
 			p3.add(p33);
 			p.add(p3);
 			JPanel p4 = new JPanel();
+			p4.setOpaque(false);
 			JPanel p44 = new JPanel();
+			p44.setOpaque(false);
 			p44.setBackground(Color.BLUE);
 			JPanel p444 = new JPanel();
+			p444.setOpaque(false);
 			p444.setPreferredSize(new Dimension(300, 250));
 			p444.setLayout(new BorderLayout());
 			JPanel p4441 = new JPanel();
+			p4441.setOpaque(false);
 			p4441.setPreferredSize(new Dimension(300, 70));
 			p4441.add(label4);
 			p444.add(p4441, "North");
 			JPanel p4442 = new JPanel();
+			p4442.setOpaque(false);
 			p4442.setPreferredSize(new Dimension(300, 90));
 			b41.addActionListener(this);
 			if (room_player[6] == 0) {
@@ -260,6 +293,7 @@ public class Room {
 			}
 			p444.add(p4442, "Center");
 			JPanel p4443 = new JPanel();
+			p4443.setOpaque(false);
 			p4443.setPreferredSize(new Dimension(300, 90));
 			b42.addActionListener(this);
 			if (room_player[7] == 0) {
@@ -276,10 +310,26 @@ public class Room {
 			p4.add(p44);
 			p.add(p4);
 			m.add(p, "Center");
-			add(m, "Center");
+			//main.add(m, "Center");
+			//main.setOpaque(false);
+			w.setOpaque(false);
+			m.setOpaque(false);
+			lp.add(bg);
+			w.setBounds(0, 0, 200, 600);
+			lp.add(w);
+			m.setBounds(200, 0, 800, 600);
+			lp.add(m);
+			//lp.add(main);
+			lp.setLayer(bg, 0);
+			lp.setLayer(w, 1);
+			lp.setLayer(m, 2);
+			//lp.setLayer(main, 1);
+			//add(lp);
+			
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setSize(1000, 600);
 			setTitle("ルーム選択画面");
+			setContentPane(lp);
 			setVisible(true);
 
 		}
