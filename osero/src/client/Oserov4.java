@@ -275,20 +275,22 @@ public class Oserov4 extends JFrame {
 					//1000が送られてきた方が先攻
 					if(protocol==1000) {
 						System.out.println("You hava black!");
+						JOptionPane.showConfirmDialog(null, "あなたは黒です", null, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 						client.turn = 0; //先攻なので黒
 						client.your_turn = 1;
 					}else if(protocol==1200){
 						System.out.println("You hava white!");
+						JOptionPane.showConfirmDialog(null, "あなたは白です", null, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 						client.turn = 1;
 						client.your_turn = 0;
 						//client.BattleReceiver(map);
-						rec = new Reciever(client, map, client.ois,end,j,pass, rate,3);
+						rec = new Reciever(client, map, client.ois,end,j,pass, rate);
 						count++;
 						System.out.println("re12");
 						rec.start();
 						System.out.println("toppa");
 					}else{}			
-					//client.ois.reset();							
+					//client.ois.reset();
 				}
 			} catch (ClassNotFoundException e1) {
 				// TODO 自動生成された catch ブロック
@@ -507,15 +509,12 @@ public class Oserov4 extends JFrame {
 					
 					// client.BattleReceiver(map);
 					if (count == 0) {
-						
-						rec = new Reciever(client, map, client.ois,end,j,pass, rate,result); // client.ois
+						rec = new Reciever(client, map, client.ois,end,j,pass, rate); // client.ois
 						rec.start();
-						
 						count++;
 						
 					} else {
-						
-						rec = new Reciever(client, map, client.ois,end,j,pass, rate,result);// client.ois
+						rec = new Reciever(client, map, client.ois,end,j,pass, rate);// client.ois
 						rec.start();
 						
 					}				
