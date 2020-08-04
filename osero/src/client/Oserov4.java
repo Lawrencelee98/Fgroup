@@ -21,7 +21,7 @@ public class Oserov4 extends JFrame {
 
 	Container c;
 	JLabel l1 = new JLabel("対戦相手" + " vs " + "相手の成績");
-	JLabel l2 = new JLabel("残り時間");
+	JLabel l2 = new JLabel("Left time: ");
 	JLabel l3 = new JLabel("");
 	JLabel l4 = new JLabel("黒の数：白の数");
 	JLabel l5 = new JLabel("あなたの番");
@@ -145,16 +145,17 @@ public class Oserov4 extends JFrame {
 			l1.setBounds(50, 10, 700, 20);
 			chessboard.setBounds(10, 40, 420, 420);
 			chess.setBounds(28, 57, 43, 43);
-			l2.setBounds(500, 50, 200, 30);
-			l3.setBounds(450, 150, 200, 30);
-			l4.setBounds(450, 250, 300, 30);
+			l2.setBounds(500, 50, 200, 40);
+			l3.setBounds(550, 90, 200, 40);
+			l4.setBounds(480, 250, 300, 30);
 			l5.setBounds(50, 500, 100, 30);
 			b1.setBounds(200, 500, 100, 30);
 			b1.addActionListener(this);
 			
 			l1.setFont(l1.getFont().deriveFont(18.0f));
-	        	l2.setFont(l2.getFont().deriveFont(26.0f));
-	        	l4.setFont(l4.getFont().deriveFont(26.0f));
+	        l2.setFont(l2.getFont().deriveFont(40.0f));
+	        l3.setFont(l3.getFont().deriveFont(40.0f));
+	        l4.setFont(l4.getFont().deriveFont(26.0f));
 
 			int buttonSize = 46, i = 0;
 			
@@ -971,7 +972,7 @@ public class Oserov4 extends JFrame {
 						time = time - 1;
 					}
 					
-					l2.setText("Left time: " + String.valueOf(time));
+					l3.setText(String.valueOf(time));
 					if(time<=0){
 						time =0;
 						
