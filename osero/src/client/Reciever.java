@@ -30,9 +30,14 @@ public class Reciever extends Thread{
 		this.pass = pass;
 		this.rate=rate;
 		this.result = result;
+		
 	}
 	@Override
 	public void run (){
+		int r=rate-5;
+		if(r<=0) {
+			r=0;
+		}
 
 		try {	
 			do{
@@ -89,9 +94,9 @@ public class Reciever extends Thread{
 							System.out.println("room_info: "+room_info.get_room_info());
 							System.out.println("get_player_info: "+room_info.get_players_info());
 							//this.client.ois=ois;
-							String Rate=String.valueOf (rate)+"→"+String.valueOf (rate-5);
-							j.dispose();
-							new Result(result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate);
+							String Rate=String.valueOf (rate)+"→"+String.valueOf (r);
+							
+							new Result(result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate,j);
 							
 						}
 
@@ -117,8 +122,8 @@ public class Reciever extends Thread{
 							System.out.println(room_info.get_players_info());
 							//this.client.ois=ois;
 							String Rate=String.valueOf (rate)+"→"+String.valueOf (rate+10);
-							j.dispose();
-							new Result(result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate);
+							
+							new Result(result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate,j);
 							
 						}
 
@@ -179,16 +184,16 @@ public class Reciever extends Thread{
 								}
 								if(this.result == 0){
 									String Rate=String.valueOf (rate)+"→"+String.valueOf (rate+10);
-									j.dispose(); 
-									new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate);
+									
+									new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate,j);
 								}else if(this.result == 1){
-									String Rate=String.valueOf (rate)+"→"+String.valueOf (rate-5);
-									j.dispose();
-									new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate);
+									String Rate=String.valueOf (rate)+"→"+String.valueOf (r);
+									
+									new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate,j);
 								}else{
 									String Rate=String.valueOf (rate)+"→"+String.valueOf (rate);
-									j.dispose();
-									new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate);
+									
+									new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate,j);
 								}
 						}
 						//分歧2 如果从对方那里第一次收到p3000对方也没有地方放的时候
@@ -227,16 +232,16 @@ public class Reciever extends Thread{
 							
 								if(this.result == 0){
 									String Rate=String.valueOf (rate)+"→"+String.valueOf (rate+10);
-									j.dispose(); 
-									new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate);
+									
+									new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate,j);
 								}else if(this.result == 1){
-									String Rate=String.valueOf (rate)+"→"+String.valueOf (rate-5);
-									j.dispose();
-									new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate);
+									String Rate=String.valueOf (rate)+"→"+String.valueOf (r);
+									
+									new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate,j);
 								}else{
 									String Rate=String.valueOf (rate)+"→"+String.valueOf (rate);
-									j.dispose();
-									new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate);
+									
+									new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate,j);
 								}
 
 								}
@@ -265,19 +270,20 @@ public class Reciever extends Thread{
 						if(this.result == 0){
 							String Rate=String.valueOf (rate)+"→"+String.valueOf (rate+10);
 							
-							j.dispose(); 
-							new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate);
+							
+							new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate,j);
 							
 						}else if(this.result == 1){
-							String Rate=String.valueOf (rate)+"→"+String.valueOf (rate-5);
 							
-							j.dispose();
-							new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate);
+							String Rate=String.valueOf (rate)+"→"+String.valueOf (r);
+							
+							
+							new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate,j);
 							
 						}else{
 							String Rate=String.valueOf (rate)+"→"+String.valueOf (rate);
-							j.dispose();
-							new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate);
+							
+							new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate,j);
 							
 						}
 						
