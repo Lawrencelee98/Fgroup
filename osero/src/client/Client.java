@@ -113,6 +113,37 @@ public class Client {
 			return flag;
 		}
 	}
+	public boolean send_changepass_info(String usr, String pass,String question, ObjectInputStream ois, ObjectOutputStream oos) {
+		boolean flag = false;
+		// TODO send login info (name, pass) to server
+		transData user = new transData(37);
+
+		user.set_change_name_pass_question(usr, pass,question);
+		try {
+			oos.writeObject(user);
+			transData answer = (transData) ois.readObject();
+			String ans = answer.get_login_answer();
+			if (ans.equals("change succeed")) {
+				// todo
+				System.out.println("receive change succeed");
+				this.login_name = usr;
+				this.login_pass = pass;
+				flag = true;
+			} else if (ans.equals("change failed : false question answer")) {
+				// todo reset pass
+				System.out.println("revcieve change failed : false question answer");
+				flag = false;
+			} else if (ans.equals("change failed : this name does not exist")) {
+				// todo reset name or name&pass
+				System.out.println("revcieve change failed : this name does not exist");
+				flag = false;
+			}
+		} catch (Exception e) {
+			// e.printStackTrace();
+		} finally {
+			return flag;
+		}
+	}
 	// method for Register_display
 
 	/*
@@ -232,7 +263,6 @@ public class Client {
 	public String get_user_pass(){
 		return this.login_pass;
 	}
-
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
