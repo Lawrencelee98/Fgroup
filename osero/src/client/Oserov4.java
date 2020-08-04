@@ -142,15 +142,19 @@ public class Oserov4 extends JFrame {
 			chess = new JLabel();
 			chess.setIcon(img);
 			
-			l1.setBounds(200, 10, 500, 20);
+			l1.setBounds(50, 10, 700, 20);
 			chessboard.setBounds(10, 40, 420, 420);
 			chess.setBounds(28, 57, 43, 43);
-			l2.setBounds(600, 50, 200, 30);
-			l3.setBounds(600, 150, 200, 30);
-			l4.setBounds(600, 250, 200, 30);
+			l2.setBounds(500, 50, 200, 30);
+			l3.setBounds(450, 150, 200, 30);
+			l4.setBounds(450, 250, 300, 30);
 			l5.setBounds(50, 500, 100, 30);
 			b1.setBounds(200, 500, 100, 30);
 			b1.addActionListener(this);
+			
+			l1.setFont(l1.getFont().deriveFont(18.0f));
+	        	l2.setFont(l2.getFont().deriveFont(26.0f));
+	        	l4.setFont(l4.getFont().deriveFont(26.0f));
 
 			int buttonSize = 46, i = 0;
 			
