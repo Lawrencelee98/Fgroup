@@ -97,7 +97,7 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
         b1.addActionListener(this);
         
         l1.setFont(l1.getFont().deriveFont(23.0f));
-        l2.setFont(l2.getFont().deriveFont(0.0f));
+        l2.setFont(l2.getFont().deriveFont(30.0f));
         l4.setFont(l4.getFont().deriveFont(26.0f));
         
         int buttonSize = 46;
