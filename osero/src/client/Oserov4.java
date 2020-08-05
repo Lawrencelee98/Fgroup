@@ -162,16 +162,17 @@ public class Oserov4 extends JFrame {
 			l1.setBounds(50, 10, 700, 20);
 			chessboard.setBounds(10, 40, 420, 420);
 			chess.setBounds(28, 57, 43, 43);
-			l2.setBounds(500, 50, 200, 30);
-			l3.setBounds(450, 150, 200, 30);
-			l4.setBounds(450, 250, 300, 30);
+			l2.setBounds(500, 50, 200, 40);
+			l3.setBounds(550, 90, 200, 40);
+			l4.setBounds(480, 250, 300, 30);
 			l5.setBounds(50, 500, 100, 30);
 			b1.setBounds(200, 500, 100, 30);
 			b1.addActionListener(this);
 			
 			l1.setFont(l1.getFont().deriveFont(18.0f));
-	        l2.setFont(l2.getFont().deriveFont(26.0f));
-			l4.setFont(l4.getFont().deriveFont(26.0f));
+	        	l2.setFont(l2.getFont().deriveFont(40.0f));
+	        	l3.setFont(l3.getFont().deriveFont(40.0f));
+	        	l4.setFont(l4.getFont().deriveFont(26.0f));
 
 			l1.setForeground(Color.BLACK);
 			l2.setForeground(Color.BLACK);
