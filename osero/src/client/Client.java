@@ -1,5 +1,5 @@
 package client;
-
+import javax.swing.*;
 import java.net.*;
 import java.util.*;
 import transData.transData;
@@ -102,9 +102,11 @@ public class Client {
 			} else if (ans.equals("login failed : false password")) {
 				// todo reset pass
 				System.out.println("receive login failed");
+				JOptionPane.showConfirmDialog(null, "パスワードが違います", "ログインに失敗しました", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 				flag = false;
 			} else if (ans.equals("login failed : this name does not exist")) {
 				// todo reset name or name&pass
+				JOptionPane.showConfirmDialog(null, "指定されたユーザ名が存在しません", "ログインに失敗しました", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 				flag = false;
 			}
 		} catch (Exception e) {
@@ -177,6 +179,7 @@ public class Client {
 				flag = true;
 			} else if (ans.equals("Register failed : this name is already used")) {
 				// todo reset pass
+				JOptionPane.showConfirmDialog(null, "指定したユーザ名は既に使用されています", "登録に失敗しました", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
 				System.out.println("receive register failed");
 				flag = false;
 			}

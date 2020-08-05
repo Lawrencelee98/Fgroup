@@ -410,7 +410,8 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
                 }
             } else {
                 // パスする
-                System.out.println("CPU pass");
+				System.out.println("CPU pass");
+				JOptionPane.showConfirmDialog(null, "CPUがパスしました", null, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
             }
         } else {
         }
