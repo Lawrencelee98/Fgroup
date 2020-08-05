@@ -17,18 +17,19 @@ import java.util.*;
 public class Room {
 
 	private PrintWriter out;
-	static Socket s_room =null;
+	static Socket s_room = null;
 	static String str;
 	static Map<Integer, Integer> room_info;
 	static List<String> players_info;
 	static ObjectOutputStream oos = null;
 	static ObjectInputStream ois = null;
 	Client client = null;
-    static ObjectOutputStream oos_room = null;
+	static ObjectOutputStream oos_room = null;
 	static ObjectInputStream ois_room = null;
 	static ObjectInputStream ois_room1 = null;
 	private static int room_port = 0;
 	private static int room_num = -1;
+
 	public Room(Client client, Map<Integer, Integer> room_info, List<String> players_info, ObjectOutputStream oos,
 			ObjectInputStream ois) {
 		this.client = client;
@@ -51,10 +52,10 @@ public class Room {
 
 	// ルームを選ぶ画面
 	public class Display4 extends JFrame implements ActionListener {
-		JLabel label1 = new JLabel("ルーム1");
-		JLabel label2 = new JLabel("ルーム2");
-		JLabel label3 = new JLabel("ルーム3");
-		JLabel label4 = new JLabel("ルーム4");
+		JLabel label1 = new JLabel("横浜");
+		JLabel label2 = new JLabel("韓国");
+		JLabel label3 = new JLabel("中国");
+		JLabel label4 = new JLabel("日本");
 		// M:空き情報などのラベルの格納
 		String[] room_label = new String[8];
 		// M:room内のプレイヤー管理(いるなら1, いないなら0)
@@ -119,7 +120,7 @@ public class Room {
 			b.addActionListener(this);
 			w.add(b);
 			w.add(CPU_match);
-			//main.add(w, "West");
+			// main.add(w, "West");
 			JPanel m = new JPanel();
 			m.setLayout(new BorderLayout());
 			JPanel x = new JPanel();
@@ -306,8 +307,8 @@ public class Room {
 			p4.add(p44);
 			p.add(p4);
 			m.add(p, "Center");
-			//main.add(m, "Center");
-			//main.setOpaque(false);
+			// main.add(m, "Center");
+			// main.setOpaque(false);
 			w.setOpaque(false);
 			m.setOpaque(false);
 			lp.add(bg);
@@ -315,13 +316,13 @@ public class Room {
 			lp.add(w);
 			m.setBounds(200, 0, 800, 600);
 			lp.add(m);
-			//lp.add(main);
+			// lp.add(main);
 			lp.setLayer(bg, 0);
 			lp.setLayer(w, 1);
 			lp.setLayer(m, 2);
-			//lp.setLayer(main, 1);
-			//add(lp);
-			
+			// lp.setLayer(main, 1);
+			// add(lp);
+
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setSize(1000, 600);
 			setTitle("ルーム選択画面");
@@ -329,8 +330,9 @@ public class Room {
 			setVisible(true);
 
 		}
+
 		public void actionPerformed(ActionEvent e) {
-			
+
 			if (e.getActionCommand().equals("ログアウト")) {
 				setVisible(false);
 
@@ -341,7 +343,7 @@ public class Room {
 					new Display5(client);
 					setVisible(false);
 					if (room_player[1] == 1) {
-						//new Display5(client);
+						// new Display5(client);
 					}
 
 				} else if (e.getSource() == b12) {
@@ -350,7 +352,7 @@ public class Room {
 					new Display5(client);
 					setVisible(false);
 					if (room_player[0] == 1) {
-						//new Display5(client);
+						// new Display5(client);
 					}
 				} else if (e.getSource() == b21) {
 					room_player[2] = 1;
@@ -358,7 +360,7 @@ public class Room {
 					new Display5(client);
 					setVisible(false);
 					if (room_player[3] == 1) {
-						//new Display5(client);
+						// new Display5(client);
 					}
 				} else if (e.getSource() == b22) {
 					room_player[3] = 1;
@@ -366,7 +368,7 @@ public class Room {
 					new Display5(client);
 					setVisible(false);
 					if (room_player[2] == 1) {
-						//new Display5(client);
+						// new Display5(client);
 					}
 				} else if (e.getSource() == b31) {
 					room_player[4] = 1;
@@ -374,7 +376,7 @@ public class Room {
 					new Display5(client);
 					setVisible(false);
 					if (room_player[5] == 1) {
-						//new Display5(client);
+						// new Display5(client);
 					}
 				} else if (e.getSource() == b32) {
 					room_player[5] = 1;
@@ -382,7 +384,7 @@ public class Room {
 					new Display5(client);
 					setVisible(false);
 					if (room_player[4] == 1) {
-						//new Display5(client);
+						// new Display5(client);
 					}
 				} else if (e.getSource() == b41) {
 					room_player[6] = 1;
@@ -390,7 +392,7 @@ public class Room {
 					new Display5(client);
 					setVisible(false);
 					if (room_player[7] == 1) {
-						//new Display5(client);
+						// new Display5(client);
 					}
 				} else if (e.getSource() == b42) {
 					room_player[7] = 1;
@@ -398,12 +400,12 @@ public class Room {
 					new Display5(client);
 					setVisible(false);
 					if (room_player[6] == 1) {
-						//new Display5(client);
+						// new Display5(client);
 					}
 				} else if (e.getSource() == CPU_match) {
-					new Oserov4_cpu(client,ois_room, oos_room, 30);
+					new Oserov4_cpu(client, ois_room, oos_room, 30);
 				}
-				
+
 				transData room_choice = new transData(13);
 				room_choice.set_room_num(room_num);
 				System.out.println("room choice=" + room_choice.get_room_num());
@@ -415,11 +417,10 @@ public class Room {
 					client.room_port = return_port.get_port();
 					System.out.println("Room:Action, room_port=" + client.room_port);
 
-					
 				} catch (Exception e2) {
 					e2.printStackTrace();
 				} finally {
-				
+
 					this.dispose();
 				}
 
@@ -440,13 +441,14 @@ public class Room {
 		res += "</html>";
 		return res;
 	}
+
 	public static class Display5 extends JFrame implements ActionListener {
 
 		JLabel label = new JLabel("<html>自分の持ち時間の希望を<br/>対戦相手に送信します。<br/>以下から選んでください。</html>");
 		Client client = null;
 
 		Display5(Client client) {
-		
+
 			System.out.println("Display5 aroused by Display4");
 
 			this.client = client;
@@ -496,7 +498,7 @@ public class Room {
 				str = "10秒";
 				time = 10;
 				this.setVisible(false);
-				//this.dispose();
+				// this.dispose();
 
 				// new Display6(this.client);
 
@@ -504,7 +506,7 @@ public class Room {
 				str = "15秒";
 				time = 15;
 				this.setVisible(false);
-				//this.dispose();
+				// this.dispose();
 
 				// new Display6(this.client);
 
@@ -512,7 +514,7 @@ public class Room {
 				str = "30秒";
 				time = 30;
 				this.setVisible(false);
-				//this.dispose();
+				// this.dispose();
 
 				// new Display6(this.client);
 
@@ -522,24 +524,23 @@ public class Room {
 				System.out.println("setting socket s_room");
 				s_room = new Socket(client.ServerAddress, client.room_port);
 				System.out.println("connect with room server");
-				
-				//InputStream
+
+				// InputStream
 				InputStream is_room = s_room.getInputStream();
 				System.out.println("get Input stream ");
-				//ObjectInputStream ois_room1= new ObjectInputStream(is_room);
-				//ois_room = ois_room1;
-				ois_room= new ObjectInputStream(is_room);
+				// ObjectInputStream ois_room1= new ObjectInputStream(is_room);
+				// ois_room = ois_room1;
+				ois_room = new ObjectInputStream(is_room);
 				System.out.println("get input stream");
 
-				//OutputStream 
+				// OutputStream
 				OutputStream os_room = s_room.getOutputStream();
 				System.out.println("get output stream ");
 				oos_room = new ObjectOutputStream(os_room);
 				System.out.println("take the oos to oos_room");
 
-				
 				client.s_room = s_room;
-				
+
 				// System.out.println("start oserov4");
 				// new Oserov4(client, oos_room, ois_room);
 				System.out.println("set socket s_room ");
@@ -547,22 +548,22 @@ public class Room {
 				e1.printStackTrace();
 
 			} finally {
-				
+
 				System.out.println("finally socket s_room setting");
 			}
-			
+
 			try {
 				transData time_data = new transData(0);
 				time_data.set_wait_time(time);
 				oos_room.writeObject(time_data);
-				
+
 				System.out.println("start osero_cpu");
-				
-				new Oserov4_cpu(client,ois_room, oos_room,time);
-				
+
+				new Oserov4_cpu(client, ois_room, oos_room, time);
+
 			} catch (Exception erro1) {
 				erro1.printStackTrace();
-			}finally{
+			} finally {
 				System.out.println("___dispose display5 ");
 				this.dispose();
 			}
@@ -577,20 +578,13 @@ public class Room {
 
 }
 /*
-class start_Osero extends Thread {
-	Client client;
-	ObjectInputStream ois;
-	ObjectOutputStream oos;
-	int time;
-
-	start_Osero(Client client, ObjectInputStream ois, ObjectOutputStream oos, int time) {
-		this.client = client;
-		this.ois = ois;
-		this.oos = oos;
-		this.time = time;
-	}
-
-	public void run() {
-		Oserov4 osero = new Oserov4(this.client, oos, ois, time);
-	}
-}*/
+ * class start_Osero extends Thread { Client client; ObjectInputStream ois;
+ * ObjectOutputStream oos; int time;
+ * 
+ * start_Osero(Client client, ObjectInputStream ois, ObjectOutputStream oos, int
+ * time) { this.client = client; this.ois = ois; this.oos = oos; this.time =
+ * time; }
+ * 
+ * public void run() { Oserov4 osero = new Oserov4(this.client, oos, ois, time);
+ * } }
+ */
