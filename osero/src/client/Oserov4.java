@@ -21,9 +21,10 @@ public class Oserov4 extends JFrame {
 
 	Container c;
 	JLabel l1 = new JLabel("対戦相手" + " vs " + "相手の成績");
-	JLabel l2 = new JLabel("Left time: ");
+	JLabel l2 = new JLabel("残り時間：");
 	JLabel l3 = new JLabel("");
-	JLabel l4 = new JLabel("黒の数：白の数");
+	JLabel l4 = new JLabel("黒");
+	JLabel l6 = new JLabel("白");
 	JLabel l5 = new JLabel("あなたの番");
 	JButton b1 = new JButton("設定");
 
@@ -87,7 +88,7 @@ public class Oserov4 extends JFrame {
 		for(i=0; i<8; i++){
 			String[] arr = players_info.get(i).split(",", 0);
 			if(arr[0].substring(16).trim().equals(client.username)){
-				res = get_record_label(players_info.get(i)) + "  vs  ";
+				res = get_record_label(players_info.get(i)) + " vs  ";
 				rate=Integer.parseInt(arr[4].substring(6).trim());
 				if(i%2 == 0){
 					res += get_record_label(players_info.get(i+1));
@@ -117,12 +118,12 @@ public class Oserov4 extends JFrame {
 		String res = new String();
 		String[] arr = str.split(",", 0);
 		res = "";
-		res += arr[0].substring(16).trim() + " [";// name
+		res += arr[0].substring(16).trim() + " ［";// name
 		res += arr[1].substring(5).trim() + "勝 ";// win
 		res += arr[2].substring(6).trim() + "負 ";// lose
 		res += arr[3].substring(6).trim() + "分 ";// draw
 		res += "レート" + arr[4].substring(6).trim();// rate
-		res += "]";
+		res += "］";
 		return res;
 	}
 
@@ -159,26 +160,34 @@ public class Oserov4 extends JFrame {
 			chess = new JLabel();
 			chess.setIcon(img);
 			
-			l1.setBounds(50, 10, 700, 20);
-			chessboard.setBounds(10, 40, 420, 420);
+			l1.setBounds(40, 25, 760, 35);
+			chessboard.setBounds(20, 80, 420, 420);
 			chess.setBounds(28, 57, 43, 43);
-			l2.setBounds(500, 50, 200, 40);
-			l3.setBounds(550, 90, 200, 40);
-			l4.setBounds(480, 250, 300, 30);
-			l5.setBounds(50, 500, 100, 30);
-			b1.setBounds(200, 500, 100, 30);
+			l2.setBounds(475, 130, 200, 40);
+			l3.setBounds(630, 130, 150, 40);
+			l4.setBounds(470, 240, 120, 40);
+			l6.setBounds(620, 240, 120, 40);
+			l5.setBounds(480, 350, 200, 30);
+			b1.setBounds(640, 470, 100, 30);
 			b1.addActionListener(this);
 			
-			l1.setFont(l1.getFont().deriveFont(18.0f));
-	        	l2.setFont(l2.getFont().deriveFont(40.0f));
-	        	l3.setFont(l3.getFont().deriveFont(40.0f));
-	        	l4.setFont(l4.getFont().deriveFont(26.0f));
+			l1.setFont(l1.getFont().deriveFont(22.0f));
+			l2.setFont(l2.getFont().deriveFont(30.0f));
+			l3.setFont(l3.getFont().deriveFont(40.0f));
+			l4.setFont(l4.getFont().deriveFont(30.0f));
+			l6.setFont(l6.getFont().deriveFont(30.0f));
+			l5.setFont(l6.getFont().deriveFont(25.0f));
 
 			l1.setForeground(Color.BLACK);
 			l2.setForeground(Color.BLACK);
 			l3.setForeground(Color.BLACK);
 			l4.setForeground(Color.BLACK);
+			l6.setForeground(Color.WHITE);
 			l5.setForeground(Color.BLACK);
+			l4.setBackground(new Color(210, 210, 210, 255));
+			l6.setBackground(new Color(50, 50, 50, 255));
+			l4.setOpaque(true);
+			l6.setOpaque(true);
 
 			int buttonSize = 46, i = 0;
 			
@@ -189,95 +198,91 @@ public class Oserov4 extends JFrame {
 				@Override
 				public void run() {
 					// TODO Auto-generated method stub
-					l4.setText("Black:" + String.valueOf(map.countNumber(0)) + "vs" + "White:"
-							+ String.valueOf(map.countNumber(1)));
+				l4.setText(" 黒　" + String.valueOf(map.countNumber(0)));
+				l6.setText(" 白　" + String.valueOf(map.countNumber(1)));
 					if (client.your_turn == 1) {
-						l5.setText("あなたの番");
+						l5.setText("あなたの番です");
 					} else {
-						l5.setText("相手の番");
+						l5.setText("相手の番です");
 					}
 				}
 			}, 100, 100);
 
+			int x=12, y=42;
 			for (i = 0; i < 8; i++) {
 				A[i] = new JButton();
-
-				A[i].setBounds(28, 57 + i * 48, buttonSize, buttonSize);
+				A[i].setBounds(28+x, 57+y + i * 48, buttonSize, buttonSize);
 				A[i].addActionListener(this);
 				A[i].setOpaque(false);
 				A[i].setContentAreaFilled(false);
 			}
 			for (i = 0; i < 8; i++) {
 				B[i] = new JButton();
-
-				B[i].setBounds(77, 57 + i * 48, buttonSize, buttonSize);
+				B[i].setBounds(76+x, 57+y + i * 48, buttonSize, buttonSize);
 				B[i].addActionListener(this);
 				B[i].setOpaque(false);
 				B[i].setContentAreaFilled(false);
 			}
 			for (i = 0; i < 8; i++) {
 				C[i] = new JButton();
-
-				C[i].setBounds(126, 57 + i * 48, buttonSize, buttonSize);
+				C[i].setBounds(124+x, 57+y + i * 48, buttonSize, buttonSize);
 				C[i].addActionListener(this);
 				C[i].setOpaque(false);
 				C[i].setContentAreaFilled(false);
 			}
 			for (i = 0; i < 8; i++) {
 				D[i] = new JButton();
-
-				D[i].setBounds(172, 57 + i * 48, buttonSize, buttonSize);
+				D[i].setBounds(172+x, 57+y + i * 48, buttonSize, buttonSize);
 				D[i].addActionListener(this);
 				D[i].setOpaque(false);
 				D[i].setContentAreaFilled(false);
 			}
 			for (i = 0; i < 8; i++) {
 				E[i] = new JButton();
-
-				E[i].setBounds(220, 57 + i * 48, buttonSize, buttonSize);
+				E[i].setBounds(219+x, 57+y + i * 48, buttonSize, buttonSize);
 				E[i].addActionListener(this);
 				E[i].setOpaque(false);
 				E[i].setContentAreaFilled(false);
 			}
 			for (i = 0; i < 8; i++) {
 				F[i] = new JButton();
-
-				F[i].setBounds(268, 57 + i * 48, buttonSize, buttonSize);
+				F[i].setBounds(266+x, 57+y + i * 48, buttonSize, buttonSize);
 				F[i].addActionListener(this);
 				F[i].setOpaque(false);
 				F[i].setContentAreaFilled(false);
 			}
 			for (i = 0; i < 8; i++) {
 				G[i] = new JButton();
-
-				G[i].setBounds(314, 57 + i * 48, buttonSize, buttonSize);
+				G[i].setBounds(314+x, 57+y + i * 48, buttonSize, buttonSize);
 				G[i].addActionListener(this);
 				G[i].setOpaque(false);
 				G[i].setContentAreaFilled(false);
 			}
 			for (i = 0; i < 8; i++) {
 				H[i] = new JButton();
-
-				H[i].setBounds(360, 57 + i * 48, buttonSize, buttonSize);
+				H[i].setBounds(361+x, 57+y + i * 48, buttonSize, buttonSize);
 				H[i].addActionListener(this);
 				H[i].setOpaque(false);
 				H[i].setContentAreaFilled(false);
-			}
+		}
 
 			lp.add(l1);
 			lp.add(l2);
 			lp.add(l3);
 			lp.add(l4);
+			lp.add(l6);
 			lp.add(l5);
 			lp.add(b1);
 			lp.add(chessboard);
 			lp.setLayer(l1, 2);
 			lp.setLayer(l2, 2);
 			lp.setLayer(l3, 2);
-			lp.setLayer(l4, 2);
+			lp.setLayer(l4, 5);
+			lp.setLayer(l6, 5);
 			lp.setLayer(l5, 2);
 			lp.setLayer(b1, 2);
 			lp.setLayer(chessboard, 2);
+	
 
 			for (i = 0; i < 8; i++) {
 				lp.add(A[i]);
