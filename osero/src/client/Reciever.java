@@ -16,6 +16,7 @@ public class Reciever extends Thread{
 	transData battle_end = new transData(50);
 	transData room_info =null;
 	boolean pass = true;
+	boolean f = true;
 	int result;
 	int rate;
 	boolean pass_flag = false;
@@ -136,7 +137,17 @@ public class Reciever extends Thread{
 
 					}else if(this.protocol ==3000){
 						int result = 3;
-						JOptionPane.showConfirmDialog(null, "対戦相手がパスしました", null, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+						for(int i=0;i<8;i++){
+							for(int j=0;j<8;j++){
+								if(map.getMapValue(i, j)==0 || map.getMapValue(i, j)==1){
+									f=false;
+									break;
+								}
+							}
+						}
+						if(f) {
+							JOptionPane.showConfirmDialog(null, "対戦相手がパスしました", null, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+						}
 						//产生分歧
 						//分歧1：如果是我发送过p3000后对方也没有地方放棋子并且add_pass_count后发送信息的话
 						System.out.println("r_data pass count:"+ r_data.get_pass_count());

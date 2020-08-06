@@ -187,7 +187,7 @@ public class Room_server extends Thread {
                             System.out.println("send time out 2000");
                             os_2.writeObject(time_out_lose);
                             os_1.writeObject(time_out_win);
-                            isend = (transData) ois_2.readObject();
+                            isend = (transData) ois_1.readObject();
                             if (isend.get_protocol() == 50) {
                                 System.out.println("get battle end protocol 50");
                                 battle_end = isend.get_battle_end();
@@ -211,82 +211,8 @@ public class Room_server extends Thread {
                             }
                         }
 
-                    }
+                    }//while
                 } else {
-                    // 2 が先手の場合
-
-                    while (battle_end) {
-
-                        instant1 = Instant.now();
-                        instant2 = instant1.plus(Duration.ofSeconds(time));
-                        transData data_2 = (transData) ois_2.readObject();
-                        instant1 = Instant.now();
-                        span = Duration.between(instant1, instant2).getSeconds();
-                        System.out.println("span:" + span);
-                        if (span <= 0) {
-                            System.out.println("send time out 2000");
-                            os_2.writeObject(time_out_lose);
-                            os_1.writeObject(time_out_win);
-                            isend = (transData) ois_2.readObject();
-                            if (isend.get_protocol() == 50) {
-                                System.out.println("get battle end protocol 50");
-                                battle_end = isend.get_battle_end();
-                                if (battle_end) {
-                                    break;
-                                }
-                            }
-
-                        } else {
-
-                            if (data_2.get_protocol() == 3 || data_2.get_protocol() == 3000) {
-                                os_1.writeObject(data_2);
-                                System.out.println("Room [ " + String.valueOf(room_num) + " ] " + "send Object to 1");
-                            } else if (data_2.get_protocol() == 50) {
-                                System.out.println("get battle end protocol 50");
-                                battle_end = data_2.get_battle_end();
-                                if (battle_end) {
-                                    break;
-                                }
-                                // Server.update_record();
-                            }
-                        }
-                        if (!battle_end) {
-                            break;
-                        }
-                        instant1 = Instant.now();
-                        instant2 = instant1.plus(Duration.ofSeconds(time));
-                        transData data_1 = (transData) ois_1.readObject();
-                        instant1 = Instant.now();
-                        span = Duration.between(instant1, instant2).getSeconds();
-                        System.out.println("span:" + span);
-                        if (span <= 0) {
-                            System.out.println("send time out 2000");
-                            os_1.writeObject(time_out_lose);
-                            os_2.writeObject(time_out_win);
-                            isend = (transData) ois_1.readObject();
-                            if (isend.get_protocol() == 50) {
-                                System.out.println("get battle end protocol 50");
-                                battle_end = isend.get_battle_end();
-                                if (battle_end) {
-                                    break;
-                                }
-                            }
-                        } else {
-
-                            if (data_1.get_protocol() == 3 || data_1.get_protocol() == 3000) {
-                                os_1.writeObject(data_1);
-                                System.out.println("Room [ " + String.valueOf(room_num) + " ] " + "send Object to 2");
-                            } else if (data_1.get_protocol() == 50) {
-                                System.out.println("get battle end protocol 50");
-                                battle_end = data_1.get_battle_end();
-                                if (battle_end) {
-                                    break;
-                                }
-                                // Server.update_record();
-                            }
-
-                        }
-                    }
                 }
 
                 System.out.println("out of while loop");
