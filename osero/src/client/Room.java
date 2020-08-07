@@ -1,12 +1,7 @@
 package client;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.*;
 import java.net.*;
 import javax.swing.*;
@@ -20,7 +15,7 @@ public class Room {
 	static Socket s_room = null;
 	static String str;
 	static Map<Integer, Integer> room_info;
-	static List<String> players_info;
+	static java.util.List<String> players_info;
 	static ObjectOutputStream oos = null;
 	static ObjectInputStream ois = null;
 	Client client = null;
@@ -29,8 +24,10 @@ public class Room {
 	static ObjectInputStream ois_room1 = null;
 	private static int room_port = 0;
 	private static int room_num = -1;
+	JFrame j = new JFrame();
+	Container c;
 
-	public Room(Client client, Map<Integer, Integer> room_info, List<String> players_info, ObjectOutputStream oos,
+	public Room(Client client, Map<Integer, Integer> room_info, java.util.List<String> players_info, ObjectOutputStream oos,
 			ObjectInputStream ois) {
 		this.client = client;
 		this.room_info = room_info;
@@ -73,6 +70,9 @@ public class Room {
 
 		public Display4() {
 			System.out.println("Display4 method");
+			c = j.getContentPane();
+			j.setBounds(0, 0, 800, 600);
+
 			for (int i = 1, j = 0; i < 5; i++, j += 2) {
 				if (room_info.get(i) == 0) {
 					room_label[j] = "空き";
@@ -103,7 +103,7 @@ public class Room {
 			b32 = new JButton(room_label[5]);
 			b41 = new JButton(room_label[6]);
 			b42 = new JButton(room_label[7]);
-			setLayout(null);
+			j.setLayout(null);
 			JPanel main = new JPanel();
 			main.setLayout(new BorderLayout());
 			main.setBounds(0, 0, 1000, 600);
@@ -323,25 +323,28 @@ public class Room {
 			// lp.setLayer(main, 1);
 			// add(lp);
 
-			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			setSize(1000, 600);
-			setTitle("ルーム選択画面");
-			setContentPane(lp);
-			setVisible(true);
+			c.setLayout(null);
+			c.add(lp);
+			j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			j.setSize(1000, 600);
+			j.setLocation(client.pos);
+			j.setTitle("ルーム選択画面");
+			j.setVisible(true);
 
 		}
 
 		public void actionPerformed(ActionEvent e) {
+			client.pos = j.getLocation();
 
 			if (e.getActionCommand().equals("ログアウト")) {
-				setVisible(false);
+				j.setVisible(false);
 
 			} else {
 				if (e.getSource() == b11) {
 					room_player[0] = 1;
 					room_num = 1;
 					new Display5(client);
-					setVisible(false);
+					j.setVisible(false);
 					if (room_player[1] == 1) {
 						// new Display5(client);
 					}
@@ -350,7 +353,7 @@ public class Room {
 					room_player[1] = 1;
 					room_num = 1;
 					new Display5(client);
-					setVisible(false);
+					j.setVisible(false);
 					if (room_player[0] == 1) {
 						// new Display5(client);
 					}
@@ -358,7 +361,7 @@ public class Room {
 					room_player[2] = 1;
 					room_num = 2;
 					new Display5(client);
-					setVisible(false);
+					j.setVisible(false);
 					if (room_player[3] == 1) {
 						// new Display5(client);
 					}
@@ -366,7 +369,7 @@ public class Room {
 					room_player[3] = 1;
 					room_num = 2;
 					new Display5(client);
-					setVisible(false);
+					j.setVisible(false);
 					if (room_player[2] == 1) {
 						// new Display5(client);
 					}
@@ -374,7 +377,7 @@ public class Room {
 					room_player[4] = 1;
 					room_num = 3;
 					new Display5(client);
-					setVisible(false);
+					j.setVisible(false);
 					if (room_player[5] == 1) {
 						// new Display5(client);
 					}
@@ -382,7 +385,7 @@ public class Room {
 					room_player[5] = 1;
 					room_num = 3;
 					new Display5(client);
-					setVisible(false);
+					j.setVisible(false);
 					if (room_player[4] == 1) {
 						// new Display5(client);
 					}
@@ -390,7 +393,7 @@ public class Room {
 					room_player[6] = 1;
 					room_num = 4;
 					new Display5(client);
-					setVisible(false);
+					j.setVisible(false);
 					if (room_player[7] == 1) {
 						// new Display5(client);
 					}
@@ -398,7 +401,7 @@ public class Room {
 					room_player[7] = 1;
 					room_num = 4;
 					new Display5(client);
-					setVisible(false);
+					j.setVisible(false);
 					if (room_player[6] == 1) {
 						// new Display5(client);
 					}

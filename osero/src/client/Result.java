@@ -21,10 +21,9 @@ public class Result extends JFrame implements ActionListener{
 	Map<Integer, Integer> room_info;
 	List<String> players_info;
 	JFrame j;
-
 	String Rate;
 	
-	public Result(int result, Client client,Map<Integer, Integer> room_info, List<String> players_info, String Rate,JFrame j)  {
+	public Result(int result, Client client,Map<Integer, Integer> room_info, List<String> players_info, String Rate, JFrame j)  {
 
 		this.client = client;
 		this.result = result;
@@ -34,27 +33,36 @@ public class Result extends JFrame implements ActionListener{
 		this.Rate=Rate;
 		l2.setText("あなたのレート：" + Rate);
 		System.out.println("Result : "+ result);
-		l.setBounds(170, 10, 100, 30);
+		l.setBounds(130, 10, 200, 30);
 		add(l);
-		l2.setBounds(140, 40, 200, 30);
+		l2.setBounds(110, 40, 200, 30);
 		add(l2);
-		if(result==0){
-			l.setText("黒の勝ち");
-		}else if(result ==1){
-			l.setText("白の勝ち");
-		}else if(result ==2){
+
+		String r_tmp = "";
+		if(result == 2){
 			l.setText("引き分け");
+		}else if(result == client.turn){
+			r_tmp = "勝ち";
+		}else{
+			r_tmp = "負け";
+		}
+
+		if(client.turn == 0){
+			l.setText("あなた（黒）の" + r_tmp);
+		}else if(client.turn == 1){
+			l.setText("あなた（白）の" + r_tmp);
 		}
 
 		l.setFont(l.getFont().deriveFont(15.0f));
 		l2.setFont(l2.getFont().deriveFont(15.0f));
 
-		b.setBounds(130, 80, 120, 30);
+		b.setBounds(130, 100, 120, 30);
 		b.addActionListener(this);
 		add(b);
 
 		this.setLayout(null);
 		this.setSize(400, 200);
+		this.setLocation(j.getLocation().x+200, j.getLocation().y+100);
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);

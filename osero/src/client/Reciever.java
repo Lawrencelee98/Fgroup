@@ -71,11 +71,12 @@ public class Reciever extends Thread{
 								transData pass = new transData(3000);
 								client.oos.writeObject(pass);
 								client.your_turn=0;	
-								this.pass_flag=true;						
+								this.pass_flag=true;
 						}
 						pass = true;
 				}else if(this.protocol==2000){
-
+						client.osero.l2.setVisible(false);
+						client.osero.l3.setVisible(false);
 						System.out.println("protocol 2000 : you lose");
 						end.set_endinfo_lose();
 						battle_end.set_battle_end(false);
@@ -102,6 +103,8 @@ public class Reciever extends Thread{
 
 
 					}else if(this.protocol==2100){
+						client.osero.l2.setVisible(false);
+						client.osero.l3.setVisible(false);
 						System.out.println("prtocol 2100 : you win");
 						end.set_endinfo_win();
 						battle_end.set_battle_end(false);
@@ -146,7 +149,7 @@ public class Reciever extends Thread{
 							}
 						}
 						if(f) {
-							JOptionPane.showConfirmDialog(null, "対戦相手がパスしました", null, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showConfirmDialog(j, "対戦相手がパスしました", null, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 						}
 						//产生分歧
 						//分歧1：如果是我发送过p3000后对方也没有地方放棋子并且add_pass_count后发送信息的话
@@ -192,7 +195,7 @@ public class Reciever extends Thread{
 								System.out.println(room_info.get_players_info());
 								//this.client.ois=ois;
 								}
-								if(this.result == 0){
+								if(this.result == client.turn){
 									String Rate=String.valueOf (rate)+"→"+String.valueOf (rate+10);
 									
 									new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate,j);
@@ -240,21 +243,19 @@ public class Reciever extends Thread{
 									//this.client.ois=ois;
 								}
 							
-								if(this.result == 0){
-									String Rate=String.valueOf (rate)+"→"+String.valueOf (rate+10);
-									
+								this.result = map.isGameFinish();
+								if(this.result == client.turn){
+									String Rate=String.valueOf (rate)+"→"+String.valueOf (rate+10); 
 									new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate,j);
-								}else if(this.result == 1){
-									String Rate=String.valueOf (rate)+"→"+String.valueOf (r);
-									
+								}else if(this.result == 2){
+									String Rate=String.valueOf (rate)+"→"+String.valueOf (rate);
 									new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate,j);
 								}else{
-									String Rate=String.valueOf (rate)+"→"+String.valueOf (rate);
-									
+									String Rate=String.valueOf (rate)+"→"+String.valueOf (r);
 									new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate,j);
 								}
 
-								}
+							}
 								//如果我有地方放的话
 							else {
 									map.checkMap(client.turn);

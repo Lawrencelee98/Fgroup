@@ -231,6 +231,7 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
 		c.setLayout(null);
 		c.add(lp);
 
+		j.setLocation(client.pos);
 		j.setVisible(true);
 		j.setResizable(false);
 		map.initMap();
@@ -253,19 +254,8 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		/*
-		 * if(e.getSource()==A[0]) { System.out.println("A[0]"); try {
-		 * 
-		 * Socket s = new Socket("localhost",10301);
-		 * 
-		 * OutputStream os = s.getOutputStream(); ObjectOutputStream oos = new
-		 * ObjectOutputStream(os);
-		 * 
-		 * transData data =new transData(0,0); //hash.put(3,data);
-		 * oos.writeObject(data); oos.close(); s.close();
-		 * 
-		 * }catch(Exception erro) {erro.printStackTrace();} }
-		 */
+		client.pos = j.getLocation();
+
 		if (e.getSource() == b1) {
 			System.out.println("open new window");
 			osero_setting = new Osero_setting_cpu(this);
@@ -439,7 +429,7 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
 			} else {
 				// パスする
 				System.out.println("CPU pass");
-				JOptionPane.showConfirmDialog(null, "CPUがパスしました", null, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showConfirmDialog(j, "CPUがパスしました", null, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 			}
 		} else {
 		}
@@ -855,14 +845,14 @@ class Data_reciever extends Thread {
 			data = (transData) ois_room.readObject();
 			System.out.println("recieved battle start from server");
 			if (data.get_protocol() == 80) {
-				JOptionPane.showConfirmDialog(null, "対戦相手が現れたので対局を開始します", "", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showConfirmDialog(j, "対戦相手が現れたので対局を開始します", "", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
 				f_time = data.get_time();
 				java.util.List<String> players_info = data.get_players_info();
 				System.out.println("recieve data protocol 80");
 				cpu_switch = true;
 				
-				new Oserov4(client,this.oos_room,this.ois_room,f_time,players_info);
+				client.osero = new Oserov4(client,this.oos_room,this.ois_room,f_time,players_info);
 			   
 				this.interrupt();
 				

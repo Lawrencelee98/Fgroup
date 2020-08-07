@@ -1,8 +1,6 @@
 package client;
-
 import javax.swing.*;
-
-import jdk.vm.ci.aarch64.AArch64.Flag;
+//import jdk.vm.ci.aarch64.AArch64.Flag;
 import transData.*;
 import java.net.*;
 import java.awt.*;
@@ -107,8 +105,8 @@ public class Oserov4 extends JFrame {
 		String bgfile = "";
 		switch(i/2){
 			case 0: bgfile = "yokohama.jpg"; break;
-			case 1: bgfile = "china.jpg"; break;
-			case 2: bgfile = "korea.jpg"; break;
+			case 1: bgfile = "korea.jpg"; break;
+			case 2: bgfile = "china.jpg"; break;
 			case 3: bgfile = "japan.jpg"; break;
 		}
 		new Display(bgfile);
@@ -312,7 +310,7 @@ public class Oserov4 extends JFrame {
 
 			c.setLayout(null);
 			c.add(lp);
-
+			j.setLocation(client.pos);
 			j.setVisible(true);
 			j.setResizable(false);
 			map.initMap();
@@ -377,6 +375,7 @@ public class Oserov4 extends JFrame {
 		}
 
 		public void actionPerformed(ActionEvent e) {
+			client.pos = j.getLocation();
 			boolean pressable = false;
 			try {
 				client.oos.reset();

@@ -5,6 +5,7 @@ import java.util.*;
 import transData.transData;
 import java.io.*;
 import transData.*;
+import java.awt.*;
 
 public class Client {
 	// atributions for Register_display
@@ -37,6 +38,7 @@ public class Client {
 	String username;
 	String password;
 	Login_display Login;
+	Point pos = new Point(0, 0);
 
 	public Client() {
 	}
@@ -203,7 +205,7 @@ public class Client {
 			System.out.println("room_obj end");
 			Map<Integer, Integer> room_info = room_obj.get_room_info();
 			System.out.println(room_info);
-			List<String> players_info = room_obj.get_players_info();
+			java.util.List<String> players_info = room_obj.get_players_info();
 			System.out.println(players_info);
 			room = new Room(this, room_info, players_info, oos, ois);
 
