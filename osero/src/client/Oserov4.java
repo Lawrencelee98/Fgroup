@@ -1,6 +1,8 @@
 package client;
 
 import javax.swing.*;
+
+import jdk.vm.ci.aarch64.AArch64.Flag;
 import transData.*;
 import java.net.*;
 import java.awt.*;
@@ -21,9 +23,10 @@ public class Oserov4 extends JFrame {
 
 	Container c;
 	JLabel l1 = new JLabel("対戦相手" + " vs " + "相手の成績");
-	JLabel l2 = new JLabel("残り時間");
+	JLabel l2 = new JLabel("残り時間：");
 	JLabel l3 = new JLabel("");
-	JLabel l4 = new JLabel("黒の数：白の数");
+	JLabel l4 = new JLabel("黒");
+	JLabel l6 = new JLabel("白");
 	JLabel l5 = new JLabel("あなたの番");
 	JButton b1 = new JButton("設定");
 
@@ -83,11 +86,11 @@ public class Oserov4 extends JFrame {
 		this.players_info = players_info;
 		System.out.println("players_info : " + players_info.toString());
 		
-	
-		for(int i=0; i<8; i++){
+		int i;
+		for(i=0; i<8; i++){
 			String[] arr = players_info.get(i).split(",", 0);
 			if(arr[0].substring(16).trim().equals(client.username)){
-				res = get_record_label(players_info.get(i)) + "  vs  ";
+				res = get_record_label(players_info.get(i)) + " vs  ";
 				rate=Integer.parseInt(arr[4].substring(6).trim());
 				if(i%2 == 0){
 					res += get_record_label(players_info.get(i+1));
@@ -100,7 +103,15 @@ public class Oserov4 extends JFrame {
 		
 		l1.setText(res);
 		System.out.println("res:" + res);
-		new Display();
+		String bgfile = "";
+		switch(i/2){
+			case 0: bgfile = "yokohama.jpg"; break;
+			case 1: bgfile = "china.jpg"; break;
+			case 2: bgfile = "korea.jpg"; break;
+			case 3: bgfile = "japan.jpg"; break;
+		}
+		new Display(bgfile);
+
 		// System.out.println("Battlereceiver");
 		// client.BattleReceiver(map);
 	}
@@ -109,12 +120,12 @@ public class Oserov4 extends JFrame {
 		String res = new String();
 		String[] arr = str.split(",", 0);
 		res = "";
-		res += arr[0].substring(16).trim() + " [";// name
+		res += arr[0].substring(16).trim() + " ［";// name
 		res += arr[1].substring(5).trim() + "勝 ";// win
 		res += arr[2].substring(6).trim() + "負 ";// lose
 		res += arr[3].substring(6).trim() + "分 ";// draw
 		res += "レート" + arr[4].substring(6).trim();// rate
-		res += "]";
+		res += "］";
 		return res;
 	}
 
@@ -125,7 +136,7 @@ public class Oserov4 extends JFrame {
 		 */
 		private static final long serialVersionUID = 1L;
 
-		public Display() {
+		public Display(String bgfile) {
 			c = j.getContentPane();
 
 			// j.setSize(800,600);
@@ -133,6 +144,15 @@ public class Oserov4 extends JFrame {
 			j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			time_count_down = new Timer_count_down(time_limit,client.your_turn,client,j);
 			JLayeredPane lp = new JLayeredPane();
+			lp.setLayout(null);
+			lp.setBounds(0, 0, 800, 600);
+
+			System.out.println("bgfile : " + bgfile);
+			ImageIcon bgimg = new ImageIcon(getClass().getResource(bgfile));
+			JLabel bg = new JLabel(bgimg);
+			bg.setBounds(0, 0, 800, 600);
+			lp.add(bg);
+			lp.setLayer(bg, 0);
 
 			ImageIcon img = new ImageIcon(getClass().getResource("frame.jpg"));
 			chessboard = new JLabel();
@@ -142,18 +162,36 @@ public class Oserov4 extends JFrame {
 			chess = new JLabel();
 			chess.setIcon(img);
 			
-			l1.setBounds(200, 10, 500, 20);
-			chessboard.setBounds(10, 40, 420, 420);
+			l1.setBounds(40, 25, 760, 35);
+			chessboard.setBounds(20, 80, 420, 420);
 			chess.setBounds(28, 57, 43, 43);
-			l2.setBounds(600, 50, 200, 30);
-			l3.setBounds(600, 150, 200, 30);
-			l4.setBounds(600, 250, 200, 30);
-			l5.setBounds(50, 500, 100, 30);
-			b1.setBounds(200, 500, 100, 30);
+			l2.setBounds(475, 130, 200, 40);
+			l3.setBounds(630, 130, 150, 40);
+			l4.setBounds(470, 240, 120, 40);
+			l6.setBounds(620, 240, 120, 40);
+			l5.setBounds(480, 350, 200, 30);
+			b1.setBounds(640, 470, 100, 30);
 			b1.addActionListener(this);
+			
+			l1.setFont(l1.getFont().deriveFont(22.0f));
+			l2.setFont(l2.getFont().deriveFont(30.0f));
+			l3.setFont(l3.getFont().deriveFont(40.0f));
+			l4.setFont(l4.getFont().deriveFont(30.0f));
+			l6.setFont(l6.getFont().deriveFont(30.0f));
+			l5.setFont(l5.getFont().deriveFont(25.0f));
+
+			l1.setForeground(Color.BLACK);
+			l2.setForeground(Color.BLACK);
+			l3.setForeground(Color.BLACK);
+			l4.setForeground(Color.BLACK);
+			l6.setForeground(Color.WHITE);
+			l5.setForeground(Color.BLACK);
+			l4.setBackground(new Color(210, 210, 210, 255));
+			l6.setBackground(new Color(50, 50, 50, 255));
+			l4.setOpaque(true);
+			l6.setOpaque(true);
 
 			int buttonSize = 46, i = 0;
-			
 
 			Timer chess_number_count = new Timer();
 			chess_number_count.schedule(new TimerTask() {
@@ -161,101 +199,113 @@ public class Oserov4 extends JFrame {
 				@Override
 				public void run() {
 					// TODO Auto-generated method stub
-					l4.setText("Black:" + String.valueOf(map.countNumber(0)) + "vs" + "White:"
-							+ String.valueOf(map.countNumber(1)));
+				l4.setText(" 黒　" + String.valueOf(map.countNumber(0)));
+				l6.setText(" 白　" + String.valueOf(map.countNumber(1)));
 					if (client.your_turn == 1) {
-						l5.setText("あなたの番");
+						l5.setText("あなたの番です");
 					} else {
-						l5.setText("相手の番");
+						l5.setText("相手の番です");
 					}
 				}
 			}, 100, 100);
 
+			int x=12, y=42;
 			for (i = 0; i < 8; i++) {
 				A[i] = new JButton();
-
-				A[i].setBounds(28, 57 + i * 48, buttonSize, buttonSize);
+				A[i].setBounds(28+x, 57+y + i * 48, buttonSize, buttonSize);
 				A[i].addActionListener(this);
 				A[i].setOpaque(false);
 				A[i].setContentAreaFilled(false);
 			}
 			for (i = 0; i < 8; i++) {
 				B[i] = new JButton();
-
-				B[i].setBounds(77, 57 + i * 48, buttonSize, buttonSize);
+				B[i].setBounds(76+x, 57+y + i * 48, buttonSize, buttonSize);
 				B[i].addActionListener(this);
 				B[i].setOpaque(false);
 				B[i].setContentAreaFilled(false);
 			}
-
 			for (i = 0; i < 8; i++) {
 				C[i] = new JButton();
-
-				C[i].setBounds(126, 57 + i * 48, buttonSize, buttonSize);
+				C[i].setBounds(124+x, 57+y + i * 48, buttonSize, buttonSize);
 				C[i].addActionListener(this);
 				C[i].setOpaque(false);
 				C[i].setContentAreaFilled(false);
 			}
 			for (i = 0; i < 8; i++) {
 				D[i] = new JButton();
-
-				D[i].setBounds(172, 57 + i * 48, buttonSize, buttonSize);
+				D[i].setBounds(172+x, 57+y + i * 48, buttonSize, buttonSize);
 				D[i].addActionListener(this);
 				D[i].setOpaque(false);
 				D[i].setContentAreaFilled(false);
 			}
 			for (i = 0; i < 8; i++) {
 				E[i] = new JButton();
-
-				E[i].setBounds(220, 57 + i * 48, buttonSize, buttonSize);
+				E[i].setBounds(219+x, 57+y + i * 48, buttonSize, buttonSize);
 				E[i].addActionListener(this);
 				E[i].setOpaque(false);
 				E[i].setContentAreaFilled(false);
 			}
 			for (i = 0; i < 8; i++) {
 				F[i] = new JButton();
-
-				F[i].setBounds(268, 57 + i * 48, buttonSize, buttonSize);
+				F[i].setBounds(266+x, 57+y + i * 48, buttonSize, buttonSize);
 				F[i].addActionListener(this);
 				F[i].setOpaque(false);
 				F[i].setContentAreaFilled(false);
 			}
 			for (i = 0; i < 8; i++) {
 				G[i] = new JButton();
-
-				G[i].setBounds(314, 57 + i * 48, buttonSize, buttonSize);
+				G[i].setBounds(314+x, 57+y + i * 48, buttonSize, buttonSize);
 				G[i].addActionListener(this);
 				G[i].setOpaque(false);
 				G[i].setContentAreaFilled(false);
 			}
 			for (i = 0; i < 8; i++) {
 				H[i] = new JButton();
-
-				H[i].setBounds(360, 57 + i * 48, buttonSize, buttonSize);
+				H[i].setBounds(361+x, 57+y + i * 48, buttonSize, buttonSize);
 				H[i].addActionListener(this);
 				H[i].setOpaque(false);
 				H[i].setContentAreaFilled(false);
-			}
+		}
 
-			c.add(l1);
-			c.add(l2);
-			c.add(l3);
-			c.add(l4);
-			c.add(l5);
-			c.add(b1);
-			j.getLayeredPane().add(chessboard, 100);
+			lp.add(l1);
+			lp.add(l2);
+			lp.add(l3);
+			lp.add(l4);
+			lp.add(l6);
+			lp.add(l5);
+			lp.add(b1);
+			lp.add(chessboard);
+			lp.setLayer(l1, 2);
+			lp.setLayer(l2, 2);
+			lp.setLayer(l3, 2);
+			lp.setLayer(l4, 5);
+			lp.setLayer(l6, 5);
+			lp.setLayer(l5, 2);
+			lp.setLayer(b1, 2);
+			lp.setLayer(chessboard, 2);
+	
 
 			for (i = 0; i < 8; i++) {
-				j.getLayeredPane().add(A[i], 0);
-				j.getLayeredPane().add(B[i], 0);
-				j.getLayeredPane().add(C[i], 0);
-				j.getLayeredPane().add(D[i], 0);
-				j.getLayeredPane().add(E[i], 0);
-				j.getLayeredPane().add(F[i], 0);
-				j.getLayeredPane().add(G[i], 0);
-				j.getLayeredPane().add(H[i], 0);
+				lp.add(A[i]);
+				lp.add(B[i]);
+				lp.add(C[i]);
+				lp.add(D[i]);
+				lp.add(E[i]);
+				lp.add(F[i]);
+				lp.add(G[i]);
+				lp.add(H[i]);
+				lp.setLayer(A[i], 10);
+				lp.setLayer(B[i], 10);
+				lp.setLayer(C[i], 10);
+				lp.setLayer(D[i], 10);
+				lp.setLayer(E[i], 10);
+				lp.setLayer(F[i], 10);
+				lp.setLayer(G[i], 10);
+				lp.setLayer(H[i], 10);
 			}
+
 			c.setLayout(null);
+			c.add(lp);
 
 			j.setVisible(true);
 			j.setResizable(false);
@@ -404,11 +454,10 @@ public class Oserov4 extends JFrame {
 
 						}
 					}
-					if(pressable){		
-					result = map.isGameFinish();
+					if(pressable){
+						result = map.isGameFinish();
 
 						if(result != 3){
-
 							try {
 								transData end = new transData(36);
 								// ObjectOutputStream oos = new ObjectOutputStream(client.s.getOutputStream());
@@ -428,10 +477,16 @@ public class Oserov4 extends JFrame {
 											break;
 									}
 									try {
+										System.out.println("s_data=" + s_data.get_row() + "," + s_data.get_line());
+										s_data.set_end_result(result);
+										client.oos.writeObject(s_data);
+										System.out.println("send!!");
+										
 										client.oos.writeObject(battle_end);
 										client.oos.reset();
 										client.oos.writeObject(end);
 										client.oos.reset();
+										client.ois.readObject();
 										transData room_info=null;
 										room_info = (transData)client.ois.readObject();
 										if(room_info.get_protocol()==12){
@@ -440,32 +495,41 @@ public class Oserov4 extends JFrame {
 									} catch (Exception erro) {
 										erro.printStackTrace();
 									}
+								}else{
+									System.out.println("s_data=" + s_data.get_row() + "," + s_data.get_line());
+										s_data.set_end_result(result);
+										client.oos.writeObject(s_data);
+										System.out.println("send!!");
 								}
-	
-								//new Result(result, client, this);
 							} catch (Exception erro) {
 								erro.printStackTrace();
 							}
+<<<<<<< HEAD
+						}else{
+							
+							System.out.println("s_data=" + s_data.get_row() + "," + s_data.get_line());
+=======
 						}else{}
 						
-
-
-					
-					// client.oos.flush();
-					// client.oos.shutdown();
-					
-					
 						System.out.println("s_data=" + s_data.get_row() + "," + s_data.get_line());
+>>>>>>> 85ed163aa74f32984375d32a52cfa83ab08a8e23
 						// client.oos.writeObject(s_data);
+						s_data.set_end_result(result);
 						client.oos.writeObject(s_data);
 				
 						System.out.println("send!!");
+<<<<<<< HEAD
+					}
+						client.your_turn = 0;					
+=======
 					
 				
-					result = map.isGameFinish();
-					System.out.println("result : " + result);
+						result = map.isGameFinish();
+						System.out.println("result : " + result);
 						if(result != 3){
 							System.out.println("game end");
+							l2.setVisible(false);
+							l3.setVisible(false);
 							try {
 								
 								// ObjectOutputStream oos = new ObjectOutputStream(client.s.getOutputStream());
@@ -505,6 +569,7 @@ public class Oserov4 extends JFrame {
 						client.your_turn = 0;
 					
 					
+>>>>>>> 85ed163aa74f32984375d32a52cfa83ab08a8e23
 					// client.BattleReceiver(map);
 					if (count == 0) {
 						
@@ -967,7 +1032,7 @@ public class Oserov4 extends JFrame {
 						time = time - 1;
 					}
 					
-					l2.setText("Left time: " + String.valueOf(time));
+					l3.setText(String.valueOf(time));
 					if(time<=0){
 						time =0;
 						

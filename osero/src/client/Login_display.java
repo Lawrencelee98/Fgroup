@@ -53,7 +53,7 @@ public class Login_display extends JFrame implements ActionListener {
 		p.add(pwd);
 		p.add(btn[0]);
 		p.add(btn[1]);
-		//p.add(btn[2]);
+		p.add(btn[2]);
 		p.add(btn[3]);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -112,35 +112,22 @@ public class Login_display extends JFrame implements ActionListener {
 				client.password = passwordstr;
 				client.choose_room(oos, ois);
 				this.dispose();
-				/*
-				 * try { System.out.println("Login_display:socket close"); //s.close(); } catch
-				 * (IOException e1) { e1.printStackTrace(); }finally {
-				 */
-				/*
-				 * ObjectOutputStream oos_room = null; ObjectInputStream ois_room = null; try{
-				 * Socket s_room = new Socket(client.ServerAddress,client.room_port);
-				 * OutputStream os_room = s_room.getOutputStream(); oos_room = new
-				 * ObjectOutputStream(os_room);
-				 * 
-				 * InputStream is_room = s_room.getInputStream(); ois_room = new
-				 * ObjectInputStream(is_room); System.out.println("start oserov4"); new
-				 * Oserov4(client, oos_room, ois_room); }catch (Exception e1){
-				 * //e.printStackTrace(); }finally {
-				 * 
-				 * }
-				 */ // ->Display4 Action
-				// }
-			} else {
+			}
+			
+			else {
 				// login failed
 				// TODO show "login failed"
 				System.out.println("Login Failed");
 			}
+		}else if(e.getSource()==btn[2]) {
+			new Change_pass("Change Password",this.client);
+			System.out.println("btn2");
 		}
 		
 		// osero 対局の終了
 
 		// button ルール説明
-		if (e.getSource() == btn[3]) {
+		else if (e.getSource() == btn[3]) {
 			new Explain("Explaination", client);
 			this.dispose();
 		}

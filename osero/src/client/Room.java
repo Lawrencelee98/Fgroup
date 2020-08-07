@@ -9,31 +9,27 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.*;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
+import javax.swing.*;
 import transData.transData;
-
 import java.util.*;
 //import client.;
 
 public class Room {
 
 	private PrintWriter out;
-	static Socket s_room =null;
+	static Socket s_room = null;
 	static String str;
 	static Map<Integer, Integer> room_info;
 	static List<String> players_info;
 	static ObjectOutputStream oos = null;
 	static ObjectInputStream ois = null;
 	Client client = null;
-    static ObjectOutputStream oos_room = null;
+	static ObjectOutputStream oos_room = null;
 	static ObjectInputStream ois_room = null;
 	static ObjectInputStream ois_room1 = null;
 	private static int room_port = 0;
 	private static int room_num = -1;
+
 	public Room(Client client, Map<Integer, Integer> room_info, List<String> players_info, ObjectOutputStream oos,
 			ObjectInputStream ois) {
 		this.client = client;
@@ -56,10 +52,10 @@ public class Room {
 
 	// ルームを選ぶ画面
 	public class Display4 extends JFrame implements ActionListener {
-		JLabel label1 = new JLabel("ルーム1");
-		JLabel label2 = new JLabel("ルーム2");
-		JLabel label3 = new JLabel("ルーム3");
-		JLabel label4 = new JLabel("ルーム4");
+		JLabel label1 = new JLabel("横浜");
+		JLabel label2 = new JLabel("韓国");
+		JLabel label3 = new JLabel("中国");
+		JLabel label4 = new JLabel("日本");
 		// M:空き情報などのラベルの格納
 		String[] room_label = new String[8];
 		// M:room内のプレイヤー管理(いるなら1, いないなら0)
@@ -107,7 +103,16 @@ public class Room {
 			b32 = new JButton(room_label[5]);
 			b41 = new JButton(room_label[6]);
 			b42 = new JButton(room_label[7]);
-			setLayout(new BorderLayout());
+			setLayout(null);
+			JPanel main = new JPanel();
+			main.setLayout(new BorderLayout());
+			main.setBounds(0, 0, 1000, 600);
+			JLayeredPane lp = new JLayeredPane();
+			lp.setLayout(null);
+			lp.setBounds(0, 0, 1000, 600);
+			ImageIcon img = new ImageIcon(getClass().getResource("fuji.jpg"));
+			JLabel bg = new JLabel(img);
+			bg.setBounds(0, 0, 1000, 600);
 			JPanel w = new JPanel();
 			JButton b = new JButton("ログアウト");
 			CPU_match = new JButton("CPU対戦");
@@ -115,25 +120,32 @@ public class Room {
 			b.addActionListener(this);
 			w.add(b);
 			w.add(CPU_match);
-			add(w, "West");
+			// main.add(w, "West");
 			JPanel m = new JPanel();
 			m.setLayout(new BorderLayout());
 			JPanel x = new JPanel();
+			x.setOpaque(false);
 			x.setPreferredSize(new Dimension(350, 15));
 			m.add(x, "North");
 			JPanel p = new JPanel();
+			p.setOpaque(false);
 			p.setLayout(new GridLayout(2, 2));
 			JPanel p1 = new JPanel();
+			p1.setOpaque(false);
 			JPanel p11 = new JPanel();
+			p11.setOpaque(false);
 			p11.setBackground(Color.BLUE);
 			JPanel p111 = new JPanel();
+			p111.setOpaque(false);
 			p111.setPreferredSize(new Dimension(300, 250));
 			p111.setLayout(new BorderLayout());
 			JPanel p1111 = new JPanel();
+			p1111.setOpaque(false);
 			p1111.setPreferredSize(new Dimension(300, 70));
 			p1111.add(label1);
 			p111.add(p1111, "North");
 			JPanel p1112 = new JPanel();
+			p1112.setOpaque(false);
 			p1112.setPreferredSize(new Dimension(300, 90));
 			b11.addActionListener(this);
 			if (room_player[0] == 0) {
@@ -146,6 +158,7 @@ public class Room {
 			}
 			p111.add(p1112, "Center");
 			JPanel p1113 = new JPanel();
+			p1113.setOpaque(false);
 			p1113.setPreferredSize(new Dimension(300, 90));
 			b12.addActionListener(this);
 			if (room_player[1] == 0) {
@@ -162,16 +175,21 @@ public class Room {
 			p1.add(p11);
 			p.add(p1);
 			JPanel p2 = new JPanel();
+			p2.setOpaque(false);
 			JPanel p22 = new JPanel();
+			p22.setOpaque(false);
 			p22.setBackground(Color.BLUE);
 			JPanel p222 = new JPanel();
+			p222.setOpaque(false);
 			p222.setPreferredSize(new Dimension(300, 250));
 			p222.setLayout(new BorderLayout());
 			JPanel p2221 = new JPanel();
+			p2221.setOpaque(false);
 			p2221.setPreferredSize(new Dimension(300, 70));
 			p2221.add(label2);
 			p222.add(p2221, "North");
 			JPanel p2222 = new JPanel();
+			p2222.setOpaque(false);
 			p2222.setPreferredSize(new Dimension(300, 90));
 			b21.addActionListener(this);
 			if (room_player[2] == 0) {
@@ -184,6 +202,7 @@ public class Room {
 			}
 			p222.add(p2222, "Center");
 			JPanel p2223 = new JPanel();
+			p2223.setOpaque(false);
 			p2223.setPreferredSize(new Dimension(300, 90));
 			b22.addActionListener(this);
 			if (room_player[3] == 0) {
@@ -200,16 +219,21 @@ public class Room {
 			p2.add(p22);
 			p.add(p2);
 			JPanel p3 = new JPanel();
+			p3.setOpaque(false);
 			JPanel p33 = new JPanel();
+			p33.setOpaque(false);
 			p33.setBackground(Color.BLUE);
 			JPanel p333 = new JPanel();
+			p333.setOpaque(false);
 			p333.setPreferredSize(new Dimension(300, 250));
 			p333.setLayout(new BorderLayout());
 			JPanel p3331 = new JPanel();
+			p3331.setOpaque(false);
 			p3331.setPreferredSize(new Dimension(300, 70));
 			p3331.add(label3);
 			p333.add(p3331, "North");
 			JPanel p3332 = new JPanel();
+			p3332.setOpaque(false);
 			p3332.setPreferredSize(new Dimension(300, 90));
 			b31.addActionListener(this);
 			if (room_player[4] == 0) {
@@ -222,6 +246,7 @@ public class Room {
 			}
 			p333.add(p3332, "Center");
 			JPanel p3333 = new JPanel();
+			p3333.setOpaque(false);
 			p3333.setPreferredSize(new Dimension(300, 90));
 			b32.addActionListener(this);
 			if (room_player[5] == 0) {
@@ -238,16 +263,21 @@ public class Room {
 			p3.add(p33);
 			p.add(p3);
 			JPanel p4 = new JPanel();
+			p4.setOpaque(false);
 			JPanel p44 = new JPanel();
+			p44.setOpaque(false);
 			p44.setBackground(Color.BLUE);
 			JPanel p444 = new JPanel();
+			p444.setOpaque(false);
 			p444.setPreferredSize(new Dimension(300, 250));
 			p444.setLayout(new BorderLayout());
 			JPanel p4441 = new JPanel();
+			p4441.setOpaque(false);
 			p4441.setPreferredSize(new Dimension(300, 70));
 			p4441.add(label4);
 			p444.add(p4441, "North");
 			JPanel p4442 = new JPanel();
+			p4442.setOpaque(false);
 			p4442.setPreferredSize(new Dimension(300, 90));
 			b41.addActionListener(this);
 			if (room_player[6] == 0) {
@@ -260,6 +290,7 @@ public class Room {
 			}
 			p444.add(p4442, "Center");
 			JPanel p4443 = new JPanel();
+			p4443.setOpaque(false);
 			p4443.setPreferredSize(new Dimension(300, 90));
 			b42.addActionListener(this);
 			if (room_player[7] == 0) {
@@ -276,16 +307,32 @@ public class Room {
 			p4.add(p44);
 			p.add(p4);
 			m.add(p, "Center");
-			add(m, "Center");
+			// main.add(m, "Center");
+			// main.setOpaque(false);
+			w.setOpaque(false);
+			m.setOpaque(false);
+			lp.add(bg);
+			w.setBounds(0, 0, 200, 600);
+			lp.add(w);
+			m.setBounds(200, 0, 800, 600);
+			lp.add(m);
+			// lp.add(main);
+			lp.setLayer(bg, 0);
+			lp.setLayer(w, 1);
+			lp.setLayer(m, 2);
+			// lp.setLayer(main, 1);
+			// add(lp);
+
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setSize(1000, 600);
 			setTitle("ルーム選択画面");
+			setContentPane(lp);
 			setVisible(true);
 
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			
+
 			if (e.getActionCommand().equals("ログアウト")) {
 				setVisible(false);
 
@@ -296,7 +343,7 @@ public class Room {
 					new Display5(client);
 					setVisible(false);
 					if (room_player[1] == 1) {
-						//new Display5(client);
+						// new Display5(client);
 					}
 
 				} else if (e.getSource() == b12) {
@@ -305,7 +352,7 @@ public class Room {
 					new Display5(client);
 					setVisible(false);
 					if (room_player[0] == 1) {
-						//new Display5(client);
+						// new Display5(client);
 					}
 				} else if (e.getSource() == b21) {
 					room_player[2] = 1;
@@ -313,7 +360,7 @@ public class Room {
 					new Display5(client);
 					setVisible(false);
 					if (room_player[3] == 1) {
-						//new Display5(client);
+						// new Display5(client);
 					}
 				} else if (e.getSource() == b22) {
 					room_player[3] = 1;
@@ -321,7 +368,7 @@ public class Room {
 					new Display5(client);
 					setVisible(false);
 					if (room_player[2] == 1) {
-						//new Display5(client);
+						// new Display5(client);
 					}
 				} else if (e.getSource() == b31) {
 					room_player[4] = 1;
@@ -329,7 +376,7 @@ public class Room {
 					new Display5(client);
 					setVisible(false);
 					if (room_player[5] == 1) {
-						//new Display5(client);
+						// new Display5(client);
 					}
 				} else if (e.getSource() == b32) {
 					room_player[5] = 1;
@@ -337,7 +384,7 @@ public class Room {
 					new Display5(client);
 					setVisible(false);
 					if (room_player[4] == 1) {
-						//new Display5(client);
+						// new Display5(client);
 					}
 				} else if (e.getSource() == b41) {
 					room_player[6] = 1;
@@ -345,7 +392,7 @@ public class Room {
 					new Display5(client);
 					setVisible(false);
 					if (room_player[7] == 1) {
-						//new Display5(client);
+						// new Display5(client);
 					}
 				} else if (e.getSource() == b42) {
 					room_player[7] = 1;
@@ -353,12 +400,12 @@ public class Room {
 					new Display5(client);
 					setVisible(false);
 					if (room_player[6] == 1) {
-						//new Display5(client);
+						// new Display5(client);
 					}
 				} else if (e.getSource() == CPU_match) {
-					new Oserov4_cpu(client,ois_room, oos_room, 30);
+					new Oserov4_cpu(client, ois_room, oos_room, 30);
 				}
-				
+
 				transData room_choice = new transData(13);
 				room_choice.set_room_num(room_num);
 				System.out.println("room choice=" + room_choice.get_room_num());
@@ -370,11 +417,10 @@ public class Room {
 					client.room_port = return_port.get_port();
 					System.out.println("Room:Action, room_port=" + client.room_port);
 
-					
 				} catch (Exception e2) {
 					e2.printStackTrace();
 				} finally {
-				
+
 					this.dispose();
 				}
 
@@ -395,13 +441,14 @@ public class Room {
 		res += "</html>";
 		return res;
 	}
+
 	public static class Display5 extends JFrame implements ActionListener {
 
 		JLabel label = new JLabel("<html>自分の持ち時間の希望を<br/>対戦相手に送信します。<br/>以下から選んでください。</html>");
 		Client client = null;
 
 		Display5(Client client) {
-		
+
 			System.out.println("Display5 aroused by Display4");
 
 			this.client = client;
@@ -451,7 +498,7 @@ public class Room {
 				str = "10秒";
 				time = 10;
 				this.setVisible(false);
-				//this.dispose();
+				// this.dispose();
 
 				// new Display6(this.client);
 
@@ -459,7 +506,7 @@ public class Room {
 				str = "15秒";
 				time = 15;
 				this.setVisible(false);
-				//this.dispose();
+				// this.dispose();
 
 				// new Display6(this.client);
 
@@ -467,7 +514,7 @@ public class Room {
 				str = "30秒";
 				time = 30;
 				this.setVisible(false);
-				//this.dispose();
+				// this.dispose();
 
 				// new Display6(this.client);
 
@@ -477,24 +524,23 @@ public class Room {
 				System.out.println("setting socket s_room");
 				s_room = new Socket(client.ServerAddress, client.room_port);
 				System.out.println("connect with room server");
-				
-				//InputStream
+
+				// InputStream
 				InputStream is_room = s_room.getInputStream();
 				System.out.println("get Input stream ");
-				//ObjectInputStream ois_room1= new ObjectInputStream(is_room);
-				//ois_room = ois_room1;
-				ois_room= new ObjectInputStream(is_room);
+				// ObjectInputStream ois_room1= new ObjectInputStream(is_room);
+				// ois_room = ois_room1;
+				ois_room = new ObjectInputStream(is_room);
 				System.out.println("get input stream");
 
-				//OutputStream 
+				// OutputStream
 				OutputStream os_room = s_room.getOutputStream();
 				System.out.println("get output stream ");
 				oos_room = new ObjectOutputStream(os_room);
 				System.out.println("take the oos to oos_room");
 
-				
 				client.s_room = s_room;
-				
+
 				// System.out.println("start oserov4");
 				// new Oserov4(client, oos_room, ois_room);
 				System.out.println("set socket s_room ");
@@ -502,22 +548,22 @@ public class Room {
 				e1.printStackTrace();
 
 			} finally {
-				
+
 				System.out.println("finally socket s_room setting");
 			}
-			
+
 			try {
 				transData time_data = new transData(0);
 				time_data.set_wait_time(time);
 				oos_room.writeObject(time_data);
-				
+
 				System.out.println("start osero_cpu");
-				
-				new Oserov4_cpu(client,ois_room, oos_room,time);
-				
+
+				new Oserov4_cpu(client, ois_room, oos_room, time);
+
 			} catch (Exception erro1) {
 				erro1.printStackTrace();
-			}finally{
+			} finally {
 				System.out.println("___dispose display5 ");
 				this.dispose();
 			}
@@ -532,20 +578,13 @@ public class Room {
 
 }
 /*
-class start_Osero extends Thread {
-	Client client;
-	ObjectInputStream ois;
-	ObjectOutputStream oos;
-	int time;
-
-	start_Osero(Client client, ObjectInputStream ois, ObjectOutputStream oos, int time) {
-		this.client = client;
-		this.ois = ois;
-		this.oos = oos;
-		this.time = time;
-	}
-
-	public void run() {
-		Oserov4 osero = new Oserov4(this.client, oos, ois, time);
-	}
-}*/
+ * class start_Osero extends Thread { Client client; ObjectInputStream ois;
+ * ObjectOutputStream oos; int time;
+ * 
+ * start_Osero(Client client, ObjectInputStream ois, ObjectOutputStream oos, int
+ * time) { this.client = client; this.ois = ois; this.oos = oos; this.time =
+ * time; }
+ * 
+ * public void run() { Oserov4 osero = new Oserov4(this.client, oos, ois, time);
+ * } }
+ */

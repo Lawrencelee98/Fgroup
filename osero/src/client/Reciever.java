@@ -1,8 +1,6 @@
 package client;
 import java.io.ObjectInputStream;
-
-import javax.swing.JFrame;
-
+import javax.swing.*;
 import client.Oserov4.Ban;
 import transData.transData;
 import java.net.*;
@@ -18,6 +16,7 @@ public class Reciever extends Thread{
 	transData battle_end = new transData(50);
 	transData room_info =null;
 	boolean pass = true;
+	boolean f = true;
 	int result;
 	int rate;
 	boolean pass_flag = false;
@@ -30,9 +29,14 @@ public class Reciever extends Thread{
 		this.pass = pass;
 		this.rate=rate;
 		this.result = result;
+		
 	}
 	@Override
 	public void run (){
+		int r=rate-5;
+		if(r<=0) {
+			r=0;
+		}
 
 		try {	
 			do{
@@ -46,14 +50,29 @@ public class Reciever extends Thread{
 		
 				if (this.protocol==3){
 						System.out.println("opponent:row="+r_data.get_row()+",line="+r_data.get_line());
-						//client.r_data = r_data;
+						//client.r_data = r_data;					
 						client.your_turn = 1;
-						System.out.println("row: "+r_data.get_row()+" line: "+r_data.get_line());
-
 						map.updateMap(r_data.get_row(), r_data.get_line(),1-client.turn);
 						map.checkMap(client.turn);
 						map.castToBoard();
 						map.timeupdater();
+						if(r_data.get_end_result()!=3){
+							
+							pass_flag=true;
+							if(client.turn==0){
+								if(r_data.get_end_result()==0){
+									end.set_endinfo_win();
+								}else if(r_data.get_end_result()==1){
+									end.set_endinfo_lose();
+								}else{
+									end.set_endinfo_draw();
+								}
+								client.oos.writeObject(battle_end);
+								
+								client.oos.writeObject(end);
+							}
+						}
+						else{
 						for(int i=0;i<8;i++){
 							for(int j=0;j<8;j++){
 								if(map.getMapValue(i, j)==2){
@@ -70,6 +89,7 @@ public class Reciever extends Thread{
 								this.pass_flag=true;						
 						}
 						pass = true;
+					}//get result ==3
 				}else if(this.protocol==2000){
 
 						System.out.println("protocol 2000 : you lose");
@@ -89,9 +109,9 @@ public class Reciever extends Thread{
 							System.out.println("room_info: "+room_info.get_room_info());
 							System.out.println("get_player_info: "+room_info.get_players_info());
 							//this.client.ois=ois;
-							String Rate=String.valueOf (rate)+"→"+String.valueOf (rate-5);
-							j.dispose();
-							new Result(result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate);
+							String Rate=String.valueOf (rate)+"→"+String.valueOf (r);
+							
+							new Result(result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate,j);
 							
 						}
 
@@ -117,8 +137,8 @@ public class Reciever extends Thread{
 							System.out.println(room_info.get_players_info());
 							//this.client.ois=ois;
 							String Rate=String.valueOf (rate)+"→"+String.valueOf (rate+10);
-							j.dispose();
-							new Result(result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate);
+							
+							new Result(result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate,j);
 							
 						}
 
@@ -133,12 +153,26 @@ public class Reciever extends Thread{
 
 					}else if(this.protocol ==3000){
 						int result = 3;
+						/*
+						for(int i=0;i<8;i++){
+							for(int j=0;j<8;j++){
+								if(map.getMapValue(i, j)==0 || map.getMapValue(i, j)==1){
+									f=false;
+									break;
+								}
+							}
+						}
+						if(f) {
+							JOptionPane.showConfirmDialog(null, "対戦相手がパスしました", null, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+						}*/
 						//产生分歧
 						//分歧1：如果是我发送过p3000后对方也没有地方放棋子并且add_pass_count后发送信息的话
+						JOptionPane.showConfirmDialog(null, "対戦相手がパスしました", null, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 						System.out.println("r_data pass count:"+ r_data.get_pass_count());
 						transData end = new transData(36);
 						if(map.countNumber(0)>map.countNumber(1)){
 							//black win
+							this.result = 0;
 							if(client.turn == 0){
 								end.set_endinfo_win();
 								
@@ -147,6 +181,7 @@ public class Reciever extends Thread{
 							}
 							this.result=0;
 						}else if(map.countNumber(0)<map.countNumber(1)){
+							this.result=1;
 							if(client.turn==0){
 								end.set_endinfo_lose();
 							}else if(client.turn ==1){
@@ -154,6 +189,7 @@ public class Reciever extends Thread{
 							}
 							this.result=1;
 						}else{
+
 							end.set_endinfo_draw();
 							this.result=2;
 						}//设置对局输赢
@@ -177,18 +213,19 @@ public class Reciever extends Thread{
 								System.out.println(room_info.get_players_info());
 								//this.client.ois=ois;
 								}
-								if(this.result == 0){
+								this.result = map.isGameFinish();
+								if(this.result == client.turn){
 									String Rate=String.valueOf (rate)+"→"+String.valueOf (rate+10);
-									j.dispose(); 
-									new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate);
-								}else if(this.result == 1){
-									String Rate=String.valueOf (rate)+"→"+String.valueOf (rate-5);
-									j.dispose();
-									new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate);
-								}else{
+									
+									new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate,j);
+								}else if(this.result == 2){
+									
 									String Rate=String.valueOf (rate)+"→"+String.valueOf (rate);
-									j.dispose();
-									new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate);
+									new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate,j);
+								}else{
+									
+									String Rate=String.valueOf (rate)+"→"+String.valueOf (r);
+									new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate,j);
 								}
 						}
 						//分歧2 如果从对方那里第一次收到p3000对方也没有地方放的时候
@@ -224,19 +261,19 @@ public class Reciever extends Thread{
 									System.out.println(room_info.get_players_info());
 									//this.client.ois=ois;
 								}
-							
-								if(this.result == 0){
+								
+								if(this.result ==client.turn){
 									String Rate=String.valueOf (rate)+"→"+String.valueOf (rate+10);
-									j.dispose(); 
-									new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate);
-								}else if(this.result == 1){
-									String Rate=String.valueOf (rate)+"→"+String.valueOf (rate-5);
-									j.dispose();
-									new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate);
-								}else{
+									
+									new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate,j);
+								}else if(this.result == 2){
+									
 									String Rate=String.valueOf (rate)+"→"+String.valueOf (rate);
-									j.dispose();
-									new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate);
+									new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate,j);
+								}else{
+									
+									String Rate=String.valueOf (rate)+"→"+String.valueOf (r);
+									new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate,j);
 								}
 
 								}
@@ -262,22 +299,16 @@ public class Reciever extends Thread{
 							System.out.println(room_info.get_players_info());
 							//this.client.ois=ois;
 						}
+						this.result = map.isGameFinish();
 						if(this.result == 0){
-							String Rate=String.valueOf (rate)+"→"+String.valueOf (rate+10);
-							
-							j.dispose(); 
-							new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate);
-							
-						}else if(this.result == 1){
-							String Rate=String.valueOf (rate)+"→"+String.valueOf (rate-5);
-							
-							j.dispose();
-							new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate);
-							
-						}else{
+							String Rate=String.valueOf (rate)+"→"+String.valueOf (rate+10);	
+							new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate,j);	
+						}else if(this.result == 2){				
 							String Rate=String.valueOf (rate)+"→"+String.valueOf (rate);
-							j.dispose();
-							new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate);
+							new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate,j);
+						}else{
+							String Rate=String.valueOf (rate)+"→"+String.valueOf (r);	
+							new Result(this.result, this.client, room_info.get_room_info(), room_info.get_players_info(),Rate,j);
 							
 						}
 						
