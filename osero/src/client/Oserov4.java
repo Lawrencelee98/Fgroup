@@ -28,6 +28,7 @@ public class Oserov4 extends JFrame {
 	JLabel l4 = new JLabel("黒");
 	JLabel l6 = new JLabel("白");
 	JLabel l5 = new JLabel("あなたの番");
+	JLabel l7 = new JLabel("あなたは[黒/白]です");
 	JButton b1 = new JButton("設定");
 
 	JButton[] A = new JButton[10];
@@ -170,6 +171,7 @@ public class Oserov4 extends JFrame {
 			l4.setBounds(470, 240, 120, 40);
 			l6.setBounds(620, 240, 120, 40);
 			l5.setBounds(480, 350, 200, 30);
+			l7.setBounds(480, 300, 190, 30);
 			b1.setBounds(640, 470, 100, 30);
 			b1.addActionListener(this);
 			
@@ -179,6 +181,7 @@ public class Oserov4 extends JFrame {
 			l4.setFont(l4.getFont().deriveFont(30.0f));
 			l6.setFont(l6.getFont().deriveFont(30.0f));
 			l5.setFont(l5.getFont().deriveFont(25.0f));
+			l7.setFont(l7.getFont().deriveFont(25.0f));
 
 			l1.setForeground(Color.BLACK);
 			l2.setForeground(Color.BLACK);
@@ -187,9 +190,10 @@ public class Oserov4 extends JFrame {
 			l6.setForeground(Color.WHITE);
 			l5.setForeground(Color.BLACK);
 			l4.setBackground(new Color(210, 210, 210, 255));
-			l6.setBackground(new Color(50, 50, 50, 255));
+			l6.setBackground(new Color(20, 20, 20, 255));
 			l4.setOpaque(true);
 			l6.setOpaque(true);
+			l7.setOpaque(true);
 
 			int buttonSize = 46, i = 0;
 
@@ -273,6 +277,7 @@ public class Oserov4 extends JFrame {
 			lp.add(l4);
 			lp.add(l6);
 			lp.add(l5);
+			lp.add(l7);
 			lp.add(b1);
 			lp.add(chessboard);
 			lp.setLayer(l1, 2);
@@ -281,6 +286,7 @@ public class Oserov4 extends JFrame {
 			lp.setLayer(l4, 5);
 			lp.setLayer(l6, 5);
 			lp.setLayer(l5, 2);
+			lp.setLayer(l7, 2);
 			lp.setLayer(b1, 2);
 			lp.setLayer(chessboard, 2);
 	
@@ -327,10 +333,17 @@ public class Oserov4 extends JFrame {
 						System.out.println("You hava black!");
 						client.turn = 0; //先攻なので黒
 						client.your_turn = 1;
+						l7.setForeground(Color.BLACK);
+						l7.setBackground(new Color(210, 210, 210, 255));
+						l7.setText("あなたは黒です");
 					}else if(protocol==1200){
 						System.out.println("You hava white!");
 						client.turn = 1;
 						client.your_turn = 0;
+						l7.setBackground(new Color(20, 20, 20, 255));
+						l7.setForeground(Color.WHITE);
+						l7.setText("あなたは白です");
+
 						//client.BattleReceiver(map);
 						rec = new Reciever(client, map, client.ois,end,j,pass, rate,3);
 						count++;

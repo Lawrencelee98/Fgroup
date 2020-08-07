@@ -34,9 +34,9 @@ public class Result extends JFrame implements ActionListener{
 		this.Rate=Rate;
 		l2.setText("あなたのレート：" + Rate);
 		System.out.println("Result : "+ result);
-		l.setBounds(70, 10, 100, 30);
+		l.setBounds(170, 10, 100, 30);
 		add(l);
-		l2.setBounds(40, 40, 100, 30);
+		l2.setBounds(140, 40, 200, 30);
 		add(l2);
 		if(result==0){
 			l.setText("黒の勝ち");
@@ -49,12 +49,12 @@ public class Result extends JFrame implements ActionListener{
 		l.setFont(l.getFont().deriveFont(15.0f));
 		l2.setFont(l2.getFont().deriveFont(15.0f));
 
-		b.setBounds(30, 80, 120, 30);
+		b.setBounds(130, 80, 120, 30);
 		b.addActionListener(this);
 		add(b);
 
 		this.setLayout(null);
-		this.setSize(200, 200);
+		this.setSize(400, 200);
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);

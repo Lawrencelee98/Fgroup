@@ -855,6 +855,7 @@ class Data_reciever extends Thread {
 			data = (transData) ois_room.readObject();
 			System.out.println("recieved battle start from server");
 			if (data.get_protocol() == 80) {
+				JOptionPane.showConfirmDialog(null, "対戦相手が現れたので対局を開始します", "", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
 				f_time = data.get_time();
 				java.util.List<String> players_info = data.get_players_info();
