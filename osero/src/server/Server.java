@@ -71,7 +71,7 @@ public class Server {
         try {
             // 読み込みファイルのインスタンス生成
             // ファイル名を指定する
-            fi = new FileInputStream("csv/login.csv");
+            fi = new FileInputStream("E:/master/Fgroup/osero/src/server/csv/login.csv");
             is = new InputStreamReader(fi);
             br = new BufferedReader(is);
 
@@ -159,11 +159,11 @@ public class Server {
         try {
             // 読み込みファイルのインスタンス生成
             // ファイル名を指定する
-            fi = new FileInputStream("csv/login.csv");
+            fi = new FileInputStream("E:/master/Fgroup/osero/src/server/csv/login.csv");
             is = new InputStreamReader(fi);
             br = new BufferedReader(is);
 
-            FileWriter fw = new FileWriter("csv/login_tmp.csv");
+            FileWriter fw = new FileWriter("E:/master/Fgroup/osero/src/server/csv/login_tmp.csv");
             PrintWriter pw = new PrintWriter(new BufferedWriter(fw));
 
             // 読み込み行
@@ -214,11 +214,11 @@ public class Server {
             br.close();
 
             // 書き換えたテンプファイルで上書き
-            fi_2 = new FileInputStream("csv/login_tmp.csv");
+            fi_2 = new FileInputStream("E:/master/Fgroup/osero/src/server/csv/login_tmp.csv");
             is_2 = new InputStreamReader(fi_2);
             br_2 = new BufferedReader(is_2);
 
-            FileWriter fw_2 = new FileWriter("csv/login.csv");
+            FileWriter fw_2 = new FileWriter("E:/master/Fgroup/osero/src/server/csv/login.csv");
             PrintWriter pw_2 = new PrintWriter(new BufferedWriter(fw_2));
 
             String line_2;
@@ -266,7 +266,7 @@ public class Server {
 
             // 同じ名前のユーザがいないか判定
             boolean ok_flag = true;
-            fi = new FileInputStream("csv/login.csv");
+            fi = new FileInputStream("E:/master/Fgroup/osero/src/server/csv/login.csv");
             is = new InputStreamReader(fi);
             br = new BufferedReader(is);
             String line;
@@ -287,7 +287,7 @@ public class Server {
             }
 
             if (ok_flag == true) {
-                FileWriter f = new FileWriter("csv/login.csv", true);
+                FileWriter f = new FileWriter("E:/master/Fgroup/osero/src/server/csv/login.csv", true);
                 PrintWriter p = new PrintWriter(new BufferedWriter(f));
 
                 p.print(obj.get_register_name());
@@ -300,7 +300,7 @@ public class Server {
                 p.close();
 
                 // record
-                FileWriter f_2 = new FileWriter("csv/record.csv", true);
+                FileWriter f_2 = new FileWriter("E:/master/Fgroup/osero/src/server/csv/record.csv", true);
                 PrintWriter p_2 = new PrintWriter(new BufferedWriter(f_2));
 
                 p_2.print(obj.get_register_name());
@@ -380,11 +380,11 @@ public class Server {
         BufferedReader br_2 = null;
 
         try {
-            fi = new FileInputStream("csv/record.csv");
+            fi = new FileInputStream("E:/master/Fgroup/osero/src/server/csv/record.csv");
             is = new InputStreamReader(fi);
             br = new BufferedReader(is);
 
-            FileWriter fw = new FileWriter("csv/record_tmp.csv");
+            FileWriter fw = new FileWriter("E:/master/Fgroup/osero/src/server/csv/record_tmp.csv");
             PrintWriter pw = new PrintWriter(new BufferedWriter(fw));
 
             if (obj.get_draw_flag()) {
@@ -467,11 +467,11 @@ public class Server {
             br.close();
 
             // 書き換えたテンプファイルで上書き
-            fi_2 = new FileInputStream("csv/record_tmp.csv");
+            fi_2 = new FileInputStream("E:/master/Fgroup/osero/src/server/csv/record_tmp.csv");
             is_2 = new InputStreamReader(fi_2);
             br_2 = new BufferedReader(is_2);
 
-            FileWriter fw_2 = new FileWriter("csv/record.csv");
+            FileWriter fw_2 = new FileWriter("E:/master/Fgroup/osero/src/server/csv/record.csv");
             PrintWriter pw_2 = new PrintWriter(new BufferedWriter(fw_2));
 
             String line_2;
@@ -525,7 +525,7 @@ public class Server {
         try {
             // 読み込みファイルのインスタンス生成
             // ファイル名を指定する
-            fi = new FileInputStream("csv/record.csv");
+            fi = new FileInputStream("E:/master/Fgroup/osero/src/server/csv/record.csv");
             is = new InputStreamReader(fi);
             br = new BufferedReader(is);
 

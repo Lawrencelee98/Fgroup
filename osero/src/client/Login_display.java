@@ -31,7 +31,7 @@ public class Login_display extends JFrame implements ActionListener {
 		label[1] = new JLabel("パスワード");
 		btn[0] = new JButton("新規登録");
 		btn[1] = new JButton("ログイン");
-		btn[2] = new JButton("パスワード");
+		btn[2] = new JButton("パスワード変更");
 		btn[3] = new JButton("ルール説明");
 
 		for (int i = 0; i < 4; i++) {

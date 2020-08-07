@@ -22,7 +22,7 @@ public class Register_display extends JFrame implements ActionListener {
 		this.client = client;
 		JPanel p = (JPanel) getContentPane();
 		p.setLayout(null);
-		label[0] = new JLabel("プレイヤ名と母の旧姓を入力してください");
+		label[0] = new JLabel("<html>プレイヤ名とパスワードと母の旧姓を入力してください</html>");
 		label[1] = new JLabel("プレイヤ名");
 		label[3] = new JLabel("パスワード");
 		label[2] = new JLabel("母の旧姓");
@@ -31,12 +31,12 @@ public class Register_display extends JFrame implements ActionListener {
 		txt[2] = new JTextArea();
 		label[0].setBounds(15, 10, 200, 60);
 		label[1].setBounds(15, 100, 75, 20);
-		label[2].setBounds(15, 130, 75, 20);
-		label[3].setBounds(15, 160, 75, 20);
+		label[3].setBounds(15, 130, 75, 20);
+		label[2].setBounds(15, 160, 75, 20);
 		txt[0].setBounds(95, 100, 120, 20);
 		txt[1].setBounds(95, 130, 120, 20);
 		txt[2].setBounds(95, 160, 120, 20);
-		btn.setBounds(40, 180, 150, 20);
+		btn.setBounds(40, 200, 150, 20);
 		btn.addActionListener(this);
 		p.add(label[0]);
 		p.add(label[1]);
@@ -47,7 +47,7 @@ public class Register_display extends JFrame implements ActionListener {
 		p.add(txt[2]);
 		p.add(btn);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(250, 300);
+		setSize(250, 280);
 		setVisible(true);
 	}
 
@@ -56,15 +56,15 @@ public class Register_display extends JFrame implements ActionListener {
 		if (e.getSource() == btn) {
 
 			try {				
-				  flag = client.send_register_name_pass(txt[0].getText(),txt[1].getText(), txt[2].getText(),client.ois,client.oos); 
-				  if (flag) { // login success
-				   client.choose_room(client.oos, client.ois);
-				   this.dispose();
-				 } 
-				   else { //
-				  //login failed // TODO show "login failed"
-				  System.out.println("Register Failed"); }
-				 
+				flag = client.send_register_name_pass(txt[0].getText(),txt[1].getText(), txt[2].getText(),client.ois,client.oos); 
+				if (flag) { // login success
+					client.username = txt[0].getText();
+					client.password = txt[1].getText();
+					client.choose_room(client.oos, client.ois);
+					this.dispose();
+				} else { //
+					//login failed // TODO show "login failed"
+					System.out.println("Register Failed"); }
 				// updata 7.20 till here
 			} catch (Exception se) {
 				System.out.println("Error(Login_display):Socket error");

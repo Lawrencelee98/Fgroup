@@ -48,6 +48,7 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
 	boolean cpu_switch = false;
 	
 	boolean G_switch = true;
+	boolean endflag = false;
 	
 	Client client = null;
 	Osero_setting_cpu osero_setting;
@@ -258,7 +259,7 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
 
 		if (e.getSource() == b1) {
 			System.out.println("open new window");
-			osero_setting = new Osero_setting_cpu(this);
+			osero_setting = new Osero_setting_cpu(chessboard,map,G_switch);
 
 		}
 
@@ -362,9 +363,16 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
 
 				}
 
-				if (isGameFinish() != 3) {
+				int result;
+				if ((result = isGameFinish()) != 3 && !endflag ){
 					// 勝敗を表すディスプレイ//
 					System.out.println("Gameover");
+					switch(result){
+						case 0: JOptionPane.showConfirmDialog(j, "あなたの勝ちです。", null, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE); break;
+						case 1: JOptionPane.showConfirmDialog(j, "CPUの勝ちです。", null, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE); break;
+						case 2: JOptionPane.showConfirmDialog(j, "引き分けです。", null, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE); break;
+					}
+					endflag = true;
 				}
 			}
 
@@ -845,8 +853,6 @@ class Data_reciever extends Thread {
 			data = (transData) ois_room.readObject();
 			System.out.println("recieved battle start from server");
 			if (data.get_protocol() == 80) {
-				JOptionPane.showConfirmDialog(j, "対戦相手が現れたので対局を開始します", "", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
-
 				f_time = data.get_time();
 				java.util.List<String> players_info = data.get_players_info();
 				System.out.println("recieve data protocol 80");
@@ -872,12 +878,3 @@ class Data_reciever extends Thread {
 	}
 }
 // Oserov4
-
-// comment: 棋盘应该是横纵为偶数，并且初始化双方各两个子交叉排列在中心，只有旁边有棋子的时候才能下棋
-
-/*
- * 映射机制：按钮映射到Map的实例上，Map的实例将按钮的状态（黑或者白）映射到棋盘上
- * 协议机制：Osero传送Object数据，根据Object的类型（isinstanceof()）来判断是什么数据然后读取数据
- */
-// (GUI)button(send chess loction to the sever) - map -updata - map - GUI
-// GUI(Login Room Osero) - client - sever - client - GUI(Login Room Osero)

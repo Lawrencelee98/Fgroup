@@ -325,5 +325,7 @@ public class transData implements Serializable{
     public String[] get_user_name(){
         return this.user_name;
     }
+    int status =0;
+    
 
 }

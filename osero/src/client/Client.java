@@ -32,7 +32,7 @@ public class Client {
 
 	boolean CPUflag = false;
 	Oserov4_cpu oserov4_cpu = null;
-
+	
 	transData r_data = null;
 	Oserov4 osero = null;
 	String username;
@@ -87,9 +87,7 @@ public class Client {
 	// method for
 	public boolean send_login_info(String usr, String pass, ObjectInputStream ois, ObjectOutputStream oos) {
 		boolean flag = false;
-		// TODO send login info (name, pass) to server
 		transData user = new transData(10);
-
 		user.set_login_name_pass(usr, pass);
 		try {
 			oos.writeObject(user);
@@ -111,17 +109,15 @@ public class Client {
 				JOptionPane.showConfirmDialog(null, "指定されたユーザ名が存在しません", "ログインに失敗しました", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 				flag = false;
 			}
-		} catch (Exception e) {
-			// e.printStackTrace();
+		} catch (Exception ee) {
+			ee.printStackTrace();
 		} finally {
 			return flag;
 		}
 	}
 	public boolean send_changepass_info(String usr, String pass,String question, ObjectInputStream ois, ObjectOutputStream oos) {
 		boolean flag = false;
-		// TODO send login info (name, pass) to server
 		transData user = new transData(37);
-
 		user.set_change_name_pass_question(usr, pass,question);
 		try {
 			oos.writeObject(user);
@@ -150,15 +146,6 @@ public class Client {
 	}
 	// method for Register_display
 
-	/*
-	 * public void send_room_num(int room_num){ this.room_num = room_num; int port =
-	 * 13; transData data = new transData(port); try{ Socket socket = new
-	 * Socket(ServerAddress,port); OutputStream os = socket.getOutputStream();
-	 * ObjectOutputStream oos = new ObjectOutputStream(os); oos.writeObject(data);
-	 * oos.flush(); socket.shutdownOutput();
-	 * System.out.println("Send room number successfully"); }catch(Exception erro){
-	 * erro.printStackTrace(); System.out.println("Send room number failed"); } }
-	 */
 	public boolean send_register_name_pass(String register_name, String register_pass, String secret_ans,
 			ObjectInputStream ois, ObjectOutputStream oos) {
 		int protocol = 20;
@@ -208,34 +195,12 @@ public class Client {
 			java.util.List<String> players_info = room_obj.get_players_info();
 			System.out.println(players_info);
 			room = new Room(this, room_info, players_info, oos, ois);
-
-			// Scanner scan = new Scanner(System.in);
-			// room_num = scan.nextInt();
-			// todo chose room having 0or1 player
-			// System.out.println(return_port.get_port());
-
-			// Display4のactionlistenerによる書き換えまち
-			// room_port = room.getRoomPort();
-
-			/*
-			 * transData room_choice = new transData(13);
-			 * room_choice.set_room_num(room_num);
-			 * System.out.println("room choice="+room_choice.get_room_num()); try {
-			 * oos.writeObject(room_choice); System.out.println("sent room choice");
-			 * transData return_port = (transData)ois.readObject();
-			 * System.out.println("receive return port"); room_port =
-			 * return_port.get_port(); } catch (IOException | ClassNotFoundException e1) {
-			 * // TODO 自動生成された catch ブロック e1.printStackTrace(); }finally {
-			 * 
-			 * }
-			 */
 		} catch (Exception e) {
-			// e.printStackTrace();
+			e.printStackTrace();
 		} finally {
 			// return room_port;
 		}
 	}
-
 	// ルームに入った後、時間選択をして、サーバにprotocol80で時間を送る、CPU対戦に入る。
 	// 二番目のプレイヤーがルームに入ると、サーバがprotocol80で先に入ったプレイヤーに教える。
 	// 先に入ったプレイヤーがCPU対戦から出る。サーバがランダム選択した時間の合意を選択する。
@@ -266,7 +231,7 @@ public class Client {
 	}
 
 	public String get_user_pass(){
-		return this.login_pass;
+		return this.password;
 	}
 
 	public static void main(String[] args) {

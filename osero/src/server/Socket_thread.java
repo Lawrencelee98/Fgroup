@@ -156,7 +156,7 @@ public class Socket_thread extends Thread{
                             Server.name_p8 = this.username;
                         }
                         System.out.println("thread [ " + String.valueOf(num) + " ] change pass ok");
-                        break;
+                        //break;
                     } else {
                         // change pass fail
 

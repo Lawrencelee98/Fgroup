@@ -1,4 +1,5 @@
 package client;
+import client.Oserov4.Ban;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -25,7 +26,10 @@ public class Osero_setting extends JFrame implements ActionListener{
 	JFrame j = new JFrame();
 	Container c;
 	JLabel chessboard;
-	public Osero_setting(JLabel chessboard){
+	Ban map;
+
+	public Osero_setting(JLabel chessboard, Ban map){
+		this.map = map;
 
 	c = j.getContentPane();
 	j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -87,9 +91,11 @@ public class Osero_setting extends JFrame implements ActionListener{
 	    	if (ae.getSource() == r1 || ae.getSource() == r2) {
 			if(status1 == true) {
 				Oserov4.G_switch = true;
-    			}else if(status2 == true) {
-    				Oserov4.G_switch = false;
-    			}
+				map.castToBoard();
+    		}else if(status2 == true) {
+				Oserov4.G_switch = false;
+				map.castToBoard();
+    		}
 		}
 		if(ae.getSource()==b1) {
 			System.out.println("close setting window");
