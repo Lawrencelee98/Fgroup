@@ -1,6 +1,8 @@
 package client;
 
 import javax.swing.*;
+
+import jdk.vm.ci.aarch64.AArch64.Flag;
 import transData.*;
 import java.net.*;
 import java.awt.*;
@@ -176,7 +178,7 @@ public class Oserov4 extends JFrame {
 			l3.setFont(l3.getFont().deriveFont(40.0f));
 			l4.setFont(l4.getFont().deriveFont(30.0f));
 			l6.setFont(l6.getFont().deriveFont(30.0f));
-			l5.setFont(l6.getFont().deriveFont(25.0f));
+			l5.setFont(l5.getFont().deriveFont(25.0f));
 
 			l1.setForeground(Color.BLACK);
 			l2.setForeground(Color.BLACK);
@@ -190,7 +192,6 @@ public class Oserov4 extends JFrame {
 			l6.setOpaque(true);
 
 			int buttonSize = 46, i = 0;
-			
 
 			Timer chess_number_count = new Timer();
 			chess_number_count.schedule(new TimerTask() {
@@ -453,11 +454,10 @@ public class Oserov4 extends JFrame {
 
 						}
 					}
-					if(pressable){		
-					result = map.isGameFinish();
+					if(pressable){
+						result = map.isGameFinish();
 
 						if(result != 3){
-
 							try {
 								transData end = new transData(36);
 								// ObjectOutputStream oos = new ObjectOutputStream(client.s.getOutputStream());
@@ -497,13 +497,6 @@ public class Oserov4 extends JFrame {
 							}
 						}else{}
 						
-
-
-					
-					// client.oos.flush();
-					// client.oos.shutdown();
-					
-					
 						System.out.println("s_data=" + s_data.get_row() + "," + s_data.get_line());
 						// client.oos.writeObject(s_data);
 						client.oos.writeObject(s_data);
@@ -511,10 +504,12 @@ public class Oserov4 extends JFrame {
 						System.out.println("send!!");
 					
 				
-					result = map.isGameFinish();
-					System.out.println("result : " + result);
+						result = map.isGameFinish();
+						System.out.println("result : " + result);
 						if(result != 3){
 							System.out.println("game end");
+							l2.setVisible(false);
+							l3.setVisible(false);
 							try {
 								
 								// ObjectOutputStream oos = new ObjectOutputStream(client.s.getOutputStream());
