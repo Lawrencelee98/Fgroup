@@ -60,11 +60,13 @@ public class Change_pass extends JFrame implements ActionListener{
             try{
                 boolean flag = client.send_changepass_info(name,pass,question,client.ois,client.oos);
                 if(flag){
-                    System.out.println(" change password success");
+					System.out.println(" change password success");
+					JOptionPane.showConfirmDialog(null, "パスワードの変更に成功しました", "", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
                     this.dispose();
                     
                 }else{
-                    System.out.println("change password failed");
+					System.out.println("change password failed");
+					JOptionPane.showConfirmDialog(null, "パスワードの変更に失敗しました", "", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
                 }
             }catch(Exception ee){
                 ee.getStackTrace();

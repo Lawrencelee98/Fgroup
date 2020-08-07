@@ -44,8 +44,8 @@ public class Reciever extends Thread{
 			this.pass_flag=false;
 			System.out.println("receiver start ");
 			r_data = (transData)ois.readObject();
-			System.out.println("receive data");
 			this.protocol=r_data.get_protocol();
+			System.out.println("receive data protocol : " + this.protocol);
 		
 		
 				if (this.protocol==3){
