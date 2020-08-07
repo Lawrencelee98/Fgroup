@@ -1,8 +1,6 @@
 package client;
 
 import javax.swing.*;
-
-import jdk.vm.ci.aarch64.AArch64.Flag;
 import transData.*;
 import java.net.*;
 import java.awt.*;
@@ -504,72 +502,20 @@ public class Oserov4 extends JFrame {
 							} catch (Exception erro) {
 								erro.printStackTrace();
 							}
-<<<<<<< HEAD
+
 						}else{
 							
 							System.out.println("s_data=" + s_data.get_row() + "," + s_data.get_line());
-=======
-						}else{}
-						
-						System.out.println("s_data=" + s_data.get_row() + "," + s_data.get_line());
->>>>>>> 85ed163aa74f32984375d32a52cfa83ab08a8e23
+
 						// client.oos.writeObject(s_data);
 						s_data.set_end_result(result);
 						client.oos.writeObject(s_data);
 				
 						System.out.println("send!!");
-<<<<<<< HEAD
+
 					}
 						client.your_turn = 0;					
-=======
-					
-				
-						result = map.isGameFinish();
-						System.out.println("result : " + result);
-						if(result != 3){
-							System.out.println("game end");
-							l2.setVisible(false);
-							l3.setVisible(false);
-							try {
-								
-								// ObjectOutputStream oos = new ObjectOutputStream(client.s.getOutputStream());
-								if (client.turn == 0) {// 先に入った側(黒)のみが結果を送信する
-									switch (result) {
-										case 0:
-											end.set_endinfo_win();
-											break;
-										case 1:
-											end.set_endinfo_lose();
-											break;
-										case 2:
-											end.set_endinfo_draw();
-											break;
-										default:
-											System.out.println("set_endinfo error");
-											break;
-									}
-									try {
-										client.oos.writeObject(battle_end);
-										client.oos.reset();
-										client.oos.writeObject(end);
-										System.out.println("send endinfo : " + result);
-										client.oos.reset();
-									} catch (Exception erro) {
-										erro.printStackTrace();
-									}
-									
-								}else{}
-								//this.dispose();
-								//new Result(result, client,2,j);
-							} catch (Exception erro) {
-								erro.printStackTrace();
-							}
-						}else{}
-				
-						client.your_turn = 0;
-					
-					
->>>>>>> 85ed163aa74f32984375d32a52cfa83ab08a8e23
+
 					// client.BattleReceiver(map);
 					if (count == 0) {
 						
