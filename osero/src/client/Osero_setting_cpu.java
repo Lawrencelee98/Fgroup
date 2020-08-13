@@ -25,21 +25,17 @@ public class Osero_setting_cpu extends JFrame implements ActionListener {
     JFrame j = new JFrame();
     Container c;
     Oserov4_cpu oserov4_cpu;
-    JLabel chessboard ;
-    client.Oserov4_cpu.Map map;
-    boolean G_switch;
+    
     boolean status1 ;
 	boolean status2 ;
-    public Osero_setting_cpu(JLabel chessboard,client.Oserov4_cpu.Map map,boolean G_switch) {
+    public Osero_setting_cpu(Oserov4_cpu oserov4_cpu) {
 
         c = j.getContentPane();
         j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         j.setSize(500, 400);
         c.setLayout(null);
-        this.chessboard = chessboard;
-        this.map = map;
-        this.G_switch = G_switch;
-        if(this.G_switch=true){
+        this.oserov4_cpu= oserov4_cpu;
+        if(oserov4_cpu.G_switch=true){
             status1 = true;
         }else{
             status1=false;
@@ -90,11 +86,11 @@ public class Osero_setting_cpu extends JFrame implements ActionListener {
 		status2 = r2.isSelected();
 	    if (ae.getSource() == r1 || ae.getSource() == r2) {
 			if(status1 == true) {
-				G_switch = true;
+				oserov4_cpu.G_switch = true;
     		}else if(status2 == true) {
-    			G_switch = false;
+    			oserov4_cpu.G_switch = false;
     		}
-			map.castToBoard(oserov4_cpu);
+			oserov4_cpu.map.castToBoard(oserov4_cpu);
 	    }
     	
         if (ae.getSource() == b1) {
