@@ -259,7 +259,7 @@ public class Oserov4_cpu extends JFrame implements ActionListener {
 
 		if (e.getSource() == b1) {
 			System.out.println("open new window");
-			osero_setting = new Osero_setting_cpu(chessboard,map,G_switch);
+			osero_setting = new Osero_setting_cpu(this);
 
 		}
 
