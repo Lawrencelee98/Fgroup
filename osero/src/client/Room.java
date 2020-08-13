@@ -337,7 +337,8 @@ public class Room {
 			client.pos = j.getLocation();
 
 			if (e.getActionCommand().equals("ログアウト")) {
-				j.setVisible(false);
+				System.out.println("ログアウト");
+				System.exit(0); 
 
 			} else {
 				if (e.getSource() == b11) {
